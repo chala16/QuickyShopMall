@@ -14,7 +14,7 @@ export default {
         'sidebar-blue': '#0C2D57',
         'header-orange':'#FC6736',
         'client-brown':'#714433',
-        'client-yellow':'#f7c469',
+        'client-yellow':'#F9E4BC',
         'admin-gray':'#EFECEC',
         'dark-brown':"#6E260E",
         'dark-purple':"#081A51",
