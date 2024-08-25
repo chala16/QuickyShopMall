@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "./Navbar";
+import NavBar from "./Navbar/Navbar";
 import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
