@@ -1,7 +1,7 @@
 import React from 'react'
-import Image1 from "../../asserts/slider/women.png";
-import Image2 from "../../asserts/slider/shopping.png";
-import Image3 from "../../asserts/slider/sale.png";
+import Image1 from "../../../images/slider/women.png";
+import Image2 from "../../../images/slider/shopping.png";
+import Image3 from "../../../images/slider/sale.png";
 import Slider from "react-slick";
 
 const ImageList = [
@@ -56,15 +56,14 @@ const ImageMover = () => {
         absolute -top-1/2 right-0 rounded-3xl rotate-45 z-[-9]"
       ></div>
       {/* Slider section */}
-      <div className="container pb-8 sm:pb-0 relative z-10">
+      <div className="container relative z-10 pb-8 sm:pb-0">
         <Slider {...settings}>
             {ImageList.map((data) => (
                 <div>
                 <div className="grid grid-cols-1 sm:grid-cols-2">
                   {/* text content section */}
-                  <div className="flex flex-col justify-center
-                  gap-4 pt-12 sm:pt-0 text-center sm:text-leftorder-2 sm:order-1 relative z-10">
-                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold">
+                  <div className="relative z-10 flex flex-col justify-center gap-4 pt-12 text-center sm:pt-0 sm:text-leftorder-2 sm:order-1">
+                    <h1 className="text-5xl font-bold sm:text-6xl lg:text-7xl">
                       {data.title}
                     </h1>
                     <p className="text-sm">
@@ -72,9 +71,7 @@ const ImageMover = () => {
                     </p>
                     <div>
                       <button
-                        className="bg-gradient-to-r
-                              from-primary to-secondary hover:scale-105
-                              duration-200 text-white py-2 px-4 rounded-full"
+                        className="px-4 py-2 text-white duration-200 rounded-full bg-gradient-to-r from-primary to-secondary hover:scale-105"
                       >
                         Order Now
                       </button>
