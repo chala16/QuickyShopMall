@@ -5,10 +5,12 @@ import Login from "../components/landingPage/ClientLogin";
 import SignUp from "../components/landingPage/ClientSignUp";
 import OwnerDashboard from "../pages/shopOwner/OwnerDashboard";
 import OwnerDashboardLayout from "../pages/shopOwner/OwnerDashboardLayout";
+
 import AddItem from "../pages/shopOwner/AddItem";
 import DeleteItem from "../pages/shopOwner/DeleteItem";
 import UpdateItem from "../pages/shopOwner/UpdateItem";
 import ViewItem from "../pages/shopOwner/ViewItem";
+
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -40,6 +42,7 @@ function CreateRouter(){
           path:'/shopOwner/dashboard',
           element:<OwnerDashboard/>
         },
+
         {
           path:'/shopOwner/dashboard/add-item',
           element:<AddItem/>
@@ -56,7 +59,8 @@ function CreateRouter(){
           path: '/shopOwner/dashboard/view-item/:id',
           element:<ViewItem/>
         },
-      
+
+
       ]
     }
 
