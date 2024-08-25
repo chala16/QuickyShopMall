@@ -69,7 +69,10 @@ const OwnerDashboard = () => {
                     Add your items.
                   </p>
                   <div className="mt-8">
-                    <Link to={`/admin/empdashboard`}>
+
+                    <Link to={`/shopOwner/dashboard/add-item`}>
+
+
                       <button className="h-8 text-lg font-bold w-44 bg-sidebar-orange rounded-xl">
                         Add item
                       </button>
@@ -152,7 +155,10 @@ const OwnerDashboard = () => {
                       Delete your items.
                     </p>
                     <div className="mt-8">
-                      <Link to={`/admin/finance/dashboard`}>
+
+                      <Link to={`/shopOwner/dashboard/delete-items`}>
+
+
                       <button className="h-8 text-lg font-bold w-44 bg-sidebar-orange rounded-xl">
                         Delete item
                       </button>
@@ -192,7 +198,11 @@ const OwnerDashboard = () => {
                       View your items.
                     </p>
                     <div className="mt-8">
-                      <Link to={`/admin/feedback/dashboard/`}>
+
+                      <Link to={`/shopOwner/dashboard/view-items`}>
+
+                   
+
                       <button className="h-8 text-lg font-bold w-44 bg-sidebar-orange rounded-xl">
                         View item
                       </button>
