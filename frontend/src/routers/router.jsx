@@ -3,6 +3,8 @@ import App from "../App";
 import Home from "../components/Home/Home";
 import Login from "../components/landingPage/ClientLogin";
 import SignUp from "../components/landingPage/ClientSignUp";
+import OwnerDashboard from "../pages/shopOwner/OwnerDashboard";
+import OwnerDashboardLayout from "../pages/shopOwner/OwnerDashboardLayout";
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -25,6 +27,17 @@ function CreateRouter(){
         }
       ]
     },
+
+    {
+      path: "/shopOwner/dashboard",
+      element: <OwnerDashboardLayout/>,
+      children:[
+        {
+          path:'/shopOwner/dashboard',
+          element:<OwnerDashboard/>
+        },
+      ]
+    }
 
   ]);
 }
