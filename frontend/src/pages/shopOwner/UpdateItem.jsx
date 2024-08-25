@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import Navbar from "../../components/home/Navbar/Navbar";
-import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
 import bg from "../../images/viewAdminBG.jpg";
 import upload from "../../images/upload.jpg";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
 
-const AddItem = () => {
+const UpdateItem = () => {
   const { user } = useAuthContext();
-  const [postImage, setPostImage] = useState();
+  const [postImage, setPostImage] = useState(null);
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [itemDetails, setItemDetails] = useState(null);
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const showSuccess = () => {
-    toast.success("Item is added successfully!", {
+    toast.success("Item is updated successfully!", {
       position: "bottom-right",
       theme: "colored",
     });
@@ -40,18 +42,39 @@ const AddItem = () => {
 
   const [selectedCategory, setSelectedCategory] = useState(category[0]);
 
+  useEffect(() => {
+    fetch(`http://localhost:3000/inventory/get-item/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setItemDetails(data);
+        setSelectedCategory(data.category);
+        setPostImage(data.image);
+      })
+      .catch((error) => {
+        console.error("Error fetching item details", error);
+        toast.error("Failed to fetch item details");
+      });
+  }, [id, user.token]);
+
   const handleFileUpload = async (e) => {
     setFileUploaded(true);
 
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
-    setPostImage( base64 );
+    setPostImage(base64);
   };
 
-  const handleAddItem = (event) => {
+  const handleUpdateItem = (event) => {
     event.preventDefault();
     if (!user) {
-      setError("You must be logged in");
+      toast.error("You must be logged in");
+      return;
     }
     const form = event.target;
 
@@ -71,8 +94,8 @@ const AddItem = () => {
       image,
     };
 
-    fetch("http://localhost:3000/inventory/add-item", {
-      method: "POST",
+    fetch(`http://localhost:3000/inventory/update-item/${id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
@@ -82,9 +105,17 @@ const AddItem = () => {
       .then((res) => res.json())
       .then((data) => {
         showSuccess();
-        navigate("/shopOwner/dashboard");
+        navigate("/shopOwner/dashboard/delete-items");
+      })
+      .catch((error) => {
+        console.error("Error updating item", error);
+        toast.error("Failed to update item");
       });
   };
+
+  if (!itemDetails) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -98,11 +129,11 @@ const AddItem = () => {
       <Navbar />
       <div className=" h-[100vh] px-44">
         <div className="flex mt-8 justify-between p-6 mb-6 mr-[820px] rounded-xl bg-client-brown">
-          <h2 className="text-3xl font-bold text-white ">Add a item</h2>
+          <h2 className="text-3xl font-bold text-white ">Update Item</h2>
         </div>
 
         <form
-          onSubmit={handleAddItem}
+          onSubmit={handleUpdateItem}
           className="flex flex-col flex-wrap gap-4 m-auto"
         >
           {/* first row */}
@@ -119,7 +150,7 @@ const AddItem = () => {
                 id="name"
                 name="name"
                 type="text"
-                placeholder="Item name"
+                defaultValue={itemDetails.name}
                 required
                 minLength={3}
                 maxLength={30}
@@ -134,7 +165,13 @@ const AddItem = () => {
                   className="text-lg text-white"
                 />
               </div>
-              <TextInput id="qty" name="qty" type="number" required />
+              <TextInput
+                id="qty"
+                name="qty"
+                type="number"
+                defaultValue={itemDetails.quantity}
+                required
+              />
             </div>
           </div>
 
@@ -153,6 +190,7 @@ const AddItem = () => {
                 name="price"
                 type="number"
                 placeholder="Item price"
+                defaultValue={itemDetails.price}
                 required
                 minLength={1}
                 maxLength={10}
@@ -202,6 +240,7 @@ const AddItem = () => {
                 className="w-40%"
                 rows={5}
                 maxLength={1000}
+                defaultValue={itemDetails.description}
               />
             </div>
             <div className="lg:w-1/2">
@@ -226,13 +265,13 @@ const AddItem = () => {
           </div>
 
           <Button type="submit" className="mt-5 bg-red-500">
-            <p className="text-lg font-bold">Add Item</p>
+            <p className="text-lg font-bold">Update Item</p>
           </Button>
 
           <Button className="bg-blue-600 ">
-            <Link to={`/shopOwner/dashboard`}>
-              <p className="text-lg font-bold">Go Back</p>
-            </Link>
+            <p className="text-lg font-bold" onClick={() => navigate(`/shopOwner/dashboard`)}>
+              Go Back
+            </p>
           </Button>
         </form>
       </div>
@@ -240,7 +279,7 @@ const AddItem = () => {
   );
 };
 
-export default AddItem;
+export default UpdateItem;
 
 function convertToBase64(file) {
   return new Promise((resolve, reject) => {
