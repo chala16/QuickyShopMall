@@ -10,6 +10,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        'image-slider':'#fea928',
+        'image-slider-secondary':'#ed8900',
+        'footer': '#705227',
         'sidebar-orange':'#FC6736',
         'sidebar-blue': '#0C2D57',
         'header-orange':'#FC6736',
