@@ -9,9 +9,8 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
         !req.body.category ||
         !req.body.description ||
         !req.body.price ||
-        !req.body.quantity ||
-        !req.body.inStock ||
-        !req.body.discount
+        !req.body.quantity||
+        !req.body.image
       ) {
         return res.status(400).send({
           message:
@@ -26,6 +25,7 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
         quantity: req.body.quantity,
         inStock: req.body.inStock,
         discount: req.body.discount,
+        image:req.body.image,
         user_id:req.user._id
       };
       
