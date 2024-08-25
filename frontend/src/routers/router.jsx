@@ -5,6 +5,7 @@ import Login from "../components/landingPage/ClientLogin";
 import SignUp from "../components/landingPage/ClientSignUp";
 import OwnerDashboard from "../pages/shopOwner/OwnerDashboard";
 import OwnerDashboardLayout from "../pages/shopOwner/OwnerDashboardLayout";
+import AddItem from "../pages/shopOwner/AddItem";
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -35,6 +36,10 @@ function CreateRouter(){
         {
           path:'/shopOwner/dashboard',
           element:<OwnerDashboard/>
+        },
+        {
+          path:'/shopOwner/dashboard/add-item',
+          element:<AddItem/>
         },
       ]
     }

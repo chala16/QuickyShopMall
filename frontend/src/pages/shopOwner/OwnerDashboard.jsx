@@ -69,7 +69,7 @@ const OwnerDashboard = () => {
                     Add your items.
                   </p>
                   <div className="mt-8">
-                    <Link to={`/admin/empdashboard`}>
+                    <Link to={`/shopOwner/dashboard/add-item`}>
                       <button className="h-8 text-lg font-bold w-44 bg-sidebar-orange rounded-xl">
                         Add item
                       </button>
