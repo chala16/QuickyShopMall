@@ -33,7 +33,7 @@ const inventorySchema = new Schema({
   },
   image: {
     type: String,
-    required:true,
+    required:true
   },
   user_id: {
     type: String,
