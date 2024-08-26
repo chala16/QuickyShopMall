@@ -63,7 +63,7 @@ const Navbar = () => {
             {user && user.userType === "shopOwner" && (
               <>
                 <a
-                  href="/client/dashboard"
+                  href="/shopOwner/dashboard"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Dashboard

@@ -47,7 +47,7 @@ export const useLogin = () => {
       localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
-      if (json.userType == "admin") {
+      if (json.userType == "shopOwner") {
         navigate("/");
         showSuccess()
       } else {
