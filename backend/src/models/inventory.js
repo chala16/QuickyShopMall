@@ -31,6 +31,10 @@ const inventorySchema = new Schema({
     type: Number,
     default: 0,
   },
+  image: {
+    type: String,
+    required: [true, "Image is required"],
+  },
   user_id: {
     type: String,
     required: [true, "User ID is required"],
