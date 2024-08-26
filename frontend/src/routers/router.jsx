@@ -1,6 +1,6 @@
 import {createBrowserRouter} from "react-router-dom";
 import App from "../App";
-import Home from "../components/Home/Home";
+import Home from "../components/home/Home";
 import Login from "../components/landingPage/ClientLogin";
 import SignUp from "../components/landingPage/ClientSignUp";
 import OwnerDashboard from "../pages/shopOwner/OwnerDashboard";
@@ -10,6 +10,7 @@ import AddItem from "../pages/shopOwner/AddItem";
 import DeleteItem from "../pages/shopOwner/DeleteItem";
 import UpdateItem from "../pages/shopOwner/UpdateItem";
 import ViewItem from "../pages/shopOwner/ViewItem";
+import Wishlist from "../pages/Wishlist";
 
 
 function CreateRouter(){
@@ -30,6 +31,10 @@ function CreateRouter(){
         {
           path:"/signup",
           element:<SignUp/>
+        },
+        {
+          path:"/wishlist",
+          element:<Wishlist/>
         }
       ]
     },
