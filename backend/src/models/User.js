@@ -18,6 +18,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  shopName: {
+    type: String
+  },
+  shopFloorNo: {
+    type: Number
+  }
 });
 
 //static signup method
