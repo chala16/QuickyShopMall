@@ -11,7 +11,7 @@ import DeleteItem from "../pages/shopOwner/DeleteItem";
 import UpdateItem from "../pages/shopOwner/UpdateItem";
 import ViewItem from "../pages/shopOwner/ViewItem";
 import Wishlist from "../pages/Wishlist";
-import ClientDashboardLayout from "../pages/ClientDashboardLayout";
+import ClientDashboardLayout from "../pages/client/ClientDashboardLayout";
 import Shops from "../pages/client/Shops";
 import ShopItems from "../pages/client/ShopItems";
 import ViewItemDetails from "../pages/client/ViewItemDetails";
