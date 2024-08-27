@@ -8,6 +8,7 @@ require("dotenv").config();
 const userRouter = require("./src/routes/user");
 const requireAuth = require("./src/middleware/requireAuth");
 const inventoryRouter = require("./src/routes/inventoryRoute");
+const wishlistRouter = require("./src/routes/wishlistRoute");
 
 const PORT = process.env.PORT || 3000;
 
@@ -39,3 +40,4 @@ mongoose
 
 app.use("/inventory", requireAuth, inventoryRouter);
 app.use("/user", userRouter);
+app.use("/api/wishlist", wishlistRouter);
