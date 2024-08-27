@@ -21,6 +21,8 @@ const Wishlist = () => {
 
             if (response.ok) {
                 setItems(json.items)
+            } else {
+                console.log('Something went wrong while fetching Wishlist items')
             }
         }
 
