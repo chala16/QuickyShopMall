@@ -3,14 +3,16 @@ import App from "../App";
 import Home from "../components/home/Home";
 import Login from "../components/landingPage/ClientLogin";
 import SignUp from "../components/landingPage/ClientSignUp";
-import OwnerDashboard from "../pages/shopOwner/OwnerDashboard";
 import OwnerDashboardLayout from "../pages/shopOwner/OwnerDashboardLayout";
-
 import AddItem from "../pages/shopOwner/AddItem";
-import DeleteItem from "../pages/shopOwner/DeleteItem";
+import DeleteItem from "../pages/shopOwner/Inventory";
 import UpdateItem from "../pages/shopOwner/UpdateItem";
 import ViewItem from "../pages/shopOwner/ViewItem";
 import Wishlist from "../pages/Wishlist";
+import ClientDashboardLayout from "../pages/client/ClientDashboardLayout";
+import Shops from "../pages/client/Shops";
+import ShopItems from "../pages/client/ShopItems";
+import ViewItemDetails from "../pages/client/ViewItemDetails";
 
 
 function CreateRouter(){
@@ -44,16 +46,11 @@ function CreateRouter(){
       element: <OwnerDashboardLayout/>,
       children:[
         {
-          path:'/shopOwner/dashboard',
-          element:<OwnerDashboard/>
-        },
-
-        {
           path:'/shopOwner/dashboard/add-item',
           element:<AddItem/>
         },
         {
-          path:'/shopOwner/dashboard/delete-items',
+          path:'/shopOwner/dashboard/view-items',
           element:<DeleteItem/>
         },
         {
@@ -65,6 +62,26 @@ function CreateRouter(){
           element:<ViewItem/>
         },
 
+
+      ]
+    },
+
+    {
+      path: "/client/dashboard",
+      element: <ClientDashboardLayout/>,
+      children:[
+        {
+          path:'/client/dashboard/shops',
+          element:<Shops/>
+        },
+        {
+          path:'/client/dashboard/view-items/:id',
+          element:<ShopItems/>
+        },
+        {
+          path:'/client/dashboard/view-item/:id',
+          element:<ViewItemDetails/>
+        },
 
       ]
     }
