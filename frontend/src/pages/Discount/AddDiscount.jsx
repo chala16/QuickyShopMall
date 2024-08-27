@@ -44,13 +44,13 @@ const AddDiscount = () => {
             {/* Form fields */}
             <div className="mb-5">
               <label
-                htmlFor="email"
+                htmlFor="date"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your email
+                Start Date
               </label>
               <input
-                type="email"
+                type="date"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="name@flowbite.com"
@@ -59,13 +59,13 @@ const AddDiscount = () => {
             </div>
             <div className="mb-5">
               <label
-                htmlFor="discount"
+                htmlFor="date"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Discount Percentage
+                End Date
               </label>
               <input
-                type="number"
+                type="date"
                 id="discount"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Discount percentage"
@@ -89,10 +89,10 @@ const AddDiscount = () => {
             </div>
             <div className="mb-5">
               <label
-                htmlFor="discount"
+                htmlFor="number"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Discount Percentage
+                Discounted price
               </label>
               <input
                 type="number"
