@@ -1,8 +1,17 @@
 import {createBrowserRouter} from "react-router-dom";
 import App from "../App";
-import Home from "../components/Home/Home";
+import Home from "../components/home/Home";
 import Login from "../components/landingPage/ClientLogin";
 import SignUp from "../components/landingPage/ClientSignUp";
+import OwnerDashboard from "../pages/shopOwner/OwnerDashboard";
+import OwnerDashboardLayout from "../pages/shopOwner/OwnerDashboardLayout";
+
+import AddItem from "../pages/shopOwner/AddItem";
+import DeleteItem from "../pages/shopOwner/DeleteItem";
+import UpdateItem from "../pages/shopOwner/UpdateItem";
+import ViewItem from "../pages/shopOwner/ViewItem";
+import Wishlist from "../pages/Wishlist";
+
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -22,9 +31,43 @@ function CreateRouter(){
         {
           path:"/signup",
           element:<SignUp/>
+        },
+        {
+          path:"/wishlist",
+          element:<Wishlist/>
         }
       ]
     },
+
+    {
+      path: "/shopOwner/dashboard",
+      element: <OwnerDashboardLayout/>,
+      children:[
+        {
+          path:'/shopOwner/dashboard',
+          element:<OwnerDashboard/>
+        },
+
+        {
+          path:'/shopOwner/dashboard/add-item',
+          element:<AddItem/>
+        },
+        {
+          path:'/shopOwner/dashboard/delete-items',
+          element:<DeleteItem/>
+        },
+        {
+          path: '/shopOwner/dashboard/update-item/:id',
+          element:<UpdateItem/>
+        },
+        {
+          path: '/shopOwner/dashboard/view-item/:id',
+          element:<ViewItem/>
+        },
+
+
+      ]
+    }
 
   ]);
 }

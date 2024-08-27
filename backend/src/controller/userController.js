@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Wishlist = require("../models/Wishlist");
 const jwt = require("jsonwebtoken");
 
 const createToken = (_id) => {
@@ -29,6 +30,9 @@ const signupUser = async (req, res) => {
     const user = await User.signup(email, password,userType);
 
     const token = createToken(user._id);
+
+    // Create a Wishlist document associated with the user
+    await Wishlist.create({ userId: user._id, items: [] });
 
     res.status(200).json({ email, token,userType });
   } catch (error) {

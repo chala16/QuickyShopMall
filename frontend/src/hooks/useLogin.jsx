@@ -40,10 +40,14 @@ export const useLogin = () => {
       setError(json.error);
     }
     if (response.ok) {
+      // Extract the token from the response
+      const { token } = json;
+      localStorage.setItem("token", token);
+
       localStorage.setItem("user", JSON.stringify(json));
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
-      if (json.userType == "admin") {
+      if (json.userType == "shopOwner") {
         navigate("/");
         showSuccess()
       } else {
