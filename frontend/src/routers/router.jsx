@@ -11,6 +11,10 @@ import DeleteItem from "../pages/shopOwner/DeleteItem";
 import UpdateItem from "../pages/shopOwner/UpdateItem";
 import ViewItem from "../pages/shopOwner/ViewItem";
 import Wishlist from "../pages/Wishlist";
+import ClientDashboardLayout from "../pages/ClientDashboardLayout";
+import Shops from "../pages/client/Shops";
+import ShopItems from "../pages/client/ShopItems";
+import ViewItemDetails from "../pages/client/ViewItemDetails";
 
 
 function CreateRouter(){
@@ -65,6 +69,26 @@ function CreateRouter(){
           element:<ViewItem/>
         },
 
+
+      ]
+    },
+
+    {
+      path: "/client/dashboard",
+      element: <ClientDashboardLayout/>,
+      children:[
+        {
+          path:'/client/dashboard/shops',
+          element:<Shops/>
+        },
+        {
+          path:'/client/dashboard/view-items/:id',
+          element:<ShopItems/>
+        },
+        {
+          path:'/client/dashboard/view-item/:id',
+          element:<ViewItemDetails/>
+        },
 
       ]
     }
