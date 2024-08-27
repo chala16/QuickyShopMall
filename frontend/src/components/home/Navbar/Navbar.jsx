@@ -156,7 +156,7 @@ const Navbar = () => {
                   Discounts
                 </a>
                 <a
-                  href="/login"
+                  href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Shops

@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/home/Navbar/Navbar";
 
 const ShopItems = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const { id } = useParams();
-  const { user } = useAuthContext();
 
   const fetchItems = () => {
-    user &&
-      fetch(`http://localhost:3000/inventory/items/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
+    fetch(`http://localhost:3000/home/owner-items/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setItems(Array.isArray(data) ? data : []);
       })
-        .then((res) => res.json())
-        .then((data) => {
-          setItems(Array.isArray(data) ? data : []);
-        })
-        .catch((error) => {
-          console.error("Error fetching items", error);
-          toast.error("Failed to fetch items");
-        });
+      .catch((error) => {
+        console.error("Error fetching items", error);
+        toast.error("Failed to fetch items");
+      });
   };
 
   const handleCardClick = (itemId) => {
@@ -34,7 +30,8 @@ const ShopItems = () => {
 
   useEffect(() => {
     fetchItems();
-  }, [user]);
+  }, []);
+  
   return (
     <div>
       <Navbar />

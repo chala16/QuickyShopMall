@@ -7,15 +7,13 @@ import Navbar from "../../components/home/Navbar/Navbar";
 const ViewItemDetails = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
-  const { user } = useAuthContext();
 
   useEffect(() => {
-    if (user && id) {
-      fetch(`http://localhost:3000/inventory/get-item/${id}`, {
+    if (id) {
+      fetch(`http://localhost:3000/home/get-item/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
         },
       })
         .then((res) => res.json())
@@ -27,7 +25,7 @@ const ViewItemDetails = () => {
           toast.error("Failed to fetch item details");
         });
     }
-  }, [id, user]);
+  }, [id]);
 
   if (!item) {
     return <div>Loading...</div>;
