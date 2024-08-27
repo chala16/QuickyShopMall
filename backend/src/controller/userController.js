@@ -20,24 +20,34 @@ const loginUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-
 };
 
 const signupUser = async (req, res) => {
-  const { email, password,userType } = req.body;
+  const { email, password, userType } = req.body;
 
   try {
-    const user = await User.signup(email, password,userType);
+    const user = await User.signup(email, password, userType);
 
     const token = createToken(user._id);
 
     // Create a Wishlist document associated with the user
     await Wishlist.create({ userId: user._id, items: [] });
 
-    res.status(200).json({ email, token,userType });
+    res.status(200).json({ email, token, userType });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = { signupUser, loginUser };
+const searchOwners = async (req, res) => {
+  try {
+    const users = await User.find({userType:"shopOwner"});
+    res.send(users);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send({ message: err.message });
+  }
+  
+};
+
+module.exports = { signupUser, loginUser, searchOwners };

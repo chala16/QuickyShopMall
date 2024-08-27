@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 const ClientDashboard = () => {
   return (
     <div>
-        <Outlet/>
+        hello
     </div>
   )
 }

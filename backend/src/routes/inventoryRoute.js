@@ -59,6 +59,18 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
       res.status(500).send({ message: err.message });
     }
   });
+
+  router.route("/items/:id").get(async (req, res) => {
+    try {
+      const user_id = req.params.id;
+      const items = await Inventory.find({ user_id: user_id });
+      res.send(items);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send({ message: err.message });
+    }
+  });
+
   
   router.route("/update-item/:id").patch(async (req, res) => {
     try {
