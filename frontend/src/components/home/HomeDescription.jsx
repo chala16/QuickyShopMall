@@ -15,9 +15,9 @@ const HomeDescription = () => {
   return (
     <div className="flex p-10 bg-black banner">
       <div className="flex-1 p-6 ml-16 rounded-lg shadow-lg">
-        <h1 className="mb-4 text-4xl font-bold text-purple-600">Why</h1>
+        <h1 className="mb-4 font-bold text-purple-600 text-8xl">Why</h1>
         <h1 className="mb-4 text-4xl font-bold text-purple-600">You Should Choose </h1>
-        <h1 className="mb-4 text-4xl font-bold text-yellow-300">QuickShop</h1>
+        <h1 className="mb-4 text-6xl font-bold text-yellow-300">QuickShop</h1>
         <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
           Imagine a shopping mall where your experience is not just about
           finding what you need but doing so effortlessly and quickly.
@@ -45,7 +45,7 @@ const HomeDescription = () => {
         </p>
       </div>
 
-      <div className="flex-1 p-4 mt-28 ">
+      <div className="flex-1 p-4 mt-72 ">
         <Swiper
           effect={"cards"}
           grabCursor={true}
