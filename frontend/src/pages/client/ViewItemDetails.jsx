@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/home/Navbar/Navbar";
 
 const ViewItemDetails = () => {
@@ -35,12 +34,12 @@ const ViewItemDetails = () => {
     <div>
       <Navbar />
       <div className="p-8">
-        <h1 className="mb-6 text-2xl font-bold">{item.name}</h1>
+        <h1 className="mb-6 ml-20 text-2xl font-bold">{item.name}</h1>
         <div className="flex flex-col md:flex-row">
           <img
             src={item.image}
             alt={item.name}
-            className="object-cover mb-4 w-full max-w-[200px] md:max-w-[35%]"
+            className="object-contain mb-4 h-96 w-full max-w-[200px] md:max-w-[35%]"
           />
           <div className="flex-1 md:ml-8">
             <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
