@@ -105,7 +105,7 @@ const DeleteItem = () => {
                     Delete
                   </button>
                   <button
-                    className="px-2 py-1 text-sm text-white bg-yellow-500 rounded"
+                    className="px-2 py-1 text-sm text-white bg-blue-600 rounded"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleEditClick(item._id);
