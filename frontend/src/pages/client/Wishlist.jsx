@@ -42,7 +42,7 @@ const Wishlist = () => {
     return (
         <div>
             <NavBar />
-            <main className="flex justify-center py-6">
+            <main className="flex justify-center py-8">
                 <div className="space-y-4">
                     {/* Add a check to ensure `items` is an array before mapping */}
                     {Array.isArray(items) && items.length > 0 ? (
@@ -50,7 +50,10 @@ const Wishlist = () => {
                             <ItemBox key={item.name} item={item} />
                         ))
                     ) : (
-                        <p>No items in your wishlist.</p>
+                        <div className="flex flex-col items-center text-center space-y-2 md:space-y-4 p-4">
+                            <p className="text-sm sm:text-base md:text-lg">Your wishlist is as empty as my coffee cup—time to fill it up! ☕</p>
+                            <a href="/client/dashboard/shops" className="text-blue-500 hover:underline">➡️ Explore the shops</a>
+                        </div>
                     )}
                 </div>
             </main>
