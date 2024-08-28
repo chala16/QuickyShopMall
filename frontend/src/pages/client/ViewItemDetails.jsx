@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Navbar from "../../components/home/Navbar/Navbar";
+import AddWishlistButton from "../../components/wishlist/AddWishlistButton";
 
 const ViewItemDetails = () => {
   const { id } = useParams();
@@ -45,6 +46,8 @@ const ViewItemDetails = () => {
             <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
             <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
             <p className="text-sm text-gray-500">Description: {item.description}</p>
+
+            <AddWishlistButton itemId={id}/>
           </div>
         </div>
       </div>

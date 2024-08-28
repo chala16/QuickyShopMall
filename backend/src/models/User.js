@@ -21,6 +21,9 @@ const userSchema = new Schema({
   shopName: {
     type: String
   },
+  shopLogo: {
+    type: String
+  },
   shopFloorNo: {
     type: Number
   }
