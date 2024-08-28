@@ -133,7 +133,7 @@ const Navbar = () => {
                   Shops
                 </a>
                 <a
-                  href="/wishlist"
+                  href="/client/dashboard/wishlist"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Wishlist
@@ -156,7 +156,7 @@ const Navbar = () => {
                   Discounts
                 </a>
                 <a
-                  href="/login"
+                  href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Shops

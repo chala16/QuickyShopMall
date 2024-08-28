@@ -8,7 +8,7 @@ import AddItem from "../pages/shopOwner/AddItem";
 import DeleteItem from "../pages/shopOwner/Inventory";
 import UpdateItem from "../pages/shopOwner/UpdateItem";
 import ViewItem from "../pages/shopOwner/ViewItem";
-import Wishlist from "../pages/Wishlist";
+import Wishlist from "../pages/client/Wishlist";
 import ClientDashboardLayout from "../pages/client/ClientDashboardLayout";
 import Shops from "../pages/client/Shops";
 import ShopItems from "../pages/client/ShopItems";
@@ -17,7 +17,7 @@ import ViewItemDetails from "../pages/client/ViewItemDetails";
 
 function CreateRouter(){
   return createBrowserRouter([
-    /*reservation routes*/
+    /*home routes*/
     {
       path: "/",
       element: <App/>,
@@ -33,10 +33,6 @@ function CreateRouter(){
         {
           path:"/signup",
           element:<SignUp/>
-        },
-        {
-          path:"/wishlist",
-          element:<Wishlist/>
         }
       ]
     },
@@ -82,6 +78,10 @@ function CreateRouter(){
           path:'/client/dashboard/view-item/:id',
           element:<ViewItemDetails/>
         },
+        {
+          path:"/client/dashboard/wishlist",
+          element:<Wishlist/>
+        }
 
       ]
     }
