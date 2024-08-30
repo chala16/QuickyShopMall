@@ -5,16 +5,13 @@ import { useNavigate } from "react-router";
 
 const Shops = () => {
   const navigate=useNavigate()
-  const { user } = useAuthContext();
   const [shops, setShops] = useState([]);
 
   const fetchItems = () => {
-    user &&
-      fetch("http://localhost:3000/user/shopOwners", {
+      fetch("http://localhost:3000/home/all-owners", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
         },
       })
         .then((res) => res.json())
@@ -33,7 +30,7 @@ const Shops = () => {
 
   useEffect(() => {
     fetchItems();
-  }, [user]);
+  }, []);
 
   return (
     <div>

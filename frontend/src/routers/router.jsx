@@ -17,7 +17,7 @@ import ViewItemDetails from "../pages/client/ViewItemDetails";
 
 function CreateRouter(){
   return createBrowserRouter([
-    /*reservation routes*/
+    /*home routes*/
     {
       path: "/",
       element: <App/>,
