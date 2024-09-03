@@ -63,13 +63,13 @@ const Navbar = () => {
             {user && user.userType === "shopOwner" && (
               <>
                 <a
-                  href="/shopOwner/dashboard"
+                  href="/shopOwner/dashboard/add-item"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
-                  Dashboard
+                  Add Item
                 </a>
                 <a
-                  href="/client/inventory"
+                  href="/shopOwner/dashboard/view-items"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Inventory
@@ -127,13 +127,13 @@ const Navbar = () => {
                   Discounts
                 </a>
                 <a
-                  href="/client/service"
+                  href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Shops
                 </a>
                 <a
-                  href="/wishlist"
+                  href="/client/dashboard/wishlist"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Wishlist
@@ -156,7 +156,7 @@ const Navbar = () => {
                   Discounts
                 </a>
                 <a
-                  href="/login"
+                  href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Shops

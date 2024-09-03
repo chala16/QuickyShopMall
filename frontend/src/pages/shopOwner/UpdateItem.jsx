@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
 import bg from "../../images/viewAdminBG.jpg";
 import upload from "../../images/upload.jpg";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const UpdateItem = () => {
