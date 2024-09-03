@@ -8,17 +8,14 @@ import AddItem from "../pages/shopOwner/AddItem";
 import DeleteItem from "../pages/shopOwner/Inventory";
 import UpdateItem from "../pages/shopOwner/UpdateItem";
 import ViewItem from "../pages/shopOwner/ViewItem";
-
-import Wishlist from "../pages/Wishlist";
-import DiscountDashboard from "../pages/Discount/DiscountDashboard";
-import AddDiscount from "../pages/Discount/AddDiscount";
-
 import Wishlist from "../pages/client/Wishlist";
 import ClientDashboardLayout from "../pages/client/ClientDashboardLayout";
 import Shops from "../pages/client/Shops";
 import ShopItems from "../pages/client/ShopItems";
 import ViewItemDetails from "../pages/client/ViewItemDetails";
 
+import DiscountDashboard from "../pages/Discount/DiscountDashboard";
+import AddDiscount from "../pages/Discount/AddDiscount";
 
 
 function CreateRouter(){
@@ -69,13 +66,6 @@ function CreateRouter(){
     },
 
     {
-      path: '/shopOwner/discounts', element: <DiscountDashboard />
-    },
-    {
-      path: '/shopOwner/discounts/add-discount/:id', element: <AddDiscount />
-
-
-    {
       path: "/client/dashboard",
       element: <ClientDashboardLayout/>,
       children:[
@@ -98,7 +88,14 @@ function CreateRouter(){
 
       ]
 
-    }
+    },
+
+    {
+      path: '/shopOwner/discounts', element: <DiscountDashboard />
+    },
+    {
+      path: '/shopOwner/discounts/add-discount/:id', element: <AddDiscount />
+    },
 
   ]);
 }
