@@ -75,7 +75,7 @@ const Navbar = () => {
                   Inventory
                 </a>
                 <a
-                  href="/client/discounts"
+                  href="/shopOwner/discounts"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Discounts
