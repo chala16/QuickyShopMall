@@ -48,7 +48,7 @@ export const useLogin = () => {
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
       if (json.userType == "shopOwner") {
-        navigate("/");
+        navigate("/shopOwner/dashboard/view-items");
         showSuccess()
       } else {
         navigate("/");
