@@ -4,10 +4,15 @@ import { toast } from "react-toastify";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import DiscountImageCard from "../../components/discount/DiscountImageCard";
 import Navbar from "../../components/home/Navbar/Navbar";
+import axios from "axios";
 
 const AddDiscount = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState("");
+  const [discountedPrice, setDiscountedPrice] = useState("");
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -30,6 +35,33 @@ const AddDiscount = () => {
     }
   }, [id, user]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const discountDetails = {
+      email: user.email,
+      itemId: id,
+      startDate,
+      endDate,
+      discountPercentage,
+      discountedPrice
+    };
+
+    axios. post("http://localhost:3000/api/discounts", discountDetails, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((response) => {
+        console.log("Discount added successfully", response);
+        toast.success("Discount added successfully");
+      })
+      .catch((error) => {
+        console.error("Error adding discount", error);
+        toast.error("Failed to add discount");
+      });
+    };
+
   if (!data) {
     return <div>Loading...</div>; // Handle loading state
   }
@@ -40,7 +72,7 @@ const AddDiscount = () => {
       <div className="flex justify-between items-start p-8">
         {/* Form Container */}
         <div className="w-full max-w-md  mt-40 ml-4">
-          <form className="ml-10 max-w-sm">
+          <form className="ml-10 max-w-sm" onSubmit={handleSubmit}>
             {/* Form fields */}
             <div className="mb-5">
               <label
@@ -53,6 +85,8 @@ const AddDiscount = () => {
                 type="date"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
                 placeholder="name@flowbite.com"
                 required
               />
@@ -68,6 +102,8 @@ const AddDiscount = () => {
                 type="date"
                 id="discount"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={endDate}
+                onChange={(e) =>setEndDate(e.target.value)}
                 placeholder="Discount percentage"
                 required
               />
@@ -83,6 +119,8 @@ const AddDiscount = () => {
                 type="number"
                 id="discount"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={discountPercentage}
+                onChange={(e) => setDiscountPercentage(e.target.value)}
                 placeholder="Discount percentage"
                 required
               />
@@ -98,6 +136,8 @@ const AddDiscount = () => {
                 type="number"
                 id="discount"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={discountedPrice}
+                onChange={(e) => setDiscountedPrice(e.target.value)}
                 placeholder="Discount percentage"
                 required
               />

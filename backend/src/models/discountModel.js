@@ -22,6 +22,10 @@ const discountSchema = mongoose.Schema({
       type: Number,
       required: true,
   },
+  discountedPrice: {
+      type: Number,
+      required: true,
+  },
 },{timestamps:true});
 
 module.exports=mongoose.model('Discounts',discountSchema)

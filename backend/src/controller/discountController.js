@@ -33,7 +33,7 @@ const getDiscount = async (req, res) => {
 
 // Create a discount
 const createDiscount = async (req, res) => {
-  const { email, itemId, startDate, endDate, discountPercentage } = req.body;
+  const { email, itemId, startDate, endDate, discountPercentage, discountedPrice } = req.body;
 
   try {
     const discount = await Discount.create({
@@ -42,6 +42,7 @@ const createDiscount = async (req, res) => {
       startDate,
       endDate,
       discountPercentage,
+      discountedPrice
     });
     res.status(200).json(discount);  // Corrected to use discount
   } catch (error) {
