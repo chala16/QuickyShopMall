@@ -9,6 +9,7 @@ const userRouter = require("./src/routes/user");
 const requireAuth = require("./src/middleware/requireAuth");
 const inventoryRouter = require("./src/routes/inventoryRoute");
 const wishlistRouter = require("./src/routes/wishlistRoute");
+
 const discountRoutes = require("./src/routes/discountRoutes");
 const PORT = process.env.PORT || 3000;
 
