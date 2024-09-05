@@ -13,6 +13,7 @@ const AddDiscount = () => {
   const [endDate, setEndDate] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [discountedPrice, setDiscountedPrice] = useState("");
+  const [discountAvailable, setDiscountAvailable] = useState(true);
   const { user } = useAuthContext();
 
   useEffect(() => {
@@ -44,14 +45,16 @@ const AddDiscount = () => {
       startDate,
       endDate,
       discountPercentage,
-      discountedPrice
+      discountedPrice,
+      discountAvailable,
     };
-
-    axios. post("http://localhost:3000/api/discounts", discountDetails, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    })
+    console.log(discountDetails);
+    axios
+      .post("http://localhost:3000/api/discounts", discountDetails, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
       .then((response) => {
         console.log("Discount added successfully", response);
         toast.success("Discount added successfully");
@@ -60,7 +63,7 @@ const AddDiscount = () => {
         console.error("Error adding discount", error);
         toast.error("Failed to add discount");
       });
-    };
+  };
 
   if (!data) {
     return <div>Loading...</div>; // Handle loading state
@@ -103,7 +106,7 @@ const AddDiscount = () => {
                 id="discount"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={endDate}
-                onChange={(e) =>setEndDate(e.target.value)}
+                onChange={(e) => setEndDate(e.target.value)}
                 placeholder="Discount percentage"
                 required
               />
@@ -132,6 +135,7 @@ const AddDiscount = () => {
               >
                 Discounted price
               </label>
+
               <input
                 type="number"
                 id="discount"
@@ -141,6 +145,22 @@ const AddDiscount = () => {
                 placeholder="Discount percentage"
                 required
               />
+            </div>
+
+            <div className="mb-5">
+              <label
+                htmlFor="discount-available"
+                className="flex items-center text-sm font-medium text-gray-900 dark:text-white"
+              >
+                <input
+                  type="checkbox"
+                  id="discount-available"
+                  checked={discountAvailable}
+                  onChange={(e) => setDiscountAvailable(e.target.checked)}
+                  className="mr-2"
+                />
+                Available
+              </label>
             </div>
             {/* Add other form fields here */}
             <button

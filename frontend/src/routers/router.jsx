@@ -16,6 +16,8 @@ import ViewItemDetails from "../pages/client/ViewItemDetails";
 
 import DiscountDashboard from "../pages/Discount/DiscountDashboard";
 import AddDiscount from "../pages/Discount/AddDiscount";
+import ViewDiscountItems from "../pages/Discount/ViewDiscountItems";
+import UpdateDiscount from "../pages/Discount/UpdateDiscount";
 
 
 function CreateRouter(){
@@ -95,6 +97,12 @@ function CreateRouter(){
     },
     {
       path: '/shopOwner/discounts/add-discount/:id', element: <AddDiscount />
+    },
+    {
+      path: '/shopOwner/discounts/view-discount-items', element: <ViewDiscountItems />
+    },
+    {
+      path: '/shopOwner/discounts/update-discount-item/:id', element: <UpdateDiscount />
     },
 
   ]);

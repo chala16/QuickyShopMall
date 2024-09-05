@@ -11,8 +11,29 @@ const getDiscounts = async (req, res) => {
   }
 }
 
+// Get discounts by email
+const getDiscountsByEmail = async (req, res) => {
+  const { email } = req.params; // Get email from query parameters
+  if (!email) {
+    return res.status(400).send("Email query parameter is required");
+  }
+
+  try {
+    // Find discounts by email
+    const discounts = await Discount.find({ email: email });
+
+    if (!discounts || discounts.length === 0) {
+      return res.status(404).send("No discounts found for this email");
+    }
+
+    res.status(200).json(discounts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 // Get a single discount
 const getDiscount = async (req, res) => {
+  
   const { id } = req.params;  // Corrected to use req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -31,18 +52,26 @@ const getDiscount = async (req, res) => {
   }
 };
 
+
 // Create a discount
 const createDiscount = async (req, res) => {
-  const { email, itemId, startDate, endDate, discountPercentage, discountedPrice } = req.body;
+  const { email, itemId, startDate, endDate, discountPercentage, discountedPrice, discountAvailable } = req.body;
 
   try {
+
+    const existingDiscount = await Discount.findOne({ email, itemId });
+    if (existingDiscount) {
+      return res.status(400).json({ message: "Discount already exists for this item." });
+    }
+
     const discount = await Discount.create({
       email,
       itemId,
       startDate,
       endDate,
       discountPercentage,
-      discountedPrice
+      discountedPrice,
+      discountAvailable
     });
     res.status(200).json(discount);  // Corrected to use discount
   } catch (error) {
@@ -105,4 +134,5 @@ module.exports = {
   createDiscount,
   deleteDiscount,
   updateDiscount,
+  getDiscountsByEmail
 };

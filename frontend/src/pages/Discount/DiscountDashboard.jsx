@@ -63,6 +63,10 @@ const DiscountDashboard = () => {
     navigate(`/shopOwner/discounts/add-discount/${itemId}`);
   };
 
+  const handleViewDiscount = () => {
+    navigate(`/shopOwner/discounts/view-discount-items`);
+  };
+
   //   const handleEditClick = (itemId) => {
   //     navigate(`/shopOwner/discounts/add-discount/${itemId}`);
   //   };
@@ -72,7 +76,17 @@ const DiscountDashboard = () => {
       <Navbar />
 
       <div className="p-8">
-        <h1 className="mb-6 text-2xl font-bold">Manage Items</h1>
+        <h1 className="mb-6 text-2xl font-bold">Discount Dashboard</h1>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleViewDiscount();
+          }}
+          type="button"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          View Discount Items
+        </button>
         <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
           {items.length > 0 ? (
             items.map((item) => (
@@ -111,7 +125,7 @@ const DiscountDashboard = () => {
                       handleAddDiscount(item._id);
                     }}
                   >
-                    Edit
+                    Add Discount
                   </button>
                 </div>
               </div>
