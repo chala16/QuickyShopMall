@@ -34,26 +34,26 @@ const getPromotion = async (req, res) => {
 
 // Create a promotion
 const createPromotion = async (req, res) => {
-    const { email, title, description, image } = req.body;
-  
-    try {
-  
-      const existingPromotion = await Promotion.findOne({ email });
-      if (existingPromotion) {
-        return res.status(400).json({ message: "Promotion already exists for this item." });
-      }
-  
-      const promotions = await Promotion.create({
-        email,
-        title,
-        description,
-        image
-      });
-      res.status(200).json(promotions);  // Corrected to use discount
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  const { email, title, description, image } = req.body;
+
+  try {
+    const existingPromotion = await Promotion.findOne({ email });
+    if (existingPromotion) {
+      return res.status(400).json({ message: "Promotion already exists for this item." });
     }
-  };
+
+    const promotions = await Promotion.create({
+      email,
+      title,
+      description,
+      image // Assuming this is Base64 data
+    });
+
+    res.status(200).json(promotions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
   // Delete a promotion
   const deletePromotion = async (req, res) => {
