@@ -68,10 +68,10 @@ const ViewItemDetails = () => {
 
             <AddWishlistButton itemId={id}/>
 
-            <h1 className="text-s font-bold mb-4 mt-10">Customer Reviews</h1>
+            <h1 className="text-s font-bold mb-4 mt-10">Voices of Our Shoppers</h1>
             <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
 
-            <h1 className="text-s font-bold mb-4 mt-10">Submit Your Review here</h1>
+            <h1 className="text-s font-bold mb-4 mt-10">We'd Love Your Feedback – Share with Your Fellow Customers</h1>
             <ReviewForm productId={id} userId={user.email} onReviewSubmitted={handleReviewSubmitted}/>{" "}
            
             

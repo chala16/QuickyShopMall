@@ -24,6 +24,11 @@ const ReviewForm = ({ productId, onReviewSubmitted}) => {
         position: "bottom-right",
         autoClose: 5000, // Duration for the toast to be visible
       });
+
+      // Clear the form fields
+      setRating(1);
+      setText("");
+      
       if (onReviewSubmitted) {
         onReviewSubmitted(); // Notify parent component to refresh reviews
       }
