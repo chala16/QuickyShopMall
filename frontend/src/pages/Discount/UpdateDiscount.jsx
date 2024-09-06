@@ -6,7 +6,7 @@ import DiscountImageCard from "../../components/discount/DiscountImageCard";
 import Navbar from "../../components/home/Navbar/Navbar";
 import axios from "axios";
 
-const AddDiscount = () => {
+const UpdateDiscount = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [startDate, setStartDate] = useState("");
@@ -16,9 +16,18 @@ const AddDiscount = () => {
   const [discountAvailable, setDiscountAvailable] = useState(true);
   const { user } = useAuthContext();
 
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (`0${date.getMonth() + 1}`).slice(-2); // Months are zero-indexed
+    const day = (`0${date.getDate()}`).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
   useEffect(() => {
     if (user && id) {
-      fetch(`http://localhost:3000/inventory/get-item/${id}`, {
+      fetch(`http://localhost:3000/api/discounts/get-discount/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +37,11 @@ const AddDiscount = () => {
         .then((res) => res.json())
         .then((data) => {
           setData(data);
+          setStartDate(formatDate(data.startDate) || "");
+          setEndDate(formatDate(data.endDate) || "");
+          setDiscountPercentage(data.discountPercentage || "");
+          setDiscountedPrice(data.discountedPrice || "");
+          setDiscountAvailable(data.discountAvailable || true);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -35,6 +49,7 @@ const AddDiscount = () => {
         });
     }
   }, [id, user]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +65,7 @@ const AddDiscount = () => {
     };
     console.log(discountDetails);
     axios
-      .post("http://localhost:3000/api/discounts", discountDetails, {
+      .patch(`http://localhost:3000/api/discounts/${id}`, discountDetails, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -181,4 +196,4 @@ const AddDiscount = () => {
   );
 };
 
-export default AddDiscount;
+export default UpdateDiscount;

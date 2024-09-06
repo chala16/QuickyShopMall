@@ -7,6 +7,7 @@ const {
   createDiscount,
   deleteDiscount,
   updateDiscount,
+  getDiscountsByEmail
 } = require('../controller/discountController');
 
 const router = express.Router();
@@ -14,9 +15,10 @@ const router = express.Router();
 
 // GET all discounts
 router.get('/', getDiscounts);
-
+// GET discounts by email
+router.get('/:email', getDiscountsByEmail);
 // GET a single discount
-router.get('/:id', getDiscount);
+router.get('/get-discount/:id', getDiscount);
 
 // POST a new discount
 router.post('/',createDiscount);

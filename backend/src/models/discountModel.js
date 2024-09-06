@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const discountSchema = mongoose.Schema({
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
   itemId: {
     type: String,
@@ -22,6 +21,14 @@ const discountSchema = mongoose.Schema({
       type: Number,
       required: true,
   },
+  discountedPrice: {
+      type: Number,
+      required: true,
+  },
+  discountAvailable: {
+    type: Boolean,
+    required: true,
+  }
 },{timestamps:true});
 
 module.exports=mongoose.model('Discounts',discountSchema)
