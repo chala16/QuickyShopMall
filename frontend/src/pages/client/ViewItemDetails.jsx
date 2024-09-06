@@ -12,6 +12,8 @@ const ViewItemDetails = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const { user } = useAuthContext(); // Get user info from context
+  const [reviewsUpdated, setReviewsUpdated] = useState(false); // State to trigger review list refresh
+
 
   useEffect(() => {
     if (id) {
@@ -32,6 +34,17 @@ const ViewItemDetails = () => {
         });
     }
   }, [id]);
+
+  useEffect(() => {
+    // Fetch reviews whenever reviewsUpdated state changes
+    if (reviewsUpdated) {
+      setReviewsUpdated(false); // Reset reviewsUpdated state
+    }
+  }, [reviewsUpdated]);
+
+  const handleReviewSubmitted = () => {
+    setReviewsUpdated(true); // Trigger review list refresh
+  };
 
   if (!item) {
     return <div>Loading...</div>;
@@ -56,10 +69,10 @@ const ViewItemDetails = () => {
             <AddWishlistButton itemId={id}/>
 
             <h1 className="text-s font-bold mb-4 mt-10">Customer Reviews</h1>
-            <ReviewList productId={id} />
+            <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
 
             <h1 className="text-s font-bold mb-4 mt-10">Submit Your Review here</h1>
-            <ReviewForm productId={id} userId={user.email} />{" "}
+            <ReviewForm productId={id} userId={user.email} onReviewSubmitted={handleReviewSubmitted}/>{" "}
            
             
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const ReviewList = ({ productId }) => {
+const ReviewList = ({ productId, reviewsUpdated }) => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const ReviewList = ({ productId }) => {
     };
 
     fetchReviews();
-  }, [productId]);
+  }, [productId, reviewsUpdated]); // Add reviewsUpdated to dependency array
 
   const handleHelpful = async (reviewId, helpful) => {
     try {

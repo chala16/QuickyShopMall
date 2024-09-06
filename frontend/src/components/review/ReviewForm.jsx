@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { toast } from "react-toastify";
 
-const ReviewForm = ({ productId}) => {
+const ReviewForm = ({ productId, onReviewSubmitted}) => {
   const [rating, setRating] = useState(1);
   const [text, setText] = useState("");
   const {user} = useAuthContext();   // Retrieve user context
@@ -24,6 +24,9 @@ const ReviewForm = ({ productId}) => {
         position: "bottom-right",
         autoClose: 5000, // Duration for the toast to be visible
       });
+      if (onReviewSubmitted) {
+        onReviewSubmitted(); // Notify parent component to refresh reviews
+      }
       
     } catch (error) {
       // Show error message
