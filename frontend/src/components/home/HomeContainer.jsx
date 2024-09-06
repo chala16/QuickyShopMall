@@ -54,11 +54,15 @@ const HomeContainer = () => {
 
 
       // Filter items that have discounts
-      const itemsWithDiscount = validItems.filter((item) =>
-        validDiscounts.some((discount) => discount.itemId === item._id)
-      );
+      // const itemsWithDiscount = validItems.filter((item) =>
+      //   validDiscounts.some((discount) => discount.itemId === item._id)
+      // );
 
-      
+      const itemsWithDiscount = validItems.filter((item) =>
+        validDiscounts.some(
+          (discount) => discount.itemId === item._id && discount.discountAvailable === true
+        )
+      );
 
       console.log("Items with discount", itemsWithDiscount);
       setDiscountItems(itemsWithDiscount);
