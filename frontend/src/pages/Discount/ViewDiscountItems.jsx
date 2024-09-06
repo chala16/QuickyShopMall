@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import Navbar from "../../components/home/Navbar/Navbar";
 
 const ViewDiscountItems = () => {
   const [discountedItems, setDiscountedItems] = useState([]);
@@ -45,11 +46,13 @@ const ViewDiscountItems = () => {
   }
 
   const handleUpdate = (id) => {
+    console.log("Update discount item with id:", id);
     navigate(`/shopOwner/discounts/update-discount-item/${id}`);
   };
 
   return (
     <div>
+      <Navbar />
       <h1 className="mt-10">Discounted Items</h1>
       <div className="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
         <table className="w-full table-fixed">
@@ -83,7 +86,7 @@ const ViewDiscountItems = () => {
           </thead>
           <tbody className="bg-white">
             {discountedItems.map((discount) => (
-              <tr key={discount.id}>
+              <tr key={discount._id}>
                 <td className="py-4 px-6 border-b border-gray-200">
                   {discount.email}
                 </td>
@@ -117,7 +120,7 @@ const ViewDiscountItems = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleUpdate(discount.id);
+                      handleUpdate(discount._id);
                     }}
                     className="py-2.5 px-6 rounded-lg text-sm font-medium bg-blue-500 mx-2 text-white"
                   >
