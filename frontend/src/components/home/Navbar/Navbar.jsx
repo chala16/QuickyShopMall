@@ -75,10 +75,16 @@ const Navbar = () => {
                   Inventory
                 </a>
                 <a
-                  href="/client/discounts"
+                  href="/shopOwner/discounts"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Discounts
+                </a>
+                <a
+                  href="/shopOwner/promotion"
+                  className="text-lg font-bold text-client-brown nav-link"
+                >
+                  Promotion
                 </a>
                 <a
                   href="/client/feedbacks"

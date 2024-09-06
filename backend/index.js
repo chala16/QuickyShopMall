@@ -12,6 +12,8 @@ const wishlistRouter = require("./src/routes/wishlistRoute");
 const homeRouter = require("./src/routes/homeRoute");
 const ReviewRouter = require("./src/routes/review");
 
+const discountRoutes = require("./src/routes/discountRoutes");
+const promotionRoutes = require("./src/routes/promotionRoutes");
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -44,4 +46,8 @@ app.use("/inventory", requireAuth, inventoryRouter);
 app.use("/home", homeRouter);
 app.use("/user", userRouter);
 app.use("/api/wishlist", wishlistRouter);
+app.use("/api/discounts", requireAuth, discountRoutes);
+app.use("/api/discount-items", discountRoutes);
+app.use("/api/promotions", requireAuth, promotionRoutes);
 app.use("/api/reviews", ReviewRouter);
+
