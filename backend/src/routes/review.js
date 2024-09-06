@@ -1,5 +1,7 @@
 const express = require('express');
 const Review = require('../models/Review');
+const User = require('../models/User');
+
 const router = express.Router();
 
 // Submit a review
@@ -22,7 +24,7 @@ router.post('/submit', async (req, res) => {
 // Get reviews for a product
 router.get('/product/:productId', async (req, res) => {
   try {
-    const reviews = await Review.find({ productId: req.params.productId });
+    const reviews = await Review.find({ productId: req.params.productId }).populate('userId', 'name email');
     res.json(reviews);
   } catch (error) {
     res.status(400).json({ error: error.message });
