@@ -11,6 +11,7 @@ const inventoryRouter = require("./src/routes/inventoryRoute");
 const wishlistRouter = require("./src/routes/wishlistRoute");
 const homeRouter = require("./src/routes/homeRoute");
 
+const discountRoutes = require("./src/routes/discountRoutes");
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -43,3 +44,5 @@ app.use("/inventory", requireAuth, inventoryRouter);
 app.use("/home", homeRouter);
 app.use("/user", userRouter);
 app.use("/api/wishlist", wishlistRouter);
+app.use("/api/discounts", requireAuth, discountRoutes);
+app.use("/api/discount-items", discountRoutes);

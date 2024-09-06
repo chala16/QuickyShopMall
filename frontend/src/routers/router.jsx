@@ -14,6 +14,11 @@ import Shops from "../pages/client/Shops";
 import ShopItems from "../pages/client/ShopItems";
 import ViewItemDetails from "../pages/client/ViewItemDetails";
 
+import DiscountDashboard from "../pages/Discount/DiscountDashboard";
+import AddDiscount from "../pages/Discount/AddDiscount";
+import ViewDiscountItems from "../pages/Discount/ViewDiscountItems";
+import UpdateDiscount from "../pages/Discount/UpdateDiscount";
+
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -84,7 +89,21 @@ function CreateRouter(){
         }
 
       ]
-    }
+
+    },
+
+    {
+      path: '/shopOwner/discounts', element: <DiscountDashboard />
+    },
+    {
+      path: '/shopOwner/discounts/add-discount/:id', element: <AddDiscount />
+    },
+    {
+      path: '/shopOwner/discounts/view-discount-items', element: <ViewDiscountItems />
+    },
+    {
+      path: '/shopOwner/discounts/update-discount-item/:id/:itemId', element: <UpdateDiscount />
+    },
 
   ]);
 }
