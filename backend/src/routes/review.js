@@ -8,6 +8,7 @@ router.post('/submit', async (req, res) => {
     const review = new Review({
       productId: req.body.productId,
       userId: req.body.userId,
+      shopId:req.body.shopId,
       rating: req.body.rating,
       text: req.body.text
     });
@@ -27,6 +28,7 @@ router.get('/product/:productId', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
 
 // Update a review
 router.put('/update/:reviewId', async (req, res) => {
@@ -50,7 +52,7 @@ router.delete('/delete/:reviewId', async (req, res) => {
   try {
     const review = await Review.findById(req.params.reviewId);
     if (review.userId.toString() === req.body.userId) {
-      await review.remove();
+      await review.deleteOne();
       res.json({ message: 'Review deleted' });
     } else {
       res.status(403).json({ message: 'Unauthorized' });

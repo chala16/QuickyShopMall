@@ -10,6 +10,7 @@ const requireAuth = require("./src/middleware/requireAuth");
 const inventoryRouter = require("./src/routes/inventoryRoute");
 const wishlistRouter = require("./src/routes/wishlistRoute");
 const homeRouter = require("./src/routes/homeRoute");
+const ReviewRouter = require("./src/routes/review");
 
 const PORT = process.env.PORT || 3000;
 
@@ -43,3 +44,4 @@ app.use("/inventory", requireAuth, inventoryRouter);
 app.use("/home", homeRouter);
 app.use("/user", userRouter);
 app.use("/api/wishlist", wishlistRouter);
+app.use("/api/reviews", ReviewRouter);

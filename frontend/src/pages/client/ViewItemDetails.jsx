@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Navbar from "../../components/home/Navbar/Navbar";
 import AddWishlistButton from "../../components/wishlist/AddWishlistButton";
+import ReviewForm from "../../components/review/ReviewForm";
+import ReviewList from "../../components/review/ReviewList";
 
 const ViewItemDetails = () => {
   const { id } = useParams();
@@ -48,6 +50,14 @@ const ViewItemDetails = () => {
             <p className="text-sm text-gray-500">Description: {item.description}</p>
 
             <AddWishlistButton itemId={id}/>
+
+            
+              <h1 className="text-s font-bold mb-4 mt-10">Submit Your Review</h1>
+              <ReviewForm productId={id}/>
+            
+
+            <ReviewList productId={id}/>
+
           </div>
         </div>
       </div>
