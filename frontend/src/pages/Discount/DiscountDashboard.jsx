@@ -76,7 +76,12 @@ const DiscountDashboard = () => {
       <Navbar />
 
       <div className="p-8">
-        <h1 className="mb-6 text-2xl font-bold">Discount Dashboard</h1>
+      <h1
+              className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
+              style={{ fontSize: "3rem", marginTop: "20px"}}
+            >
+              Discount Manage
+            </h1>
         <button
           onClick={(e) => {
             e.stopPropagation();
