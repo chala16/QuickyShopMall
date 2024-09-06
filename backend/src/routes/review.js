@@ -9,8 +9,7 @@ router.post('/submit', async (req, res) => {
   try {
     const review = new Review({
       productId: req.body.productId,
-      userId: req.body.userId,
-      shopId:req.body.shopId,
+      email: req.body.email,
       rating: req.body.rating,
       text: req.body.text
     });
@@ -24,7 +23,7 @@ router.post('/submit', async (req, res) => {
 // Get reviews for a product
 router.get('/product/:productId', async (req, res) => {
   try {
-    const reviews = await Review.find({ productId: req.params.productId }).populate('userId', 'name email');
+    const reviews = await Review.find({ productId: req.params.productId });
     res.json(reviews);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -36,7 +35,7 @@ router.get('/product/:productId', async (req, res) => {
 router.put('/update/:reviewId', async (req, res) => {
   try {
     const review = await Review.findById(req.params.reviewId);
-    if (review.userId.toString() === req.body.userId) {
+    if (review.email === req.body.email) {
       review.rating = req.body.rating;
       review.text = req.body.text;
       await review.save();
@@ -53,7 +52,7 @@ router.put('/update/:reviewId', async (req, res) => {
 router.delete('/delete/:reviewId', async (req, res) => {
   try {
     const review = await Review.findById(req.params.reviewId);
-    if (review.userId.toString() === req.body.userId) {
+    if (review.email === req.body.email) {
       await review.deleteOne();
       res.json({ message: 'Review deleted' });
     } else {

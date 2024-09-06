@@ -7,7 +7,7 @@ const ReviewList = ({ productId }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`/api/reviews/product/${productId}`);
+        const response = await axios.get(`http://localhost:3000/api/reviews/product/${productId}`);
         const data = response.data;
 
         // Ensure the response data is an array
@@ -28,7 +28,7 @@ const ReviewList = ({ productId }) => {
 
   const handleHelpful = async (reviewId, helpful) => {
     try {
-      await axios.post(`/api/reviews/helpful/${reviewId}`, { helpful });
+      await axios.post(`http://localhost:3000/api/reviews/helpful/${reviewId}`, { helpful });
       // Optional: re-fetch reviews or update state to reflect changes
     } catch (error) {
       console.error("Error marking review as helpful/not helpful:", error);
@@ -42,6 +42,7 @@ const ReviewList = ({ productId }) => {
       ) : (
         reviews.map((review) => (
           <div key={review._id} className="p-4 bg-white rounded shadow">
+            <p className="text-gray-500 text-sm">{review.email}</p> {/* Display email */}
             <p className="text-gray-800">{review.text}</p>
             <div className="flex items-center justify-between mt-2">
               <span className="text-yellow-500">{`Rating: ${review.rating}`}</span>

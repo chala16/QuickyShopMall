@@ -5,10 +5,13 @@ import Navbar from "../../components/home/Navbar/Navbar";
 import AddWishlistButton from "../../components/wishlist/AddWishlistButton";
 import ReviewForm from "../../components/review/ReviewForm";
 import ReviewList from "../../components/review/ReviewList";
+import { useAuthContext } from "../../hooks/useAuthContext"; // Import your auth context hook
+
 
 const ViewItemDetails = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
+  const { user } = useAuthContext(); // Get user info from context
 
   useEffect(() => {
     if (id) {
@@ -21,6 +24,7 @@ const ViewItemDetails = () => {
         .then((res) => res.json())
         .then((data) => {
           setItem(data);
+          console.log(data);
         })
         .catch((error) => {
           console.error("Error fetching item", error);
@@ -51,12 +55,13 @@ const ViewItemDetails = () => {
 
             <AddWishlistButton itemId={id}/>
 
-            
-              <h1 className="text-s font-bold mb-4 mt-10">Submit Your Review</h1>
-              <ReviewForm productId={id}/>
-            
+            <h1 className="text-s font-bold mb-4 mt-10">Customer Reviews</h1>
+            <ReviewList productId={id} />
 
-            <ReviewList productId={id}/>
+            <h1 className="text-s font-bold mb-4 mt-10">Submit Your Review here</h1>
+            <ReviewForm productId={id} userId={user.email} />{" "}
+           
+            
 
           </div>
         </div>
