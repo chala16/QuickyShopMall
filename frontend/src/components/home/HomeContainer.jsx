@@ -42,35 +42,41 @@ const HomeContainer = () => {
           return res.json();
         }),
       ]);
-
+  
       const validItems = Array.isArray(itemsResponse) ? itemsResponse : [];
       const validDiscounts = Array.isArray(discountsResponse) ? discountsResponse : [];
-
-      setItems(validItems);
-      //check items fetching
-      console.log("Items", validItems);
-      //check discounts fetching
-      console.log("Discounts", validDiscounts);
-
-
-      // Filter items that have discounts
-      // const itemsWithDiscount = validItems.filter((item) =>
-      //   validDiscounts.some((discount) => discount.itemId === item._id)
-      // );
-
-      const itemsWithDiscount = validItems.filter((item) =>
-        validDiscounts.some(
+  
+      // Combine items and discounts
+      const itemsWithDiscounts = validItems.map((item) => {
+        // Find the discount for the current item
+        const discount = validDiscounts.find(
           (discount) => discount.itemId === item._id && discount.discountAvailable === true
-        )
-      );
-
-      console.log("Items with discount", itemsWithDiscount);
-      setDiscountItems(itemsWithDiscount);
+        );
+  
+        // If a discount exists, apply it
+        if (discount) {
+          return {
+            ...item,
+            discountPrice: discount.discountedPrice, // Discounted price
+            discountPercentage: discount.discountPercentage, // Discount percentage
+          };
+        }
+        return item; // Return item as is if no discount exists
+      }).filter((item) => item.discountPrice); // Filter out items without discounts
+  
+      setItems(validItems);
+      setDiscountItems(itemsWithDiscounts);
+  
+      // Debugging logs
+      console.log("Items", validItems);
+      console.log("Discounts", validDiscounts);
+      console.log("Items with discounts", itemsWithDiscounts);
     } catch (error) {
       console.error("Error fetching items or discounts", error);
       toast.error("Failed to fetch items or discounts");
     }
   };
+  
 
   const handleCardClick = (shopId) => {
     navigate(`/client/dashboard/view-items/${shopId}`);
@@ -194,50 +200,50 @@ const HomeContainer = () => {
           >
             {discountItems.map((item) => (
               <SwiperSlide
-                className="mx-8 mb-8 shadow-xl rounded-xl"
-                key={item._id}
-              >
-                <div key={item._id} className="card min-w-[300px]">
-                  <img
-                    className="object-contain w-full h-40"
-                    src={item.image}
-                    alt={item.name}
-                  />
-                  <div className="flex flex-col gap-3 p-5">
-                    <div className="flex items-center gap-2">
-                      <span className="badge">{item.category}</span>
-                    </div>
-
-                    <h2 className="product-title" title={item.name}>
-                      {item.name}
-                    </h2>
-
-                    <div>
-                      <span className="text-xl font-bold">
-                        Rs. {item.price}
+              className="mx-8 mb-8 shadow-xl rounded-xl"
+              key={item._id}
+            >
+              <div key={item._id} className="card min-w-[300px]">
+                <img
+                  className="object-contain w-full h-40"
+                  src={item.image}
+                  alt={item.name}
+                />
+                <div className="flex flex-col gap-3 p-5">
+                  <div className="flex items-center gap-2">
+                    <span className="badge">{item.category}</span>
+                  </div>
+            
+                  <h2 className="product-title" title={item.name}>
+                    {item.name}
+                  </h2>
+            
+                  <div>
+                    <span className="text-xl font-bold">
+                      Rs. {item.discountPrice} {/* Use the discounted price */}
+                    </span>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-sm line-through opacity-50">
+                        Rs. {item.price} {/* Original price */}
                       </span>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-sm line-through opacity-50">
-                          Rs. {item.price}
-                        </span>
-                        <span className="discount-percent">Save 20%</span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-8 mt-5">
-                      <button className="button-primary">
-                        Add to wishlist
-                      </button>
-                      <button
-                        className="button-icon"
-                        onClick={() => handleHomeCardClick(item._id)}
-                      >
-                        <img className="opacity-50" src={eyeImg} alt="View" />
-                      </button>
+                      <span className="discount-percent">Save {item.discountPercentage}%</span>
                     </div>
                   </div>
+            
+                  <div className="flex gap-8 mt-5">
+                    <button className="button-primary">
+                      Add to wishlist
+                    </button>
+                    <button
+                      className="button-icon"
+                      onClick={() => handleHomeCardClick(item._id)}
+                    >
+                      <img className="opacity-50" src={eyeImg} alt="View" />
+                    </button>
+                  </div>
                 </div>
-              </SwiperSlide>
+              </div>
+            </SwiperSlide>            
             ))}
           </Swiper>
         </div>
