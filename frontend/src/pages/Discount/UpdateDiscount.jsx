@@ -7,7 +7,7 @@ import Navbar from "../../components/home/Navbar/Navbar";
 import axios from "axios";
 
 const UpdateDiscount = () => {
-  const { id } = useParams();
+  const { id, itemId  } = useParams();
   const [data, setData] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -56,7 +56,7 @@ const UpdateDiscount = () => {
 
     const discountDetails = {
       email: user.email,
-      itemId: id,
+      itemId: itemId,
       startDate,
       endDate,
       discountPercentage,

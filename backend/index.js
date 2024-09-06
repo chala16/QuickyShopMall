@@ -45,3 +45,4 @@ app.use("/home", homeRouter);
 app.use("/user", userRouter);
 app.use("/api/wishlist", wishlistRouter);
 app.use("/api/discounts", requireAuth, discountRoutes);
+app.use("/api/discount-items", discountRoutes);

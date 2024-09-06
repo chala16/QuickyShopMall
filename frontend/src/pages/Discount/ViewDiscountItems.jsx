@@ -45,9 +45,9 @@ const ViewDiscountItems = () => {
     return <p>Loading...</p>;
   }
 
-  const handleUpdate = (id) => {
+  const handleUpdate = (id, itemId) => {
     console.log("Update discount item with id:", id);
-    navigate(`/shopOwner/discounts/update-discount-item/${id}`);
+    navigate(`/shopOwner/discounts/update-discount-item/${id}/${itemId}`);
   };
 
   return (
@@ -120,7 +120,7 @@ const ViewDiscountItems = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleUpdate(discount._id);
+                      handleUpdate(discount._id, discount.itemId);
                     }}
                     className="py-2.5 px-6 rounded-lg text-sm font-medium bg-blue-500 mx-2 text-white"
                   >

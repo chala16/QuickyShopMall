@@ -14,7 +14,7 @@ const router = express.Router();
 
 
 // GET all discounts
-router.get('/', getDiscounts);
+router.get('/all-discounts', getDiscounts);
 // GET discounts by email
 router.get('/:email', getDiscountsByEmail);
 // GET a single discount
