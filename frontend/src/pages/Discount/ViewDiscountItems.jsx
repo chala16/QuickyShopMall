@@ -14,7 +14,6 @@ const ViewDiscountItems = () => {
   // Function to fetch discounted items
   const fetchItems = () => {
     if (user && user.token) {
-      
       axios
         .get(`http://localhost:3000/api/discounts/${user.email}`, {
           headers: {
@@ -48,6 +47,25 @@ const ViewDiscountItems = () => {
   const handleUpdate = (id, itemId) => {
     console.log("Update discount item with id:", id);
     navigate(`/shopOwner/discounts/update-discount-item/${id}/${itemId}`);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      axios
+        .delete(`http://localhost:3000/api/discounts/${id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then(() => {
+          setDiscountedItems(discountedItems.filter((item) => item._id !== id));
+          toast.success("Item deleted successfully");
+        })
+        .catch((error) => {
+          console.error("Error deleting item", error);
+          toast.error("Failed to delete item");
+        });
+    }
   };
 
   return (
@@ -129,7 +147,7 @@ const ViewDiscountItems = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDelete(discount.id);
+                      handleDelete(discount._id);
                     }}
                     className="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white"
                   >
