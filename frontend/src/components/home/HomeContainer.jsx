@@ -14,6 +14,7 @@ const HomeContainer = () => {
   const navigate = useNavigate();
   const [shops, setShops] = useState([]);
   const [items, setItems] = useState([]);
+  const [discountItems, setDiscountItems] = useState([]);
 
   const fetchShops = () => {
     fetch("http://localhost:3000/home/all-owners", {
@@ -24,23 +25,47 @@ const HomeContainer = () => {
         setShops(Array.isArray(data) ? data : []);
       })
       .catch((error) => {
-        console.error("Error fetching items", error);
-        toast.error("Failed to fetch items");
+        console.error("Error fetching shops", error);
+        toast.error("Failed to fetch shops");
       });
   };
 
-  const fetchItems = () => {
-    fetch("http://localhost:3000/home/all-items", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(Array.isArray(data) ? data : []);
-      })
-      .catch((error) => {
-        console.error("Error fetching items", error);
-        toast.error("Failed to fetch items");
-      });
+  const fetchItems = async () => {
+    try {
+      const [itemsResponse, discountsResponse] = await Promise.all([
+        fetch("http://localhost:3000/home/all-items").then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch items");
+          return res.json();
+        }),
+        fetch("http://localhost:3000/api/discount-items/all-discounts").then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch discounts");
+          return res.json();
+        }),
+      ]);
+
+      const validItems = Array.isArray(itemsResponse) ? itemsResponse : [];
+      const validDiscounts = Array.isArray(discountsResponse) ? discountsResponse : [];
+
+      setItems(validItems);
+      //check items fetching
+      console.log("Items", validItems);
+      //check discounts fetching
+      console.log("Discounts", validDiscounts);
+
+
+      // Filter items that have discounts
+      const itemsWithDiscount = validItems.filter((item) =>
+        validDiscounts.some((discount) => discount.itemId === item._id)
+      );
+
+      
+
+      console.log("Items with discount", itemsWithDiscount);
+      setDiscountItems(itemsWithDiscount);
+    } catch (error) {
+      console.error("Error fetching items or discounts", error);
+      toast.error("Failed to fetch items or discounts");
+    }
   };
 
   const handleCardClick = (shopId) => {
@@ -57,9 +82,6 @@ const HomeContainer = () => {
 
   useEffect(() => {
     fetchShops();
-  }, []);
-
-  useEffect(() => {
     fetchItems();
   }, []);
 
@@ -69,7 +91,7 @@ const HomeContainer = () => {
       <div className="flex justify-between mt-10 mb-10 ml-20 mr-20">
         <p className="text-2xl font-bold ">Trending Shops</p>
         <button
-          onClick={() => handleViewMoreClick()}
+          onClick={handleViewMoreClick}
           className="pl-2 pr-2 font-bold text-white bg-blue-600 text-md rounded-xl"
         >
           View more
@@ -138,7 +160,7 @@ const HomeContainer = () => {
         <div className="flex justify-between mt-20 mb-16 ml-20 mr-20">
           <p className="text-2xl font-bold ">Discount items</p>
           <button
-            onClick={() => handleViewMoreClick()}
+            onClick={handleViewMoreClick}
             className="pl-2 pr-2 font-bold text-white bg-blue-600 text-md rounded-xl"
           >
             View more
@@ -166,7 +188,7 @@ const HomeContainer = () => {
             modules={[Pagination]}
             className="w-full h-full mySwiper"
           >
-            {items.map((item) => (
+            {discountItems.map((item) => (
               <SwiperSlide
                 className="mx-8 mb-8 shadow-xl rounded-xl"
                 key={item._id}

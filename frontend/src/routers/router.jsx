@@ -102,7 +102,7 @@ function CreateRouter(){
       path: '/shopOwner/discounts/view-discount-items', element: <ViewDiscountItems />
     },
     {
-      path: '/shopOwner/discounts/update-discount-item/:id', element: <UpdateDiscount />
+      path: '/shopOwner/discounts/update-discount-item/:id/:itemId', element: <UpdateDiscount />
     },
 
   ]);
