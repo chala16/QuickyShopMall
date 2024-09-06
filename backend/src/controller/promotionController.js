@@ -4,7 +4,7 @@ const Promotion = require("../models/promotionModel.js");
 // Get all discounts
 const getPromotions = async (req, res) => {
     try {
-      const promotions = await Discount.find({}).sort({ createdAt: -1 });
+      const promotions = await Promotion.find({}).sort({ createdAt: -1 });
       res.status(200).json(promotions);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -38,7 +38,7 @@ const createPromotion = async (req, res) => {
   
     try {
   
-      const existingPromotion = await Promotion.findOne({ email, itemId });
+      const existingPromotion = await Promotion.findOne({ email });
       if (existingPromotion) {
         return res.status(400).json({ message: "Promotion already exists for this item." });
       }
