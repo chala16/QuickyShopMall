@@ -13,6 +13,12 @@ const PromotionDashBoard = () => {
       navigate(`/shopOwner/promotion/add-promotion/${user.email}`);
     }
   };
+  const handlView = () => {
+    if (user?.email) {
+      // Navigate to the add-promotion page with the user's email as the ID
+      navigate(`/shopOwner/promotion/view-promotion/${user.email}`);
+    }
+  };
 
   return (
     <div>
@@ -35,6 +41,7 @@ const PromotionDashBoard = () => {
             <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
               <button
                 className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-medium text-center text-gray-900 border border-gray-200 rounded-lg sm:w-auto hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                onClick={handlView}
               >
                 Show All Promotions
               </button>
