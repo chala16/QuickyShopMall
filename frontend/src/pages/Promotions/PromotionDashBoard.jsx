@@ -30,12 +30,11 @@ const PromotionDashBoard = () => {
               className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
               style={{ fontSize: "5rem" }}
             >
-              Building digital <br /> products &amp; brands.
+              Grow more  <br /> with &amp; Promotions.
             </h1>
 
             <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-              This free and open-source landing page template was built using
-              the utility classes from
+              Grow your business with adding promotions to your shops!
             </p>
 
             <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
