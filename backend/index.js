@@ -10,6 +10,7 @@ const requireAuth = require("./src/middleware/requireAuth");
 const inventoryRouter = require("./src/routes/inventoryRoute");
 const wishlistRouter = require("./src/routes/wishlistRoute");
 const homeRouter = require("./src/routes/homeRoute");
+const ReviewRouter = require("./src/routes/review");
 
 const discountRoutes = require("./src/routes/discountRoutes");
 const promotionRoutes = require("./src/routes/promotionRoutes");
@@ -49,3 +50,6 @@ app.use("/api/discounts", requireAuth, discountRoutes);
 app.use("/api/discount-items", discountRoutes);
 app.use("/api/promotions", requireAuth, promotionRoutes);
 app.use("/api/promotion/promotion-list", promotionRoutes);
+app.use("/api/reviews", ReviewRouter);
+
+

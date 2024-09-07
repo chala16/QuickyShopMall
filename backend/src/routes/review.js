@@ -1,5 +1,7 @@
 const express = require('express');
 const Review = require('../models/Review');
+const User = require('../models/User');
+
 const router = express.Router();
 
 // Submit a review
@@ -7,7 +9,7 @@ router.post('/submit', async (req, res) => {
   try {
     const review = new Review({
       productId: req.body.productId,
-      userId: req.body.userId,
+      email: req.body.email,
       rating: req.body.rating,
       text: req.body.text
     });
@@ -28,11 +30,12 @@ router.get('/product/:productId', async (req, res) => {
   }
 });
 
+
 // Update a review
 router.put('/update/:reviewId', async (req, res) => {
   try {
     const review = await Review.findById(req.params.reviewId);
-    if (review.userId.toString() === req.body.userId) {
+    if (review.email === req.body.email) {
       review.rating = req.body.rating;
       review.text = req.body.text;
       await review.save();
@@ -49,8 +52,8 @@ router.put('/update/:reviewId', async (req, res) => {
 router.delete('/delete/:reviewId', async (req, res) => {
   try {
     const review = await Review.findById(req.params.reviewId);
-    if (review.userId.toString() === req.body.userId) {
-      await review.remove();
+    if (review.email === req.body.email) {
+      await review.deleteOne();
       res.json({ message: 'Review deleted' });
     } else {
       res.status(403).json({ message: 'Unauthorized' });
