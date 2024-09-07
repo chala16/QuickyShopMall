@@ -71,7 +71,12 @@ const ViewDiscountItems = () => {
   return (
     <div>
       <Navbar />
-      <h1 className="mt-10">Discounted Items</h1>
+      <h1
+        className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
+        style={{ fontSize: "3rem", marginTop: "30px", marginLeft: "20px" }}
+      >
+        Discounted Items <br />
+      </h1>
       <div className="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
         <table className="w-full table-fixed">
           <thead>

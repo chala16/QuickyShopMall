@@ -21,6 +21,7 @@ import UpdateDiscount from "../pages/Discount/UpdateDiscount";
 import add from "../pages/Promotions/PromotionDashBoard";
 import PromotionDashBoard from "../pages/Promotions/PromotionDashBoard";
 import PromotionAdd from "../pages/Promotions/PromotionAdd";
+import ViewallPromotions from "../pages/Promotions/ViewallPromotions";
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -111,6 +112,9 @@ function CreateRouter(){
     },
     {
       path: '/shopOwner/promotion/add-promotion/:id', element: <PromotionAdd />
+    },
+    {
+      path: '/shopOwner/promotion/view-promotion/:id', element: <ViewallPromotions />
     },
 
   ]);

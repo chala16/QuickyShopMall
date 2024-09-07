@@ -31,7 +31,25 @@ const getPromotion = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
-
+  const getPromotionsByEmail = async (req, res) => {
+    const { email } = req.params; // Get email from query parameters
+    if (!email) {
+      return res.status(400).send("Email query parameter is required");
+    }
+  
+    try {
+      // Find discounts by email
+      const promotions = await Promotion.find({ email: email });
+  
+      if (!promotions || promotions.length === 0) {
+        return res.status(404).send("No promotions found for this email");
+      }
+  
+      res.status(200).json(promotions);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
 // Create a promotion
 const createPromotion = async (req, res) => {
   const { email, title, description, image } = req.body;
@@ -108,5 +126,6 @@ module.exports = {
     getPromotion,
     createPromotion,
     deletePromotion,
-    updatePromotion
+    updatePromotion,
+    getPromotionsByEmail
 };
