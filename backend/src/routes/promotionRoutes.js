@@ -6,7 +6,8 @@ const {
   getPromotion,
   createPromotion,
   deletePromotion,
-  updatePromotion
+  updatePromotion,
+  getPromotionsByEmail
 } = require('../controller/promotionController');
 
 const router = express.Router();
@@ -16,6 +17,9 @@ router.get('/all-promotions', getPromotions);
 
 // GET a single promotion
 router.get('/get-promotion/:id', getPromotion);
+
+// GET discounts by email
+router.get('/:email', getPromotionsByEmail);
 
 // POST a new promotion
 router.post('/', createPromotion);

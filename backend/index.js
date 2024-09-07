@@ -49,5 +49,7 @@ app.use("/api/wishlist", wishlistRouter);
 app.use("/api/discounts", requireAuth, discountRoutes);
 app.use("/api/discount-items", discountRoutes);
 app.use("/api/promotions", requireAuth, promotionRoutes);
+app.use("/api/promotion/promotion-list", promotionRoutes);
 app.use("/api/reviews", ReviewRouter);
+
 

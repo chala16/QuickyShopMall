@@ -50,12 +50,12 @@ const PromotionAdd = () => {
   return (
     <div>
       <Navbar />
-      <section className="bg-white dark:bg-gray-900 mt-48">
+      <section className="bg-white dark:bg-gray-900 mt-28">
         <div className="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
           <div className="mr-auto place-self-center lg:col-span-7">
             <h1
               className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
-              style={{ fontSize: "5rem" }}
+              style={{ fontSize: "3rem" }}
             >
               <img
                 src="https://www.pngall.com/wp-content/uploads/8/Campaign-PNG-Clipart.png"
@@ -63,8 +63,8 @@ const PromotionAdd = () => {
                 style={{
                   marginTop: "-100px",
                   marginLeft: "-75px",
-                  width: "1000px",
-                  height: "500px",
+                  width: "600px",
+                  height: "400px",
                 }}
               />
             </h1>
@@ -78,8 +78,8 @@ const PromotionAdd = () => {
           >
             <form className="max-w-md mx-auto" style={{ width: "100%" }} onSubmit={handleSubmit}>
               <h1
-                className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
-                style={{ fontSize: "3rem" }}
+                className="max-w-1xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
+                style={{ fontSize: "2rem" }}
               >
                 Add Promotion
               </h1>
@@ -87,7 +87,7 @@ const PromotionAdd = () => {
                 <input
                   type="text"
                   id="title"
-                  className="block py-2.5 px-0 w-full text-2xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -95,7 +95,7 @@ const PromotionAdd = () => {
                 />
                 <label
                   htmlFor="title"
-                  className="absolute text-xl text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Title
                 </label>
@@ -105,7 +105,7 @@ const PromotionAdd = () => {
                 <textarea
                   id="description"
                   rows="4"
-                  className="block py-2.5 px-0 w-full text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -113,7 +113,7 @@ const PromotionAdd = () => {
                 ></textarea>
                 <label
                   htmlFor="description"
-                  className="absolute text-xl text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Description
                 </label>
@@ -124,13 +124,13 @@ const PromotionAdd = () => {
                   type="file"
                   id="image"
                   accept="image/*"
-                  className="block py-2.5 px-0 w-full text-xl text-gray-900 bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mt-6"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mt-6"
                   onChange={handleImageChange}
                   required
                 />
                 <label
                   htmlFor="image"
-                  className="absolute text-2xl text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="absolute text-1xl text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   style={{
                     marginTop: "-10px",
                     marginBottom: "20px",
