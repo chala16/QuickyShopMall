@@ -68,7 +68,7 @@ const DeleteItem = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-100">
       <Navbar />
 
       <div className="p-8">
@@ -84,7 +84,7 @@ const DeleteItem = () => {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="object-cover w-full h-48"
+                  className="object-cover m-4 w-36 "
                 />
                 <div className="p-4">
                   <h3 className="mb-2 text-lg font-semibold">{item.name}</h3>
@@ -96,7 +96,7 @@ const DeleteItem = () => {
                 </div>
                 <div className="absolute flex space-x-2 top-4 right-4">
                   <button
-                    className="px-2 py-1 text-sm text-white bg-red-500 rounded"
+                    className="px-2 py-1 text-sm text-white bg-red-500 rounded shadow-2xl"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDelete(item._id);
@@ -105,7 +105,7 @@ const DeleteItem = () => {
                     Delete
                   </button>
                   <button
-                    className="px-2 py-1 text-sm text-white bg-blue-600 rounded"
+                    className="px-2 py-1 text-sm text-white bg-blue-600 rounded shadow-2xl"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleEditClick(item._id);
