@@ -72,7 +72,7 @@ const ViewItemDetails = () => {
             <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
 
             <h1 className="text-s font-bold mb-4 mt-10">We'd Love Your Feedback – Share with Your Fellow Customers</h1>
-            <ReviewForm productId={id} userId={user.email} onReviewSubmitted={handleReviewSubmitted}/>{" "}
+            <ReviewForm productId={id} onReviewSubmitted={handleReviewSubmitted}/>{" "}
            
             
 
