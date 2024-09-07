@@ -50,11 +50,11 @@ const ImageMover = () => {
 
   return (
     <div
-      className="relative overflow-hidden min-h-[550px] sm:min-h-[650px] bg-gray-100 flex justify-center items-center dark:bg-gray-950 dark:text-white duration-200"
+      className="relative overflow-hidden min-h-[550px] sm:min-h-[550px] bg-gray-100 flex justify-center items-center dark:bg-gray-950 dark:text-white duration-200"
     >
       {/* Slider background pattern */}
       <div
-        className="h-[700px] w-[700px] bg-primary/40 absolute -top-1/2 right-0 rounded-3xl rotate-45 z-[-9]"
+        className="h-[700px] w-[400px] bg-primary/40 absolute -top-1/2 right-0 rounded-3xl rotate-45 z-[-9]"
       ></div>
       {/* Slider section */}
       <div className="container pb-8 sm:pb-0 relative z-10">
@@ -64,7 +64,7 @@ const ImageMover = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2">
                 {/* text content section */}
                 <div className="relative z-10 flex flex-col justify-center gap-4 pt-12 text-center sm:pt-0 sm:text-left sm:order-1">
-                  <h1 className="text-5xl font-bold sm:text-6xl lg:text-7xl">
+                  <h1 className="text-5xl font-bold sm:text-6xl lg:text-4xl">
                     {promotion.title}
                   </h1>
                   <p className="text-sm">
@@ -86,7 +86,7 @@ const ImageMover = () => {
                     <img
                       src={promotion.image}  
                       alt={promotion.title}
-                      className="w-[400px] h-[300px] sm:h-[450px] sm:w-[450px] sm:scale-125 object-contain mx-auto"
+                      className="w-[300px] h-[300px] sm:h-[450px] sm:w-[450px] sm:scale-125 object-contain mx-auto"
                     />
                   </div>
                 </div>
