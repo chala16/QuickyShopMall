@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import RatingStars from 'react-rating-stars-component';
+
 
 const ReviewList = ({ productId, reviewsUpdated }) => {
   const [reviews, setReviews] = useState([]);
@@ -43,9 +45,22 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
         reviews.map((review) => (
           <div key={review._id} className="p-4 bg-white rounded shadow">
             <p className="text-gray-500 text-sm">{review.email}</p> {/* Display email */}
-            <p className="text-gray-800">{review.text}</p>
+            {/* Display the formatted review date */}
+            <p className="text-gray-400 text-xs mt-0">
+            {new Date(review.date).toLocaleDateString("en-CA")}
+            </p>
+            <p className="text-gray-800 mt-4">{review.text}</p>
             <div className="flex items-center justify-between mt-2">
-              <span className="text-yellow-500">{`Rating: ${review.rating}`}</span>
+              <span className="flex items-center">
+                {/* Show the star rating inside span */}
+                <RatingStars
+                  value={review.rating}
+                  count={5}
+                  size={24}
+                  activeColor="#ffd700"
+                  edit={false} // Make it read-only
+                />
+              </span>  
               <div>
                 <button
                   onClick={() => handleHelpful(review._id, true)}
