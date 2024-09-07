@@ -46,7 +46,7 @@ const ViewallPromotions = () => {
       <Navbar />
       <h1
         className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
-        style={{ fontSize: "3rem", marginTop: "80px", marginBottom: "40px", marginLeft: "20px" }}
+        style={{ fontSize: "2rem", marginTop: "40px", marginBottom: "40px", marginLeft: "20px" }}
       >
         Manage &amp; Promotions.
       </h1>
@@ -54,16 +54,16 @@ const ViewallPromotions = () => {
         <table className="w-full table-fixed">
           <thead>
             <tr className="bg-gray-100">
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Title
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Description
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Image
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Action
               </th>
             </tr>
@@ -71,22 +71,26 @@ const ViewallPromotions = () => {
           <tbody className="bg-white">
             {promotionItems.map((promo) => (
               <tr key={promo._id}>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {promo.title}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {promo.description}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
-                  {promo.image}
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                <img
+                    src={promo.image}
+                    alt={promo.title}
+                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                  />
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleUpdate(promo._id);
                     }}
-                    className="py-2.5 px-6 rounded-lg text-sm font-medium bg-blue-500 mx-2 text-white"
+                    className="py-1 px-4 rounded-lg text-xs font-medium bg-blue-500 mx-2 text-white"
                   >
                     Edit
                   </button>
@@ -95,7 +99,7 @@ const ViewallPromotions = () => {
                       e.stopPropagation();
                       handleDelete(promo._id);
                     }}
-                    className="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white"
+                    className="py-1 px-4 rounded-lg text-xs font-medium bg-red-500 text-white"
                   >
                     Delete
                   </button>
