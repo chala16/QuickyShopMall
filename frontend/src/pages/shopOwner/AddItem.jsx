@@ -84,7 +84,7 @@ const AddItem = () => {
       .then((res) => res.json())
       .then((data) => {
         showSuccess();
-        navigate("/shopOwner/dashboard");
+        navigate("/shopOwner/dashboard/view-items");
       });
   };
 

@@ -78,7 +78,7 @@ const DeleteItem = () => {
             items.map((item) => (
               <div
                 key={item._id}
-                className="relative overflow-hidden bg-white rounded-lg shadow-md cursor-pointer"
+                className="relative overflow-hidden bg-white shadow-md cursor-pointer rounded-2xl"
                 onClick={() => handleCardClick(item._id)}
               >
                 <img
@@ -118,7 +118,7 @@ const DeleteItem = () => {
             ))
           ) : (
             <p className="text-center text-gray-500 col-span-full">
-              No items available
+              Loading items...
             </p>
           )}
         </div>
