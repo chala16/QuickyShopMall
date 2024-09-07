@@ -78,7 +78,7 @@ const DiscountDashboard = () => {
       <div className="p-8">
       <h1
               className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
-              style={{ fontSize: "3rem", marginTop: "20px"}}
+              style={{ fontSize: "2rem", marginTop: "20px"}}
             >
               Discount Manage
             </h1>

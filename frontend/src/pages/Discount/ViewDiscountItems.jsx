@@ -73,7 +73,7 @@ const ViewDiscountItems = () => {
       <Navbar />
       <h1
         className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
-        style={{ fontSize: "3rem", marginTop: "30px", marginLeft: "20px" }}
+        style={{ fontSize: "2rem", marginTop: "30px", marginLeft: "20px" }}
       >
         Discounted Items <br />
       </h1>
@@ -81,28 +81,28 @@ const ViewDiscountItems = () => {
         <table className="w-full table-fixed">
           <thead>
             <tr className="bg-gray-100">
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Email
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 ItemId
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Start Date
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 End Date
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Discount Percentage
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Discount Price
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Availability
               </th>
-              <th className="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">
+              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Action
               </th>
             </tr>
@@ -110,25 +110,25 @@ const ViewDiscountItems = () => {
           <tbody className="bg-white">
             {discountedItems.map((discount) => (
               <tr key={discount._id}>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.email}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.itemId}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.startDate}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.endDate}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.discountPercentage}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.discountedPrice}
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   <span
                     className={`py-1 px-2 rounded-full text-xs ${
                       discount.discountAvailable
@@ -139,13 +139,13 @@ const ViewDiscountItems = () => {
                     {discount.discountAvailable ? "Active" : "Inactive"}
                   </span>
                 </td>
-                <td className="py-4 px-6 border-b border-gray-200">
+                <td className="py-2 px-4 border-b border-gray-200">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleUpdate(discount._id, discount.itemId);
                     }}
-                    className="py-2.5 px-6 rounded-lg text-sm font-medium bg-blue-500 mx-2 text-white"
+                    className="py-1 px-4 rounded-lg text-sm font-medium bg-blue-500 mx-2 text-white"
                   >
                     Edit
                   </button>
@@ -154,7 +154,7 @@ const ViewDiscountItems = () => {
                       e.stopPropagation();
                       handleDelete(discount._id);
                     }}
-                    className="py-2.5 px-6 rounded-lg text-sm font-medium bg-red-500 text-white"
+                    className="py-1 px-4 rounded-lg text-sm font-medium bg-red-500 text-white"
                   >
                     Delete
                   </button>
