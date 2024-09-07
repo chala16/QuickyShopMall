@@ -3,7 +3,6 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
-import bg from "../../images/viewAdminBG.jpg";
 import upload from "../../images/upload.jpg";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
@@ -87,18 +86,11 @@ const AddItem = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "50% 10%",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="pb-20 bg-gray-100 h-full-screen">
       <Navbar />
-      <div className=" h-[100vh] px-44">
-        <div className="flex mt-8 justify-between p-6 mb-6 mr-[820px] rounded-xl bg-client-brown">
-          <h2 className="text-3xl font-bold text-white ">Add a item</h2>
+      <div className="px-20 pb-20 mt-20 bg-white rounded-3xl mx-44">
+        <div className="flex justify-between p-6 mt-8 mb-6 rounded-xl">
+          <h2 className="text-3xl font-bold ">Add Product</h2>
         </div>
 
         <form
@@ -112,7 +104,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="itemName"
                   value="Item name"
-                  className="text-lg text-white"
+                  className="text-lg"
                 />
               </div>
               <TextInput
@@ -131,7 +123,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="qty"
                   value="Item Quantity"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <TextInput id="qty" name="qty" type="number" required />
@@ -145,7 +137,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="price"
                   value="Item Price"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <TextInput
@@ -164,7 +156,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="category"
                   value="Category type"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
 
@@ -191,7 +183,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="itemDescription"
                   value="Item Description"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <Textarea
@@ -213,7 +205,7 @@ const AddItem = () => {
                   <img className="w-16" src={upload} alt="" />
                 </Label>
                 <input
-                  className="mt-4 text-white bg-black"
+                  className="mt-4 bg-black"
                   type="file"
                   label="Image"
                   name="image"
