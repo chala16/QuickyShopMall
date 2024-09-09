@@ -39,6 +39,30 @@ const Wishlist = () => {
         fetchItems()
     }, [])
 
+    // Handle deleting an item from the wishlist
+    const handleDelete = async (itemId) => {
+        const token = localStorage.getItem('token')
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/wishlist/delete-item/${itemId}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            if (response.ok) {
+                // Remove the deleted item from the state
+                setItems((prevItems) => prevItems.filter((item) => item.itemId !== itemId))
+            } else {
+                console.log('Failed to delete the item (frontend)')
+            }
+        } catch (error) {
+            console.log('Error while deleting the item:', error)
+        }
+    }
+
     return (
         <div>
             <NavBar />
@@ -47,7 +71,7 @@ const Wishlist = () => {
                     {/* Add a check to ensure `items` is an array before mapping */}
                     {Array.isArray(items) && items.length > 0 ? (
                         items.map((item) => (
-                            <ItemBox key={item.name} item={item} />
+                            <ItemBox key={item.itemId} item={item} handleDelete={handleDelete} />
                         ))
                     ) : (
                         <div className="flex flex-col items-center text-center space-y-2 md:space-y-4 p-4">

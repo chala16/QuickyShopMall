@@ -54,6 +54,7 @@ const getItemsFromWishlist = async (req, res) => {
 
     const items = wishlist.items
       .map((item) => ({
+        itemId: item.itemId._id,
         name: item.itemId.name,
         price: item.itemId.price,
         inStock: item.itemId.inStock,
@@ -69,7 +70,27 @@ const getItemsFromWishlist = async (req, res) => {
   }
 };
 
+const deleteItemsFromWishlist = async (req, res) => {
+  const userId = req.user._id;
+  const { itemId } = req.params;
+
+  try {
+    const updatedWishlist = await Wishlist.updateOne(
+      { userId },
+      {
+        $pull: {
+          items: { itemId },
+        }
+      }
+    );
+    return res.status(200).json({ message: 'Item removed from wishlist', updatedWishlist });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete the item (backend)" });
+  }
+};
+
 module.exports = {
   addItemsToWishlist,
   getItemsFromWishlist,
+  deleteItemsFromWishlist
 };
