@@ -41,6 +41,11 @@ const ViewallPromotions = () => {
     return <p>Loading...</p>;
   }
 
+  const handleUpdate = (id) => {
+    console.log("Update discount item with id:", id);
+    navigate(`/shopOwner/promotion/update-promotion/${id}`);
+  };
+
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       axios
