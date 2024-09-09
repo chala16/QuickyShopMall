@@ -1,4 +1,4 @@
-const ItemBox = ({ item }) => {
+const ItemBox = ({ item, handleDelete }) => {
   const isInStock = item.inStock > 0
 
   return (
@@ -17,6 +17,12 @@ const ItemBox = ({ item }) => {
         </p>
         <p className="text-gray-600"><b>Shop:</b> {item.shopName}</p>
         <p className="text-gray-600"><b>Floor:</b> {item.shopFloorNo}</p>
+        <button
+          onClick={() => { handleDelete(item.itemId) }}
+          className="py-1 px-2 bg-red-500 text-white hover:bg-red-700 rounded-md"
+        >
+          Remove
+        </button>
       </div>
     </div>
   )
