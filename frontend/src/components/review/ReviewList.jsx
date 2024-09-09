@@ -12,6 +12,9 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
   const { user } = useAuthContext(); // Get user info from context
   const [editingReview, setEditingReview] = useState(null);
   const [updatedText, setUpdatedText] = useState("");
+  const [updatedRating, setUpdatedRating] = useState(0); // Track updated rating
+
+  
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -52,15 +55,17 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
       await axios.put(`http://localhost:3000/api/reviews/update/${reviewId}`, {
         email: user?.email,
         text: updatedText,
-        rating: reviewToUpdate.rating // Add this line to include the rating
+        rating: updatedRating || reviewToUpdate.rating // Update rating if modified
       });
+
       setEditingReview(null);
       setUpdatedText("");
+      setUpdatedRating(0);
 
       // Re-fetch or update reviews to reflect the change
       setReviews((prevReviews) =>
         prevReviews.map((review) =>
-          review._id === reviewId ? { ...review, text: updatedText } : review
+          review._id === reviewId ? { ...review, text: updatedText, rating: updatedRating || review.rating } : review
         )
       );
 
@@ -102,8 +107,7 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
       ) : (
         reviews.map((review) => (
           <div key={review._id} className="p-4 bg-white rounded shadow">
-            <p className="text-gray-500 text-sm">{review.email}</p> {/* Display email */}
-            {/* Display the formatted review date */}
+            <p className="text-gray-500 text-sm">{review.email}</p>
             <p className="text-gray-400 text-xs mt-0">
               {new Date(review.date).toLocaleDateString("en-CA")}
             </p>
@@ -114,6 +118,13 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
                   onChange={(e) => setUpdatedText(e.target.value)}
                   className="mt-2 p-2 border rounded w-full"
                   placeholder="Edit your review"
+                />
+                <RatingStars
+                  value={updatedRating}
+                  count={5}
+                  size={24}
+                  activeColor="#ffd700"
+                  onChange={(newRating) => setUpdatedRating(newRating)} // Allow rating update
                 />
                 <button
                   onClick={() => handleUpdate(review._id)}
@@ -133,34 +144,23 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
                 <p className="text-gray-800 mt-4">{review.text}</p>
                 <div className="flex items-center justify-between mt-2">
                   <span className="flex items-center">
-                    {/* Show the star rating */}
                     <RatingStars
                       value={review.rating}
                       count={5}
                       size={24}
                       activeColor="#ffd700"
-                      edit={false} // Make it read-only
+                      edit={false}
                     />
                   </span>
                   <div>
-                    <button
-                      onClick={() => handleHelpful(review._id, true)}
-                      className="text-green-500 hover:text-green-600"
-                    >
-                      Helpful ({review.helpfulCount})
-                    </button>
-                    <button
-                      onClick={() => handleHelpful(review._id, false)}
-                      className="text-red-500 hover:text-red-600 ml-4"
-                    >
-                      Not Helpful ({review.notHelpfulCount})
-                    </button>
+                    
                     {review.email === user?.email && (
                       <>
                         <button
                           onClick={() => {
                             setEditingReview(review._id);
-                            setUpdatedText(review.text); // Pre-fill text when editing
+                            setUpdatedText(review.text);
+                            setUpdatedRating(review.rating); // Pre-fill rating when editing
                           }}
                           className="bg-blue-500 text-white hover:bg-blue-600 ml-4 py-1 px-3 rounded"
                         >
