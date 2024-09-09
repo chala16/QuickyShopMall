@@ -25,7 +25,7 @@ const ReviewForm = ({ productId, onReviewSubmitted}) => {
 
       // Show success message
       toast.success("Review added successfully!", {
-        position: "bottom-right",
+        position: "top-right",
         autoClose: 5000, // Duration for the toast to be visible
       });
 
