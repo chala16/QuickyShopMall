@@ -70,7 +70,7 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
       );
 
       toast.success("Review updated successfully!", {
-        position: "bottom-right",
+        position: "top-right",
         autoClose: 5000, // Duration for the toast to be visible
       });
 
@@ -90,7 +90,7 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
         setReviews(reviews.filter(review => review._id !== reviewId)); // Remove review from UI
 
         toast.success("Review deleted successfully!", {
-          position: "bottom-right",
+          position: "top-right",
           autoClose: 5000, // Duration for the toast to be visible
         });
 

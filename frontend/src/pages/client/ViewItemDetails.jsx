@@ -61,6 +61,10 @@ const ViewItemDetails = () => {
             alt={item.name}
             className="object-contain mb-4 h-96 w-full max-w-[200px] md:max-w-[35%]"
           />
+
+
+
+          
           <div className="flex-1 md:ml-8">
             <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
             <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
@@ -68,16 +72,18 @@ const ViewItemDetails = () => {
 
             <AddWishlistButton itemId={id}/>
 
-            <h1 className="text-s font-bold mb-4 mt-10">Voices of Our Shoppers</h1>
-            <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
-
+           <div>
             <h1 className="text-s font-bold mb-4 mt-10">We'd Love Your Feedback – Share with Your Fellow Customers</h1>
             <ReviewForm productId={id} onReviewSubmitted={handleReviewSubmitted}/>{" "}
-           
+           </div>
             
-
           </div>
         </div>
+        
+            
+
+            <h1 className="text-s font-bold mb-4 mt-10">Voices of Our Shoppers</h1>
+            <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
       </div>
     </div>
   );
