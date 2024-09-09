@@ -22,6 +22,7 @@ import add from "../pages/Promotions/PromotionDashBoard";
 import PromotionDashBoard from "../pages/Promotions/PromotionDashBoard";
 import PromotionAdd from "../pages/Promotions/PromotionAdd";
 import ViewallPromotions from "../pages/Promotions/ViewallPromotions";
+import UpdatePromotion from "../pages/Promotions/UpdatePromotion";
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -115,6 +116,9 @@ function CreateRouter(){
     },
     {
       path: '/shopOwner/promotion/view-promotion/:id', element: <ViewallPromotions />
+    },
+    {
+      path: '/shopOwner/promotion/update-promotion/:id', element: <UpdatePromotion />
     },
 
   ]);
