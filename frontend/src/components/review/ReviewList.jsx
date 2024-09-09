@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import RatingStars from 'react-rating-stars-component';
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { toast } from "react-toastify";
+
 
 
 
@@ -61,6 +63,12 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
           review._id === reviewId ? { ...review, text: updatedText } : review
         )
       );
+
+      toast.success("Review updated successfully!", {
+        position: "bottom-right",
+        autoClose: 5000, // Duration for the toast to be visible
+      });
+
     } else {
       console.error("Review not found for update");
     } }catch (error) {
@@ -75,11 +83,17 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
           data: { email: user?.email },
         });
         setReviews(reviews.filter(review => review._id !== reviewId)); // Remove review from UI
+
+        toast.success("Review deleted successfully!", {
+          position: "bottom-right",
+          autoClose: 5000, // Duration for the toast to be visible
+        });
+
       } catch (error) {
         console.error("Error deleting review:", error);
       }
     }
-  };
+  };   
 
   return (
     <div className="space-y-4">
