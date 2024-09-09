@@ -6,15 +6,16 @@ import AddWishlistButton from "../../components/wishlist/AddWishlistButton";
 import ReviewForm from "../../components/review/ReviewForm";
 import ReviewList from "../../components/review/ReviewList";
 import { useAuthContext } from "../../hooks/useAuthContext"; // Import your auth context hook
-
+import { useLocation } from 'react-router-dom';
 
 const ViewItemDetails = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const { user } = useAuthContext(); // Get user info from context
   const [reviewsUpdated, setReviewsUpdated] = useState(false); // State to trigger review list refresh
-
-
+  const location = useLocation();
+  const { discountPrice } = location.state || {};
+  
   useEffect(() => {
     if (id) {
       fetch(`http://localhost:3000/home/get-item/${id}`, {
@@ -62,7 +63,7 @@ const ViewItemDetails = () => {
             className="object-contain mb-4 h-96 w-full max-w-[200px] md:max-w-[35%]"
           />
           <div className="flex-1 md:ml-8">
-            <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
+            <p className="mb-2 font-bold text-red-500">Price: Rs. {discountPrice}</p>
             <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
             <p className="text-sm text-gray-500">Description: {item.description}</p>
 
