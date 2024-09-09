@@ -55,6 +55,7 @@ const UpdateDiscount = () => {
     const discountDetails = {
       email: user.email,
       itemId: itemId,
+      itemName: data.name,
       startDate,
       endDate,
       discountPercentage,

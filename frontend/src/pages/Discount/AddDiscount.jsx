@@ -42,6 +42,7 @@ const AddDiscount = () => {
     const discountDetails = {
       email: user.email,
       itemId: id,
+      itemName: data.name,
       startDate,
       endDate,
       discountPercentage,

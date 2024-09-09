@@ -9,6 +9,10 @@ const discountSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  itemName: {
+    type: String,
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
