@@ -1,23 +1,51 @@
 import { useState } from "react";
 import axios from "axios";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { toast } from "react-toastify";
 
-const ReviewForm = ({ productId, userId }) => {
+const ReviewForm = ({ productId, onReviewSubmitted}) => {
   const [rating, setRating] = useState(1);
   const [text, setText] = useState("");
+  const {user} = useAuthContext();   // Retrieve user context
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("You need to log in to submit a review.");
+      return;
+    }
+    console.log( "user email:",user.email , "Product ID:", productId, "rating:", rating, "text:", text); 
     try {
-      await axios.post("/api/reviews/submit", {
+      await axios.post("http://localhost:3000/api/reviews/submit", {
         productId,
-        userId,
+        email:user.email,
         rating,
         text,
       });
-      // handle success, e.g., show a message or update the review list
+
+      // Show success message
+      toast.success("Review added successfully!", {
+        position: "bottom-right",
+        autoClose: 5000, // Duration for the toast to be visible
+      });
+
+      // Clear the form fields
+      setRating(1);
+      setText("");
+      
+      if (onReviewSubmitted) {
+        onReviewSubmitted(); // Notify parent component to refresh reviews
+      }
+      
     } catch (error) {
-      console.error(error);
+      // Show error message
+      toast.error("Error submitting review. Please try again.", {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+      console.error("Error details:", error.response || error.message || error);
     }
+    
   };
 
   return (
@@ -55,7 +83,7 @@ const ReviewForm = ({ productId, userId }) => {
       </div>
       <button
         type="submit"
-        className="px-4 py-2 bg-blue-500 text-white rounded-md"
+        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
       >
         Submit Review
       </button>
