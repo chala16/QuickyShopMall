@@ -7,7 +7,7 @@ import Navbar from "../../components/home/Navbar/Navbar";
 import axios from "axios";
 
 const UpdateDiscount = () => {
-  const { id, itemId  } = useParams();
+  const { id, itemId } = useParams();
   const [data, setData] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -16,12 +16,11 @@ const UpdateDiscount = () => {
   const [discountAvailable, setDiscountAvailable] = useState(true);
   const { user } = useAuthContext();
 
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = (`0${date.getMonth() + 1}`).slice(-2); // Months are zero-indexed
-    const day = (`0${date.getDate()}`).slice(-2);
+    const month = `0${date.getMonth() + 1}`.slice(-2);
+    const day = `0${date.getDate()}`.slice(-2);
     return `${year}-${month}-${day}`;
   };
 
@@ -50,7 +49,6 @@ const UpdateDiscount = () => {
     }
   }, [id, user]);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -63,7 +61,7 @@ const UpdateDiscount = () => {
       discountedPrice,
       discountAvailable,
     };
-    console.log(discountDetails);
+
     axios
       .patch(`http://localhost:3000/api/discounts/${id}`, discountDetails, {
         headers: {
@@ -71,127 +69,149 @@ const UpdateDiscount = () => {
         },
       })
       .then((response) => {
-        console.log("Discount added successfully", response);
-        toast.success("Discount added successfully");
+        toast.success("Discount updated successfully");
       })
       .catch((error) => {
-        console.error("Error adding discount", error);
-        toast.error("Failed to add discount");
+        console.error("Error updating discount", error);
+        toast.error("Failed to update discount");
       });
   };
 
   if (!data) {
-    return <div>Loading...</div>; // Handle loading state
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
       <Navbar />
-      <div className="flex justify-between items-start p-8">
-        {/* Form Container */}
-        <div className="w-full max-w-md  mt-40 ml-4">
-          <form className="ml-10 max-w-sm" onSubmit={handleSubmit}>
-            {/* Form fields */}
-            <div className="mb-5">
-              <label
-                htmlFor="date"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Start Date
-              </label>
-              <input
-                type="date"
-                id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                placeholder="name@flowbite.com"
-                required
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="date"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                End Date
-              </label>
-              <input
-                type="date"
-                id="discount"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                placeholder="Discount percentage"
-                required
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="discount"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Discount Percentage
-              </label>
-              <input
-                type="number"
-                id="discount"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                value={discountPercentage}
-                onChange={(e) => setDiscountPercentage(e.target.value)}
-                placeholder="Discount percentage"
-                required
-              />
-            </div>
-            <div className="mb-5">
-              <label
-                htmlFor="number"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Discounted price
-              </label>
-
-              <input
-                type="number"
-                id="discount"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                value={discountedPrice}
-                onChange={(e) => setDiscountedPrice(e.target.value)}
-                placeholder="Discount percentage"
-                required
-              />
-            </div>
-
-            <div className="mb-5">
-              <label
-                htmlFor="discount-available"
-                className="flex items-center text-sm font-medium text-gray-900 dark:text-white"
-              >
-                <input
-                  type="checkbox"
-                  id="discount-available"
-                  checked={discountAvailable}
-                  onChange={(e) => setDiscountAvailable(e.target.checked)}
-                  className="mr-2"
-                />
-                Available
-              </label>
-            </div>
-            {/* Add other form fields here */}
-            <button
-              type="submit"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      <section className="bg-white dark:bg-gray-900 mt-28">
+        <div className="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
+          <div className="mr-auto place-self-center lg:col-span-7">
+            <h1
+              className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
+              style={{ fontSize: "3rem" }}
             >
-              Submit
-            </button>
-          </form>
-        </div>
+              <img
+                src="https://www.pngall.com/wp-content/uploads/8/Campaign-PNG-Clipart.png"
+                alt="hero"
+                style={{
+                  marginTop: "-100px",
+                  marginLeft: "-75px",
+                  width: "600px",
+                  height: "400px",
+                }}
+              />{" "}
+            </h1>
+          </div>
 
-        {/* Image Card Container */}
-        <div className="w-full max-w-md mt-20 mr-20">
-          <DiscountImageCard data={data} />
+          <div
+            className="hidden lg:mt-0 lg:col-span-5 lg:flex"
+            style={{
+              marginTop: "-30px",
+            }}
+          >
+            <form
+              className="max-w-md mx-auto"
+              style={{ width: "100%" }}
+              onSubmit={handleSubmit}
+            >
+              <h1
+                className="max-w-1xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
+                style={{ fontSize: "2rem" }}
+              >
+                Update Discount
+              </h1>
+              <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="start-date"
+                  className="absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  id="start-date"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="end-date"
+                  className="absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  id="end-date"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="discount-percentage"
+                  className="absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Discount Percentage
+                </label>
+                <input
+                  type="number"
+                  id="discount-percentage"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  value={discountPercentage}
+                  onChange={(e) => setDiscountPercentage(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="discounted-price"
+                  className="absolute text-sm text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Discounted Price
+                </label>
+                <input
+                  type="number"
+                  id="discounted-price"
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  value={discountedPrice}
+                  onChange={(e) => setDiscountedPrice(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="discount-available"
+                  className="flex items-center text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  <input
+                    type="checkbox"
+                    id="discount-available"
+                    checked={discountAvailable}
+                    onChange={(e) => setDiscountAvailable(e.target.checked)}
+                    className="mr-2"
+                  />
+                  Available
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+          <div className="w-full max-w-md mt-20 lg:mt-0 lg:col-span-7">
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
