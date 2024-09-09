@@ -63,7 +63,7 @@ const ViewItemDetails = () => {
             className="object-contain mb-4 h-96 w-full max-w-[200px] md:max-w-[35%]"
           />
           <div className="flex-1 md:ml-8">
-            <p className="mb-2 font-bold text-red-500">Price: Rs. {discountPrice}</p>
+            <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
             <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
             <p className="text-sm text-gray-500">Description: {item.description}</p>
 
