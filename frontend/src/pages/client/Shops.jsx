@@ -36,7 +36,7 @@ const Shops = () => {
     <div>
       <Navbar />
       <h1 className="mt-6 ml-10 text-2xl font-bold">Shops</h1>
-      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 mx-8 md:grid-cols-3 lg:grid-cols-4">
         {shops.length > 0 ? (
           shops.map((shop) => (
             <div
@@ -51,7 +51,7 @@ const Shops = () => {
               />
               <div className="p-4">
                 <h3 className="mb-2 text-lg font-semibold">{shop.shopName}</h3>
-                <p className="mb-2 font-bold text-red-500">Floor No : {shop.shopFloorNo}</p>
+                <p className="px-4 mb-2 font-bold text-white bg-red-400 w-fit rounded-xl">Floor No : {shop.shopFloorNo}</p>
               </div>
             </div>
           ))

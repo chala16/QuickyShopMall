@@ -65,7 +65,7 @@ const ViewItemDetails = () => {
           <div className="flex-1 md:ml-8">
             <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
             <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
-            <p className="text-sm text-gray-500">Description: {item.description}</p>
+            <p className="text-sm text-gray-500 mb-6">Description: {item.description}</p>
 
             <AddWishlistButton itemId={id}/>
 

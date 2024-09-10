@@ -75,8 +75,18 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
   router.route("/update-item/:id").patch(async (req, res) => {
     try {
       const { id } = req.params;
+      const updateData = req.body;
+
+      // Update the inStock to false if the item quantity is zero
+      if (updateData.quantity !== undefined) {
+        if (updateData.quantity == 0) {
+          updateData.inStock = false;
+        } else {
+          updateData.inStock = true;
+        }
+      }
   
-      const result = await Inventory.findByIdAndUpdate(id, req.body, { new: true });
+      const result = await Inventory.findByIdAndUpdate(id, updateData, { new: true });
   
       if (!result) {
         return res.status(404).json({ message: "Item not found" });

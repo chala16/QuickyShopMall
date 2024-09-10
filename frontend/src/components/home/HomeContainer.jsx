@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eyeImg from "../../images/eye.svg";
 import HomeDescription from "./HomeDescription";
+import AddWishlistButton from "../wishlist/AddWishlistButton";
 
 const HomeContainer = () => {
   const navigate = useNavigate();
@@ -57,12 +58,12 @@ const HomeContainer = () => {
         if (discount) {
           return {
             ...item,
-            discountPrice: discount.discountedPrice, // Discounted price
+            discountAmount: item.price-discount.discountedPrice, // Discounted price
             discountPercentage: discount.discountPercentage, // Discount percentage
           };
         }
         return item; // Return item as is if no discount exists
-      }).filter((item) => item.discountPrice); // Filter out items without discounts
+      }).filter((item) => item.discountAmount); // Filter out items without discounts
   
       setItems(validItems);
       setDiscountItems(itemsWithDiscounts);
@@ -86,10 +87,8 @@ const HomeContainer = () => {
     navigate(`/client/dashboard/shops`);
   };
 
-  const handleHomeCardClick = (itemId, discountPrice) => {
-    navigate(`/client/dashboard/view-item/${itemId}`,{
-      state: { discountPrice },
-    });
+  const handleHomeCardClick = (itemId, item) => {
+    navigate(`/client/dashboard/view-item/${itemId}`,{state:item});
     
   };
 
@@ -223,7 +222,7 @@ const HomeContainer = () => {
             
                   <div>
                     <span className="text-xl font-bold">
-                      Rs. {item.discountPrice} {/* Use the discounted price */}
+                      Rs. {item.discountAmount} {/* Use the discounted price */}
                     </span>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-sm line-through opacity-50">
@@ -234,12 +233,14 @@ const HomeContainer = () => {
                   </div>
             
                   <div className="flex gap-8 mt-5">
-                    <button className="button-primary">
+                    {/* <button className="button-primary">
                       Add to wishlist
-                    </button>
+                    </button> */}
+                    <AddWishlistButton itemId={item._id} />
+
                     <button
                       className="button-icon"
-                      onClick={() => handleHomeCardClick(item._id, item.discountPrice)}
+                      onClick={() => handleHomeCardClick(item._id, item)}
                     >
                       <img className="opacity-50" src={eyeImg} alt="View" />
                     </button>
