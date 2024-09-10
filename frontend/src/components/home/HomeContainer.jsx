@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eyeImg from "../../images/eye.svg";
 import HomeDescription from "./HomeDescription";
+import AddWishlistButton from "../wishlist/AddWishlistButton";
 
 const HomeContainer = () => {
   const navigate = useNavigate();
@@ -86,10 +87,8 @@ const HomeContainer = () => {
     navigate(`/client/dashboard/shops`);
   };
 
-  const handleHomeCardClick = (itemId, discountPrice) => {
-    navigate(`/client/dashboard/view-item/${itemId}`,{
-      state: { discountPrice },
-    });
+  const handleHomeCardClick = (itemId, item) => {
+    navigate(`/client/dashboard/view-item/${itemId}`,{state:item});
     
   };
 
@@ -234,12 +233,14 @@ const HomeContainer = () => {
                   </div>
             
                   <div className="flex gap-8 mt-5">
-                    <button className="button-primary">
+                    {/* <button className="button-primary">
                       Add to wishlist
-                    </button>
+                    </button> */}
+                    <AddWishlistButton itemId={item._id} />
+
                     <button
                       className="button-icon"
-                      onClick={() => handleHomeCardClick(item._id, item.discountPrice)}
+                      onClick={() => handleHomeCardClick(item._id, item)}
                     >
                       <img className="opacity-50" src={eyeImg} alt="View" />
                     </button>

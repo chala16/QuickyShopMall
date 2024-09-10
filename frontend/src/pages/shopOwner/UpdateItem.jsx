@@ -3,7 +3,6 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
-import bg from "../../images/viewAdminBG.jpg";
 import upload from "../../images/upload.jpg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,6 +12,10 @@ import { FaBoxArchive } from "react-icons/fa6";
 
 const UpdateItem = () => {
   const { user } = useAuthContext();
+  const [itemNameError, setItemNameError] = useState();
+  const [itemQtyError, setItemQtyError] = useState();
+  const [itemPriceError, setItemPriceError] = useState();
+  const [descriptionError, setDescriptionError] = useState();
   const [postImage, setPostImage] = useState(null);
   const [fileUploaded, setFileUploaded] = useState(false);
   const [itemDetails, setItemDetails] = useState(null);
@@ -120,6 +123,45 @@ const UpdateItem = () => {
     return <div>Loading...</div>;
   }
 
+  //Validations
+  const handleItemName = (event) => {
+    const inputValue = event.target.value.trim();
+    if (!inputValue) {
+      setDescriptionError("Cannot be empty");
+    } else {
+      setDescriptionError("");
+    }
+  };
+
+  const handleQty = (event) => {
+    const inputValue = event.target.value.trim();
+    if (inputValue < 0 || inputValue > 99999 || inputValue == 0) {
+      setItemQtyError("Cannot be minus value or enter below 100000 quantity");
+    } else {
+      setItemQtyError("");
+    }
+  };
+
+  const handlePrice = (event) => {
+    const inputValue = event.target.value.trim();
+    if (inputValue < 0 || inputValue > 999999999999 || inputValue == 0) {
+      setItemPriceError(
+        "Cannot be minus value or enter below Rs.1000000000000 price"
+      );
+    } else {
+      setItemPriceError("");
+    }
+  };
+
+  const handleDescription = (event) => {
+    const inputValue = event.target.value.trim();
+    if (!inputValue) {
+      setDescriptionError("Cannot be empty");
+    } else {
+      setDescriptionError("");
+    }
+  };
+
   return (
     <div className="min-h-screen pb-16 bg-gray-100">
       <Navbar />
@@ -158,9 +200,15 @@ const UpdateItem = () => {
                 type="text"
                 defaultValue={itemDetails.name}
                 required
+                onChange={handleItemName}
                 minLength={3}
                 maxLength={30}
               />
+              {itemNameError && (
+                <div className="font-semibold text-red-600 ">
+                  {itemNameError}
+                </div>
+              )}
             </div>
 
             <div className="lg:w-1/2">
@@ -175,9 +223,15 @@ const UpdateItem = () => {
                 id="qty"
                 name="qty"
                 type="number"
+                onChange={handleQty}
                 defaultValue={itemDetails.quantity}
                 required
               />
+              {itemQtyError && (
+                <div className="font-semibold text-red-600 ">
+                  {itemQtyError}
+                </div>
+              )}
             </div>
           </div>
 
@@ -198,9 +252,15 @@ const UpdateItem = () => {
                 placeholder="Item price"
                 defaultValue={itemDetails.price}
                 required
+                onChange={handlePrice}
                 minLength={1}
                 maxLength={10}
               />
+              {itemPriceError && (
+                <div className="font-semibold text-red-600 ">
+                  {itemPriceError}
+                </div>
+              )}
             </div>
 
             <div className="lg:w-1/2">
@@ -246,19 +306,35 @@ const UpdateItem = () => {
                 className="w-40%"
                 rows={5}
                 maxLength={1000}
+                onChange={handleDescription}
                 defaultValue={itemDetails.description}
               />
+              {descriptionError && (
+                <div className="font-semibold text-red-600 ">
+                  {descriptionError}
+                </div>
+              )}
             </div>
             <div className="lg:w-1/2">
-            <div className="block mb-2">
+              <div className="block mb-2">
                 <Label
                   htmlFor="image"
                   value="Item Image"
                   className="text-lg "
                 />
                 <div>
+                  {/* Show the current image if exists */}
+                  {postImage && (
+                    <div className="mb-4">
+                      <img
+                        src={postImage}
+                        alt="Current item"
+                        className="object-cover w-20 h-20 rounded-md shadow-lg"
+                      />
+                    </div>
+                  )}
                   <input
-                    className="mt-4 bg-black"
+                    className="bg-black "
                     type="file"
                     label="Image"
                     name="image"
@@ -266,15 +342,24 @@ const UpdateItem = () => {
                     accept=".jpeg,.png,.jpg"
                     onChange={(e) => handleFileUpload(e)}
                   />
-                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <Button type="submit" className="w-40 bg-red-500 shadow-lg ">
+          <Button
+            type="submit"
+            disabled={
+              !fileUploaded ||
+              itemNameError ||
+              itemQtyError ||
+              itemPriceError ||
+              descriptionError
+            }
+            className="w-40 bg-red-500 shadow-lg "
+          >
             <p className="text-lg font-bold">Update Item</p>
           </Button>
-
         </form>
       </div>
     </div>
