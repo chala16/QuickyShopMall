@@ -6,15 +6,16 @@ import AddWishlistButton from "../../components/wishlist/AddWishlistButton";
 import ReviewForm from "../../components/review/ReviewForm";
 import ReviewList from "../../components/review/ReviewList";
 import { useAuthContext } from "../../hooks/useAuthContext"; // Import your auth context hook
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 const ViewItemDetails = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
+  const { user } = useAuthContext(); // Get user info from context
   const [reviewsUpdated, setReviewsUpdated] = useState(false); // State to trigger review list refresh
   const location = useLocation();
-  const itemDetails = location.state;
-
+  const { discountPrice } = location.state || {};
+  
   useEffect(() => {
     if (id) {
       fetch(`http://localhost:3000/home/get-item/${id}`, {
@@ -62,39 +63,20 @@ const ViewItemDetails = () => {
             className="object-contain mb-4 h-96 w-full max-w-[200px] md:max-w-[35%]"
           />
           <div className="flex-1 md:ml-8">
-            <div>
-              <span className="text-xl font-bold">
-                Rs. {itemDetails.discountAmount ? itemDetails.discountAmount : itemDetails.price}
-              </span>
-              {itemDetails.discountPercentage > 0 && (
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-sm line-through opacity-50">
-                    Rs. {itemDetails.price}
-                  </span>
-                  <span className="discount-percent">
-                    Save {itemDetails.discountPercentage}%
-                  </span>
-                </div>
-              )}
-            </div>
-            <p className="mb-2 text-sm text-gray-600">
-              Category: {item.category}
-            </p>
-            <p className="text-sm text-gray-500">
-              Description: {item.description}
-            </p>
-            <AddWishlistButton itemId={id} />
-            <h1 className="mt-10 mb-4 font-bold text-s">
-              Voices of Our Shoppers
-            </h1>
-            <ReviewList productId={id} reviewsUpdated={reviewsUpdated} />
-            <h1 className="mt-10 mb-4 font-bold text-s">
-              We'd Love Your Feedback – Share with Your Fellow Customers
-            </h1>
-            <ReviewForm
-              productId={id}
-              onReviewSubmitted={handleReviewSubmitted}
-            />{" "}
+            <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
+            <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
+            <p className="text-sm text-gray-500">Description: {item.description}</p>
+
+            <AddWishlistButton itemId={id}/>
+
+            <h1 className="text-s font-bold mb-4 mt-10">Voices of Our Shoppers</h1>
+            <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
+
+            <h1 className="text-s font-bold mb-4 mt-10">We'd Love Your Feedback – Share with Your Fellow Customers</h1>
+            <ReviewForm productId={id} onReviewSubmitted={handleReviewSubmitted}/>{" "}
+           
+            
+
           </div>
         </div>
       </div>
