@@ -55,7 +55,7 @@ const getDiscount = async (req, res) => {
 
 // Create a discount
 const createDiscount = async (req, res) => {
-  const { email, itemId, startDate, endDate, discountPercentage, discountedPrice, discountAvailable } = req.body;
+  const { email, itemId, itemName, startDate, endDate, discountPercentage, discountedPrice, discountAvailable } = req.body;
 
   try {
 
@@ -67,6 +67,7 @@ const createDiscount = async (req, res) => {
     const discount = await Discount.create({
       email,
       itemId,
+      itemName,
       startDate,
       endDate,
       discountPercentage,

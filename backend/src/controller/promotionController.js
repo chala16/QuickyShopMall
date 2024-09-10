@@ -55,10 +55,10 @@ const createPromotion = async (req, res) => {
   const { email, title, description, image } = req.body;
 
   try {
-    const existingPromotion = await Promotion.findOne({ email });
-    if (existingPromotion) {
-      return res.status(400).json({ message: "Promotion already exists for this item." });
-    }
+    // const existingPromotion = await Promotion.findOne({ email });
+    // if (existingPromotion) {
+    //   return res.status(400).json({ message: "Promotion already exists for this item." });
+    // }
 
     const promotions = await Promotion.create({
       email,
