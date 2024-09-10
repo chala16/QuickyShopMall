@@ -117,10 +117,10 @@ const ViewDiscountItems = () => {
                   {discount.itemName}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {discount.startDate}
+                {new Date(discount.startDate).toLocaleDateString()}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {discount.endDate}
+                {new Date(discount.endDate).toLocaleDateString()}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.discountPercentage}
