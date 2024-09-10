@@ -51,7 +51,7 @@ const Shops = () => {
               />
               <div className="p-4">
                 <h3 className="mb-2 text-lg font-semibold">{shop.shopName}</h3>
-                <p className="mb-2 font-bold text-red-500">Floor No : {shop.shopFloorNo}</p>
+                <p className="px-4 mb-2 font-bold text-white bg-red-400 w-fit rounded-xl">Floor No : {shop.shopFloorNo}</p>
               </div>
             </div>
           ))

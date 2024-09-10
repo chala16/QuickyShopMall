@@ -121,7 +121,7 @@ const UpdateItem = () => {
   }
 
   return (
-    <div className="pb-16 bg-gray-100 h-full-screen">
+    <div className="min-h-screen pb-16 bg-gray-100">
       <Navbar />
       <div className="px-20 pb-12 mt-16 bg-white shadow-xl rounded-3xl mx-44">
         <div className="pt-8 mt-8">
