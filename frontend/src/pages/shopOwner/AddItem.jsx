@@ -3,10 +3,12 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
-import bg from "../../images/viewAdminBG.jpg";
 import upload from "../../images/upload.jpg";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { FaBoxArchive } from "react-icons/fa6";
+import { IconContext } from "react-icons";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 const AddItem = () => {
   const { user } = useAuthContext();
@@ -45,7 +47,7 @@ const AddItem = () => {
 
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
-    setPostImage( base64 );
+    setPostImage(base64);
   };
 
   const handleAddItem = (event) => {
@@ -82,23 +84,26 @@ const AddItem = () => {
       .then((res) => res.json())
       .then((data) => {
         showSuccess();
-        navigate("/shopOwner/dashboard");
+        navigate("/shopOwner/dashboard/view-items");
       });
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "50% 10%",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="min-h-screen pb-16 bg-gray-100">
       <Navbar />
-      <div className=" h-[100vh] px-44">
-        <div className="flex mt-8 justify-between p-6 mb-6 mr-[820px] rounded-xl bg-client-brown">
-          <h2 className="text-3xl font-bold text-white ">Add a item</h2>
+      <div className="px-20 pb-12 mt-16 bg-white shadow-xl rounded-3xl mx-44">
+        <div className="pt-8 mt-8">
+          <Link to={`/`}>
+            <IconContext.Provider value={{ color: "green", size: "40px" }}>
+              <IoArrowBackCircleSharp />
+            </IconContext.Provider>
+          </Link>
+        </div>
+        <div className="flex p-6 pt-0 rounded-xl">
+          <IconContext.Provider value={{ color: "blue", size: "24px" }}>
+            <FaBoxArchive className="mt-8 mr-4" />
+          </IconContext.Provider>
+          <h2 className="mt-6 text-3xl font-bold">Add Product</h2>
         </div>
 
         <form
@@ -112,7 +117,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="itemName"
                   value="Item name"
-                  className="text-lg text-white"
+                  className="text-lg"
                 />
               </div>
               <TextInput
@@ -131,7 +136,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="qty"
                   value="Item Quantity"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <TextInput id="qty" name="qty" type="number" required />
@@ -145,7 +150,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="price"
                   value="Item Price"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <TextInput
@@ -164,7 +169,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="category"
                   value="Category type"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
 
@@ -191,7 +196,7 @@ const AddItem = () => {
                 <Label
                   htmlFor="itemDescription"
                   value="Item Description"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <Textarea
@@ -205,34 +210,29 @@ const AddItem = () => {
               />
             </div>
             <div className="lg:w-1/2">
-              <div className="block mt-10 mb-2">
+              <div className="block mb-2">
                 <Label
-                  htmlFor="file-upload"
-                  className="m-auto custom-file-upload"
-                >
-                  <img className="w-16" src={upload} alt="" />
-                </Label>
-                <input
-                  className="mt-4 text-white bg-black"
-                  type="file"
-                  label="Image"
-                  name="image"
-                  id="file-upload"
-                  accept=".jpeg,.png,.jpg"
-                  onChange={(e) => handleFileUpload(e)}
+                  htmlFor="image"
+                  value="Item Image"
+                  className="text-lg "
                 />
+                <div>
+                  <input
+                    className="mt-4 bg-black"
+                    type="file"
+                    label="Image"
+                    name="image"
+                    id="file-upload"
+                    accept=".jpeg,.png,.jpg"
+                    onChange={(e) => handleFileUpload(e)}
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          <Button type="submit" className="mt-5 bg-red-500">
-            <p className="text-lg font-bold">Add Item</p>
-          </Button>
-
-          <Button className="bg-blue-600 ">
-            <Link to={`/shopOwner/dashboard`}>
-              <p className="text-lg font-bold">Go Back</p>
-            </Link>
+          <Button type="submit" className="w-40 bg-red-500 shadow-lg ">
+            <p className="text-lg font-bold">Add Product</p>
           </Button>
         </form>
       </div>
