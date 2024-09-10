@@ -76,11 +76,11 @@ const AddWishlistButton = ({ itemId }) => {
   return (
     <button
       onClick={handleToggleWishlist}
-      className={`px-6 py-2 mt-6 text-black font-bold rounded-lg hover:bg-yellow-300 md:px-8 md:py-3 ${
+      className={`px-6 py-2 text-black font-bold rounded-lg hover:bg-yellow-300 md:px-8 md:py-3 ${
         isInWishlist ? "bg-yellow-50" : "bg-yellow-200"
       }`}
     >
-      {isInWishlist ? "Item added to Wishlist" : "Add to Wishlist"}
+      {isInWishlist ? "Already Added" : "Add to Wishlist"}
     </button>
   );
 };

@@ -10,8 +10,8 @@ const ItemBox = ({ item, handleDelete }) => {
         <h2 className="text-xl font-semibold">{item.name}</h2>
         <p className="text-gray-600"><b>Price:</b> Rs.{item.price.toFixed(2)}</p>
         <p className="text-gray-600">
-          <b>Stock Available:</b> {""}
-          <span className={isInStock ? "text-green-500" : "text-red-500"}>
+          <b>Available:</b> {""}
+          <span className={isInStock ? "text-green-500 font-bold" : "text-red-500 font-bold"}>
             { isInStock ? "Yes" : "Out of Stock" }
           </span>
         </p>
