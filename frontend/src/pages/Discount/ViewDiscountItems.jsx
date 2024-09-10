@@ -85,7 +85,7 @@ const ViewDiscountItems = () => {
                 Email
               </th>
               <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                ItemId
+                Item Name
               </th>
               <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
                 Start Date
@@ -114,7 +114,7 @@ const ViewDiscountItems = () => {
                   {discount.email}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {discount.itemId}
+                  {discount.itemName}
                 </td>
                 <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   {discount.startDate}
