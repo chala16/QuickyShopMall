@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Navbar from "../../components/home/Navbar/Navbar";
 import eyeImg from "../../images/eye.svg";
+import AddWishlistButton from "../../components/wishlist/AddWishlistButton";
 
 const ShopItems = () => {
   const navigate = useNavigate();
@@ -128,7 +129,7 @@ const ShopItems = () => {
                   </div>
 
                   <div className="flex justify-between mt-5">
-                    <button className="button-primary">Add to wishlist</button>
+                    <AddWishlistButton itemId={item._id} />
                     <button
                       className="mx-4 button-icon"
                       onClick={() => handleCardClick(item._id)}
