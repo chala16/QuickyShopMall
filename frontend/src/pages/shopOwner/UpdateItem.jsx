@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
 import bg from "../../images/viewAdminBG.jpg";
 import upload from "../../images/upload.jpg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IconContext } from "react-icons";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { FaBoxArchive } from "react-icons/fa6";
 
 const UpdateItem = () => {
   const { user } = useAuthContext();
@@ -105,7 +108,7 @@ const UpdateItem = () => {
       .then((res) => res.json())
       .then((data) => {
         showSuccess();
-        navigate("/shopOwner/dashboard/delete-items");
+        navigate("/shopOwner/dashboard/view-items");
       })
       .catch((error) => {
         console.error("Error updating item", error);
@@ -118,18 +121,21 @@ const UpdateItem = () => {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "50% 10%",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="min-h-screen pb-16 bg-gray-100">
       <Navbar />
-      <div className=" h-[100vh] px-44">
-        <div className="flex mt-8 justify-between p-6 mb-6 mr-[820px] rounded-xl bg-client-brown">
-          <h2 className="text-3xl font-bold text-white ">Update Item</h2>
+      <div className="px-20 pb-12 mt-16 bg-white shadow-xl rounded-3xl mx-44">
+        <div className="pt-8 mt-8">
+          <Link to={`/shopOwner/dashboard/view-items`}>
+            <IconContext.Provider value={{ color: "green", size: "40px" }}>
+              <IoArrowBackCircleSharp />
+            </IconContext.Provider>
+          </Link>
+        </div>
+        <div className="flex p-6 pt-0 rounded-xl">
+          <IconContext.Provider value={{ color: "blue", size: "24px" }}>
+            <FaBoxArchive className="mt-8 mr-4" />
+          </IconContext.Provider>
+          <h2 className="mt-6 text-3xl font-bold">Update Product</h2>
         </div>
 
         <form
@@ -143,7 +149,7 @@ const UpdateItem = () => {
                 <Label
                   htmlFor="itemName"
                   value="Item name"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <TextInput
@@ -162,7 +168,7 @@ const UpdateItem = () => {
                 <Label
                   htmlFor="qty"
                   value="Item Quantity"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <TextInput
@@ -182,7 +188,7 @@ const UpdateItem = () => {
                 <Label
                   htmlFor="price"
                   value="Item Price"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <TextInput
@@ -202,7 +208,7 @@ const UpdateItem = () => {
                 <Label
                   htmlFor="category"
                   value="Category type"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
 
@@ -229,7 +235,7 @@ const UpdateItem = () => {
                 <Label
                   htmlFor="itemDescription"
                   value="Item Description"
-                  className="text-lg text-white"
+                  className="text-lg "
                 />
               </div>
               <Textarea
@@ -244,35 +250,31 @@ const UpdateItem = () => {
               />
             </div>
             <div className="lg:w-1/2">
-              <div className="block mt-10 mb-2">
+            <div className="block mb-2">
                 <Label
-                  htmlFor="file-upload"
-                  className="m-auto custom-file-upload"
-                >
-                  <img className="w-16" src={upload} alt="" />
-                </Label>
-                <input
-                  className="mt-4 text-white bg-black"
-                  type="file"
-                  label="Image"
-                  name="image"
-                  id="file-upload"
-                  accept=".jpeg,.png,.jpg"
-                  onChange={(e) => handleFileUpload(e)}
+                  htmlFor="image"
+                  value="Item Image"
+                  className="text-lg "
                 />
+                <div>
+                  <input
+                    className="mt-4 bg-black"
+                    type="file"
+                    label="Image"
+                    name="image"
+                    id="file-upload"
+                    accept=".jpeg,.png,.jpg"
+                    onChange={(e) => handleFileUpload(e)}
+                  />
+                  </div>
               </div>
             </div>
           </div>
 
-          <Button type="submit" className="mt-5 bg-red-500">
+          <Button type="submit" className="w-40 bg-red-500 shadow-lg ">
             <p className="text-lg font-bold">Update Item</p>
           </Button>
 
-          <Button className="bg-blue-600 ">
-            <p className="text-lg font-bold" onClick={() => navigate(`/shopOwner/dashboard`)}>
-              Go Back
-            </p>
-          </Button>
         </form>
       </div>
     </div>
