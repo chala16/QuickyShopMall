@@ -76,8 +76,8 @@ const ShopItems = () => {
     }
   };
 
-  const handleCardClick = (itemId) => {
-    navigate(`/client/dashboard/view-item/${itemId}`);
+  const handleCardClick = (itemId,item) => {
+    navigate(`/client/dashboard/view-item/${itemId}`,{state:item});
   };
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const ShopItems = () => {
                     <button className="button-primary">Add to wishlist</button>
                     <button
                       className="mx-4 button-icon"
-                      onClick={() => handleCardClick(item._id)}
+                      onClick={() => handleCardClick(item._id,item)}
                     >
                       <img className="opacity-50" src={eyeImg} alt="View" />
                     </button>
