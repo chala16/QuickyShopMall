@@ -34,7 +34,7 @@ const ViewItem = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar />
       <div className="p-8">
         <h1 className="mb-6 text-2xl font-bold">{item.name}</h1>
