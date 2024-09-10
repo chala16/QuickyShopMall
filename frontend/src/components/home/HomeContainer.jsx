@@ -86,10 +86,8 @@ const HomeContainer = () => {
     navigate(`/client/dashboard/shops`);
   };
 
-  const handleHomeCardClick = (itemId, discountPrice) => {
-    navigate(`/client/dashboard/view-item/${itemId}`,{
-      state: { discountPrice },
-    });
+  const handleHomeCardClick = (itemId, item) => {
+    navigate(`/client/dashboard/view-item/${itemId}`,{state:item});
     
   };
 
@@ -239,7 +237,7 @@ const HomeContainer = () => {
                     </button>
                     <button
                       className="button-icon"
-                      onClick={() => handleHomeCardClick(item._id, item.discountPrice)}
+                      onClick={() => handleHomeCardClick(item._id, item)}
                     >
                       <img className="opacity-50" src={eyeImg} alt="View" />
                     </button>
