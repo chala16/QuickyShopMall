@@ -3,11 +3,19 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Navbar from "../../components/home/Navbar/Navbar";
 import AddWishlistButton from "../../components/wishlist/AddWishlistButton";
+import ReviewForm from "../../components/review/ReviewForm";
+import ReviewList from "../../components/review/ReviewList";
+import { useAuthContext } from "../../hooks/useAuthContext"; // Import your auth context hook
+import { useLocation } from 'react-router-dom';
 
 const ViewItemDetails = () => {
   const { id } = useParams();
   const [item, setItem] = useState(null);
-
+  const { user } = useAuthContext(); // Get user info from context
+  const [reviewsUpdated, setReviewsUpdated] = useState(false); // State to trigger review list refresh
+  const location = useLocation();
+  const { discountPrice } = location.state || {};
+  
   useEffect(() => {
     if (id) {
       fetch(`http://localhost:3000/home/get-item/${id}`, {
@@ -19,6 +27,7 @@ const ViewItemDetails = () => {
         .then((res) => res.json())
         .then((data) => {
           setItem(data);
+          console.log(data);
         })
         .catch((error) => {
           console.error("Error fetching item", error);
@@ -26,6 +35,17 @@ const ViewItemDetails = () => {
         });
     }
   }, [id]);
+
+  useEffect(() => {
+    // Fetch reviews whenever reviewsUpdated state changes
+    if (reviewsUpdated) {
+      setReviewsUpdated(false); // Reset reviewsUpdated state
+    }
+  }, [reviewsUpdated]);
+
+  const handleReviewSubmitted = () => {
+    setReviewsUpdated(true); // Trigger review list refresh
+  };
 
   if (!item) {
     return <div>Loading...</div>;
@@ -48,6 +68,15 @@ const ViewItemDetails = () => {
             <p className="text-sm text-gray-500">Description: {item.description}</p>
 
             <AddWishlistButton itemId={id}/>
+
+            <h1 className="text-s font-bold mb-4 mt-10">Voices of Our Shoppers</h1>
+            <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
+
+            <h1 className="text-s font-bold mb-4 mt-10">We'd Love Your Feedback – Share with Your Fellow Customers</h1>
+            <ReviewForm productId={id} onReviewSubmitted={handleReviewSubmitted}/>{" "}
+           
+            
+
           </div>
         </div>
       </div>

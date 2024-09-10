@@ -64,31 +64,37 @@ const Navbar = () => {
               <>
                 <a
                   href="/shopOwner/dashboard/add-item"
-                  className="text-lg font-bold text-client-brown nav-link"
+                  className="text-sm font-bold text-client-brown nav-link"
                 >
                   Add Item
                 </a>
                 <a
                   href="/shopOwner/dashboard/view-items"
-                  className="text-lg font-bold text-client-brown nav-link"
+                  className="text-sm font-bold text-client-brown nav-link"
                 >
                   Inventory
                 </a>
                 <a
                   href="/shopOwner/discounts"
-                  className="text-lg font-bold text-client-brown nav-link"
+                  className="text-sm font-bold text-client-brown nav-link"
                 >
                   Discounts
                 </a>
                 <a
+                  href="/shopOwner/promotion"
+                  className="text-sm font-bold text-client-brown nav-link"
+                >
+                  Promotion
+                </a>
+                <a
                   href="/client/feedbacks"
-                  className="text-lg font-bold text-client-brown nav-link"
+                  className="text-sm font-bold text-client-brown nav-link"
                 >
                   Feedbacks
                 </a>
                 <a
                   href="/client/report"
-                  className="text-lg font-bold text-client-brown nav-link"
+                  className="text-sm font-bold text-client-brown nav-link"
                 >
                   Report
                 </a>

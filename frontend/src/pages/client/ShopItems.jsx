@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Navbar from "../../components/home/Navbar/Navbar";
 
+
 const ShopItems = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
@@ -31,7 +32,7 @@ const ShopItems = () => {
   useEffect(() => {
     fetchItems();
   }, []);
-  
+
   return (
     <div>
       <Navbar />

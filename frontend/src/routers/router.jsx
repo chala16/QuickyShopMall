@@ -18,7 +18,11 @@ import DiscountDashboard from "../pages/Discount/DiscountDashboard";
 import AddDiscount from "../pages/Discount/AddDiscount";
 import ViewDiscountItems from "../pages/Discount/ViewDiscountItems";
 import UpdateDiscount from "../pages/Discount/UpdateDiscount";
-
+import add from "../pages/Promotions/PromotionDashBoard";
+import PromotionDashBoard from "../pages/Promotions/PromotionDashBoard";
+import PromotionAdd from "../pages/Promotions/PromotionAdd";
+import ViewallPromotions from "../pages/Promotions/ViewallPromotions";
+import UpdatePromotion from "../pages/Promotions/UpdatePromotion";
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -103,6 +107,18 @@ function CreateRouter(){
     },
     {
       path: '/shopOwner/discounts/update-discount-item/:id/:itemId', element: <UpdateDiscount />
+    },
+    {
+      path: '/shopOwner/promotion', element: <PromotionDashBoard />
+    },
+    {
+      path: '/shopOwner/promotion/add-promotion/:id', element: <PromotionAdd />
+    },
+    {
+      path: '/shopOwner/promotion/view-promotion/:id', element: <ViewallPromotions />
+    },
+    {
+      path: '/shopOwner/promotion/update-promotion/:id', element: <UpdatePromotion />
     },
 
   ]);
