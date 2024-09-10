@@ -7,7 +7,7 @@ import Navbar from "../../components/home/Navbar/Navbar";
 
 const ViewDiscountItems = () => {
   const [discountedItems, setDiscountedItems] = useState([]);
-  const { user } = useAuthContext(); // Assuming this provides the user object with token
+  const { user } = useAuthContext(); 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +32,7 @@ const ViewDiscountItems = () => {
     }
   };
 
-  // Trigger fetching of items when the user is available
+  
   useEffect(() => {
     if (user) {
       fetchItems();
