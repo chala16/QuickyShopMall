@@ -57,12 +57,12 @@ const HomeContainer = () => {
         if (discount) {
           return {
             ...item,
-            discountAmount: item.price-discount.discountedPrice, // Discounted price
+            discountPrice: discount.discountedPrice, // Discounted price
             discountPercentage: discount.discountPercentage, // Discount percentage
           };
         }
         return item; // Return item as is if no discount exists
-      }).filter((item) => item.discountAmount); // Filter out items without discounts
+      }).filter((item) => item.discountPrice); // Filter out items without discounts
   
       setItems(validItems);
       setDiscountItems(itemsWithDiscounts);
@@ -223,7 +223,7 @@ const HomeContainer = () => {
             
                   <div>
                     <span className="text-xl font-bold">
-                      Rs. {item.discountAmount} {/* Use the discounted price */}
+                      Rs. {item.discountPrice} {/* Use the discounted price */}
                     </span>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-sm line-through opacity-50">

@@ -16,34 +16,36 @@ const HomeDescription = () => {
     <div className="flex p-10 bg-black banner">
       <div className="flex-1 p-6 ml-16 rounded-lg shadow-lg">
         <h1 className="mb-4 font-bold text-purple-600 text-8xl">Why</h1>
-        <h1 className="mb-4 text-4xl font-bold text-purple-600">
-          You Should Choose{" "}
-        </h1>
-        <h1 className="mb-16 text-6xl font-bold text-yellow-300">QuickShop</h1>
-        <div>
-          <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
-            <p className="text-xl italic text-blue-300">Smart Navigation </p>Use a 2D map on your device for quick, accurate
-            store navigation.
-          </p>
-          <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
-          <p className="text-xl italic text-blue-300">Wishlist Organization</p>Items are automatically sorted by floor for
-            efficient shopping.
-          </p>
-          <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
-          <p className="text-xl italic text-blue-300">Floor-Based Efficiency</p>Move easily between floors with items
-            grouped by location.
-          </p>
-          <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
-          <p className="text-xl italic text-blue-300">Time-Saving Technology</p>Spend less time searching for items.
-          </p>
-          <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
-          <p className="text-xl italic text-blue-300">Enhanced Experience</p>Enjoy a effortless, and pleasurable
-            shopping experience.
-          </p>
-        </div>
+        <h1 className="mb-4 text-4xl font-bold text-purple-600">You Should Choose </h1>
+        <h1 className="mb-4 text-6xl font-bold text-yellow-300">QuickShop</h1>
+        <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
+          Imagine a shopping mall where your experience is not just about
+          finding what you need but doing so effortlessly and quickly.
+          Introducing the next-generation shopping experience, where technology
+          meets convenience. Our mall is equipped with a cutting-edge 2D shop
+          map that allows you to navigate through stores like never before. No
+          more wandering aimlessly-just glance at the map on your device to find
+          the quickest route to your desired shop.
+        </p>
+        <p className="mb-4 font-bold leading-relaxed text-justify text-gray-400">
+          But that's not all. Our innovative wishlist system goes a step further
+          by organizing your shopping items by floor. As you add items to your
+          wishlist, they are automatically sorted by their location in the mall,
+          allowing you to make your way from floor to floor with ease. Whether
+          you're searching for the latest fashion, tech gadgets, or gourmet
+          delights, our system ensures you spend less time searching and more
+          time enjoying.
+        </p>
+        <p className="font-bold leading-relaxed text-justify text-gray-400">
+          This seamless integration of technology into your shopping experience
+          not only saves time but also enhances your overall visit, making
+          shopping less of a chore and more of a pleasure. Welcome to a mall
+          designed for the modern shopper-efficient, intuitive, and above all,
+          enjoyable.
+        </p>
       </div>
 
-      <div className="flex-1 p-4 mt-40 ">
+      <div className="flex-1 p-4 mt-72 ">
         <Swiper
           effect={"cards"}
           grabCursor={true}

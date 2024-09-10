@@ -41,7 +41,7 @@ const Navbar = () => {
       <div className="py-2 bg-client-yellow ">
         <div className="container flex items-center justify-between ">
           <div>
-            <a href="/" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
+            <a href="#" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
               <img src={Logo} alt="Logo" className="w-10 ml-20" />
               QuickShop
             </a>
