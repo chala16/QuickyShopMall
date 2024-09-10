@@ -12,6 +12,10 @@ import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 const AddItem = () => {
   const { user } = useAuthContext();
+  const [itemNameError,setItemNameError]=useState();
+  const [itemQtyError,setItemQtyError]=useState();
+  const [itemPriceError,setItemPriceError]=useState();
+  const [descriptionError,setDescriptionError]=useState();
   const [postImage, setPostImage] = useState();
   const [fileUploaded, setFileUploaded] = useState(false);
   const navigate = useNavigate();
@@ -57,9 +61,9 @@ const AddItem = () => {
     }
     const form = event.target;
 
-    const name = form.name.value;
+    const name = form.name.value.trim();
     const category = form.category.value;
-    const description = form.description.value;
+    const description = form.description.value.trim();
     const price = form.price.value;
     const quantity = form.qty.value;
     const image = postImage;
@@ -88,6 +92,49 @@ const AddItem = () => {
       });
   };
 
+  //Validations
+  const handleItemName = (event) => {
+    const inputValue = event.target.value.trim();
+    if (!inputValue) {
+      setDescriptionError("Cannot be empty");
+    } else {
+      setDescriptionError("");
+    }
+  };
+
+  const handleQty = (event) => {
+    const inputValue = event.target.value.trim();
+    if (inputValue<0 || inputValue>99999 ||inputValue==0) {
+      setItemQtyError(
+        "Cannot be minus value or enter below 100000 quantity"
+      );
+    } else {
+      setItemQtyError("");
+    }
+  };
+
+  const handlePrice = (event) => {
+    const inputValue = event.target.value.trim();
+    if (inputValue<0 || inputValue>999999999999 ||inputValue==0) {
+      setItemPriceError(
+        "Cannot be minus value or enter below Rs.1000000000000 price"
+      );
+    } else {
+      setItemPriceError("");
+    }
+  };
+
+  const handleDescription = (event) => {
+    const inputValue = event.target.value.trim();
+    if (!inputValue) {
+      setDescriptionError(
+        "Cannot be empty"
+      );
+    } else {
+      setDescriptionError("");
+    }
+  };
+
   return (
     <div className="min-h-screen pb-16 bg-gray-100">
       <Navbar />
@@ -103,7 +150,7 @@ const AddItem = () => {
           <IconContext.Provider value={{ color: "blue", size: "24px" }}>
             <FaBoxArchive className="mt-8 mr-4" />
           </IconContext.Provider>
-          <h2 className="mt-6 text-3xl font-bold">Add Product</h2>
+          <h2 className="mt-6 text-3xl font-semibold">Add Product</h2>
         </div>
 
         <form
@@ -126,9 +173,13 @@ const AddItem = () => {
                 type="text"
                 placeholder="Item name"
                 required
+                onChange={handleItemName}
                 minLength={3}
                 maxLength={30}
               />
+               {itemNameError && (
+                <div className="font-semibold text-red-600 ">{itemNameError}</div>
+              )}
             </div>
 
             <div className="lg:w-1/2">
@@ -139,7 +190,10 @@ const AddItem = () => {
                   className="text-lg "
                 />
               </div>
-              <TextInput id="qty" name="qty" type="number" required />
+              <TextInput onChange={handleQty} id="qty" name="qty" type="number" required />
+              {itemQtyError && (
+                <div className="font-semibold text-red-600 ">{itemQtyError}</div>
+              )}
             </div>
           </div>
 
@@ -157,11 +211,15 @@ const AddItem = () => {
                 id="price"
                 name="price"
                 type="number"
+                onChange={handlePrice}
                 placeholder="Item price"
                 required
                 minLength={1}
                 maxLength={10}
               />
+              {itemPriceError && (
+                <div className="font-semibold text-red-600 ">{itemPriceError}</div>
+              )}
             </div>
 
             <div className="lg:w-1/2">
@@ -205,9 +263,13 @@ const AddItem = () => {
                 placeholder="Write your item description..."
                 required
                 className="w-40%"
+                onChange={handleDescription}
                 rows={5}
                 maxLength={1000}
               />
+              {descriptionError && (
+                <div className="font-semibold text-red-600 ">{descriptionError}</div>
+              )}
             </div>
             <div className="lg:w-1/2">
               <div className="block mb-2">
@@ -231,7 +293,7 @@ const AddItem = () => {
             </div>
           </div>
 
-          <Button type="submit" className="w-40 bg-red-500 shadow-lg ">
+          <Button type="submit" disabled={!fileUploaded || itemNameError || itemQtyError || itemPriceError || descriptionError} className="w-40 bg-red-500 shadow-lg ">
             <p className="text-lg font-bold">Add Product</p>
           </Button>
         </form>
