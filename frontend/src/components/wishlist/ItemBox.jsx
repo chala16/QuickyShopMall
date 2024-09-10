@@ -4,7 +4,7 @@ const ItemBox = ({ item, handleDelete }) => {
   return (
     <div className="bg-100 p-6 mb-3 w-full max-w-xl flex items-start space-x-4">
       <div className="flex-shrink-0">
-        <img src={item.image} alt="item-image" className="w-36 h-28 object-cover rounded"></img>
+        <img src={item.image} alt="item-image" className="w-36 h-28 object-contain rounded"></img>
       </div>
       <div className="flex-1">
         <h2 className="text-xl font-semibold">{item.name}</h2>
