@@ -48,6 +48,12 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
   };
 
   const handleUpdate = async (reviewId) => {
+
+    if (!updatedText || updatedText.trim() === "") {
+      toast.error("Please provide review text.");
+      return;
+    }
+
     try {
       const reviewToUpdate = reviews.find(review => review._id === reviewId);
 
