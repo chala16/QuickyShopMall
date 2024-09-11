@@ -67,7 +67,7 @@ const AddDiscount = () => {
   };
 
   if (!data) {
-    return <div>Loading...</div>; // Handle loading state
+    return <div>Loading...</div>; 
   }
 
   return (
@@ -91,7 +91,7 @@ const AddDiscount = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                placeholder="name@flowbite.com"
+                min={new Date().toISOString().split("T")[0]} // Prevent past dates
                 required
               />
             </div>
@@ -108,7 +108,7 @@ const AddDiscount = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                placeholder="Discount percentage"
+                min={startDate || new Date().toISOString().split("T")[0]} // prevent past dates 
                 required
               />
             </div>
@@ -125,6 +125,8 @@ const AddDiscount = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={discountPercentage}
                 onChange={(e) => setDiscountPercentage(e.target.value)}
+                min="0" // Minimum 0%
+                max="100" // Maximum 100%
                 placeholder="Discount percentage"
                 required
               />
@@ -143,7 +145,7 @@ const AddDiscount = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={discountedPrice}
                 onChange={(e) => setDiscountedPrice(e.target.value)}
-                placeholder="Discount percentage"
+                placeholder="Discount Price"
                 required
               />
             </div>
@@ -163,7 +165,7 @@ const AddDiscount = () => {
                 Available
               </label>
             </div>
-            {/* Add other form fields here */}
+            
             <button
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
