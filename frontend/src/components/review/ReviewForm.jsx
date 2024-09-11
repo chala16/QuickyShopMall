@@ -14,6 +14,18 @@ const ReviewForm = ({ productId, onReviewSubmitted}) => {
       toast.error("You need to log in to submit a review.");
       return;
     }
+
+
+    if (!rating || rating <= 0) {
+      toast.error("Please provide a rating.");
+      return;
+    }
+
+    if (!text || text.trim() === "") {
+      toast.error("Please fill in the review text.");
+      return;
+    }
+
     console.log( "user email:",user.email , "Product ID:", productId, "rating:", rating, "text:", text); 
     try {
       await axios.post("http://localhost:3000/api/reviews/submit", {
