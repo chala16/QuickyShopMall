@@ -36,7 +36,7 @@ const Shops = () => {
     <div>
       <Navbar />
       <h1 className="mt-6 ml-10 text-2xl font-bold">Shops</h1>
-      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 mx-8 md:grid-cols-3 lg:grid-cols-4">
         {shops.length > 0 ? (
           shops.map((shop) => (
             <div
