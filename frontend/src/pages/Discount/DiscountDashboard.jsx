@@ -32,32 +32,6 @@ const DiscountDashboard = () => {
     fetchItems();
   }, [user]);
 
-  //   const handleDelete = async (itemId) => {
-  //     if (window.confirm("Are you sure you want to delete this item?")) {
-  //       try {
-  //         const response = await fetch(
-  //           `http://localhost:3000/inventory/delete-item/${itemId}`,
-  //           {
-  //             method: "DELETE",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //               Authorization: `Bearer ${user.token}`,
-  //             },
-  //           }
-  //         );
-
-  //         if (!response.ok) {
-  //           throw new Error("Failed to delete item");
-  //         }
-
-  //         fetchItems();
-  //         toast.success("Item deleted successfully");
-  //       } catch (error) {
-  //         console.error("Error deleting item", error);
-  //         toast.error("Failed to delete item");
-  //       }
-  //     }
-  //   };
 
   const handleAddDiscount = (itemId) => {
     navigate(`/shopOwner/discounts/add-discount/${itemId}`);
@@ -67,9 +41,6 @@ const DiscountDashboard = () => {
     navigate(`/shopOwner/discounts/view-discount-items`);
   };
 
-  //   const handleEditClick = (itemId) => {
-  //     navigate(`/shopOwner/discounts/add-discount/${itemId}`);
-  //   };
 
   return (
     <div>
@@ -114,15 +85,6 @@ const DiscountDashboard = () => {
                   <p className="text-sm text-gray-500">{item.description}</p>
                 </div>
                 <div className="absolute flex space-x-2 top-4 right-4">
-                  {/* <button
-                    className="px-2 py-1 text-sm text-white bg-red-500 rounded"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(item._id);
-                    }}
-                  >
-                    Delete
-                  </button> */}
                   <button
                     className="px-2 py-1 text-sm text-white bg-yellow-500 rounded"
                     onClick={(e) => {
