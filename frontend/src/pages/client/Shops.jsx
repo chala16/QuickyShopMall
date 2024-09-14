@@ -6,6 +6,10 @@ import { useNavigate } from "react-router";
 const Shops = () => {
   const navigate=useNavigate()
   const [shops, setShops] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [selectedShop, setSelectedShop] = useState(null);
+  const [selectedShopName, setSelectedShopName] = useState(""); // Store shop name
+
 
   const fetchItems = () => {
       fetch("http://localhost:3000/home/all-owners", {
@@ -27,6 +31,14 @@ const Shops = () => {
   const handleCardClick = (shopId) => {
     navigate(`/client/dashboard/view-items/${shopId}`);
   };
+
+  const handleViewFAQs = (shopId, shopName) => {
+    console.log(`Fetching FAQs for shop: ${shopId}`);
+    navigate(`/client/dashboard/faqs/${shopId}/${shopName}`);
+  };
+  
+
+
 
   useEffect(() => {
     fetchItems();
@@ -52,6 +64,18 @@ const Shops = () => {
               <div className="p-4">
                 <h3 className="mb-2 text-lg font-semibold">{shop.shopName}</h3>
                 <p className="px-4 mb-2 font-bold text-white bg-red-400 w-fit rounded-xl">Floor No : {shop.shopFloorNo}</p>
+                <div className="flex justify-between mt-5">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the card click event
+                    console.log(`Fetching FAQs for shop: ${shop._id}`);
+                    handleViewFAQs(shop._id, shop.shopName);
+                  }}
+                className="ml-auto mt-2 px-6 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg shadow-lg hover:from-blue-500 hover:to-blue-700 hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105"
+                >
+                  View FAQs
+                </button>
+                </div>
               </div>
             </div>
           ))
@@ -61,6 +85,7 @@ const Shops = () => {
           </p>
         )}
       </div>
+
     </div>
   );
 };
