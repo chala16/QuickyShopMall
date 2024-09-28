@@ -11,11 +11,12 @@ const AddDiscount = () => {
   const [data, setData] = useState(null);
   const [startDate] = useState(new Date().toISOString().split("T")[0]); // Automatically set to current date
   const [endDate, setEndDate] = useState("");
-  const [discountPercentage, setDiscountPercentage] = useState("");
-  const [discountedPrice, setDiscountedPrice] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState(0); // Initialize as 0
+  const [discountedPrice, setDiscountedPrice] = useState(0); // Initialize as 0
   const [discountAvailable, setDiscountAvailable] = useState(true);
   const { user } = useAuthContext();
 
+  // Fetch item details
   useEffect(() => {
     if (user && id) {
       fetch(`http://localhost:3000/inventory/get-item/${id}`, {
@@ -35,6 +36,16 @@ const AddDiscount = () => {
         });
     }
   }, [id, user]);
+
+  // Calculate discounted price when discountPercentage or data.price changes
+  useEffect(() => {
+    if (data && data.price && discountPercentage >= 0) {
+      const calculatedDiscountedPrice = (
+        (data.price * discountPercentage) / 100
+      ).toFixed(2); // Keeping two decimal places
+      setDiscountedPrice(calculatedDiscountedPrice);
+    }
+  }, [discountPercentage, data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +78,7 @@ const AddDiscount = () => {
   };
 
   if (!data) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
@@ -75,7 +86,7 @@ const AddDiscount = () => {
       <Navbar />
       <div className="flex justify-between items-start p-8">
         {/* Form Container */}
-        <div className="w-full max-w-md  mt-40 ml-4">
+        <div className="w-full max-w-md mt-40 ml-4">
           <form className="ml-10 max-w-sm" onSubmit={handleSubmit}>
             {/* Form fields */}
             <div className="mb-5">
@@ -107,10 +118,7 @@ const AddDiscount = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-
-                min={startDate || new Date().toISOString().split("T")[0]} // prevent past dates 
-               
-
+                min={startDate || new Date().toISOString().split("T")[0]} // Prevent past dates
                 required
               />
             </div>
@@ -138,16 +146,14 @@ const AddDiscount = () => {
                 htmlFor="number"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Discounted price
+                Discounted Price
               </label>
-
               <input
                 type="number"
-                id="discount"
+                id="discountedPrice"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={discountedPrice}
-                onChange={(e) => setDiscountedPrice(e.target.value)}
-                placeholder="Discount Price"
+                readOnly // Make the field read-only
                 required
               />
             </div>
@@ -167,7 +173,7 @@ const AddDiscount = () => {
                 Available
               </label>
             </div>
-            
+
             <button
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
