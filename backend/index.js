@@ -16,6 +16,8 @@ const faqRouter = require("./src/routes/faqRoute")
 const discountRoutes = require("./src/routes/discountRoutes");
 const promotionRoutes = require("./src/routes/promotionRoutes");
 const PORT = process.env.PORT || 3000;
+const schedule = require("node-schedule");  // Import node-schedule
+const Discount = require("./src/models/discountModel"); // Import your Discount model
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb", extended: true }));
@@ -31,12 +33,44 @@ app.use("/icons", express.static("./Icon-svgs"));
 
 const URL = process.env.MONGODB_URL;
 
+const checkAndDeleteExpiredDiscounts = async () => {
+  const currentDate = new Date();  // Get the current date
+  console.log("Current Date:", currentDate);
+  
+  try {
+    // Delete all discounts where the endDate is less than the current date
+    const result = await Discount.deleteMany({ endDate: { $lt: currentDate } });
+    console.log(`${result.deletedCount} expired discounts deleted.`);
+  } catch (error) {
+    console.error("Error deleting expired discounts:", error);
+  }
+};
+
 mongoose
   .connect(URL)
   .then(() => {
     console.log("MongoDB Connection Success!");
     app.listen(PORT, () => {
       console.log(`Server is up and running on Port Number: ${PORT}`);
+
+      // Immediately check and delete expired discounts
+      checkAndDeleteExpiredDiscounts();
+
+      // Schedule the job to delete expired discounts daily at midnight
+      schedule.scheduleJob("0 0 * * *", async () => {
+        console.log("Running scheduled task to delete expired discounts...");
+        
+        const currentDate = new Date();  // Get the current date
+        console.log("Current Date:", currentDate);
+        try {
+          // Delete all discounts where the endDate is less than the current date
+          const result = await Discount.deleteMany({ endDate: { $lt: currentDate } });
+          console.log(`${result.deletedCount} expired discounts deleted.`);
+        } catch (error) {
+          console.error("Error deleting expired discounts:", error);
+        }
+      });
+
     });
   })
   .catch((err) => {
