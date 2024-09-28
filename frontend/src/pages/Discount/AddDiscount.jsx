@@ -9,7 +9,7 @@ import axios from "axios";
 const AddDiscount = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
-  const [startDate, setStartDate] = useState("");
+  const [startDate] = useState(new Date().toISOString().split("T")[0]); // Automatically set to current date
   const [endDate, setEndDate] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [discountedPrice, setDiscountedPrice] = useState("");
@@ -90,8 +90,7 @@ const AddDiscount = () => {
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                min={new Date().toISOString().split("T")[0]} // Prevent past dates
+                readOnly
                 required
               />
             </div>

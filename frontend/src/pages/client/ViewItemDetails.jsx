@@ -14,7 +14,6 @@ const ViewItemDetails = () => {
   const { user } = useAuthContext(); // Get user info from context
   const [reviewsUpdated, setReviewsUpdated] = useState(false); // State to trigger review list refresh
   const location = useLocation();
-  const { discountPrice } = location.state || {};
   
   useEffect(() => {
     if (id) {
@@ -65,13 +64,13 @@ const ViewItemDetails = () => {
           <div className="flex-1 md:ml-8">
             <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
             <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
-            <p className="text-sm text-gray-500 mb-6">Description: {item.description}</p>
+            <p className="mb-6 text-sm text-gray-500">Description: {item.description}</p>
 
             <AddWishlistButton itemId={id}/>
 
             
 
-            <h1 className="text-s font-bold mb-4 mt-10">We'd Love Your Feedback – Share with Your Fellow Customers !</h1>
+            <h1 className="mt-10 mb-4 font-bold text-s">We'd Love Your Feedback – Share with Your Fellow Customers !</h1>
             <ReviewForm productId={id} onReviewSubmitted={handleReviewSubmitted}/>{" "}
            
             
@@ -79,7 +78,7 @@ const ViewItemDetails = () => {
           </div>
 
         </div>
-        <h1 className="text-s font-bold mb-4 mt-10">Voices of Our Shoppers</h1>
+        <h1 className="mt-10 mb-4 font-bold text-s">Voices of Our Shoppers</h1>
             <ReviewList productId={id} reviewsUpdated={reviewsUpdated}/>
       </div>
     </div>

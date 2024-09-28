@@ -13,6 +13,7 @@ import ClientDashboardLayout from "../pages/client/ClientDashboardLayout";
 import Shops from "../pages/client/Shops";
 import ShopItems from "../pages/client/ShopItems";
 import ViewItemDetails from "../pages/client/ViewItemDetails";
+import FAQsPage from "../pages/client/FAQsPage";
 
 import DiscountDashboard from "../pages/Discount/DiscountDashboard";
 import AddDiscount from "../pages/Discount/AddDiscount";
@@ -90,6 +91,10 @@ function CreateRouter(){
         {
           path:"/client/dashboard/wishlist",
           element:<Wishlist/>
+        },
+        {
+          path: '/client/dashboard/faqs/:shopId/:shopName',
+          element: <FAQsPage/>,
         }
 
       ]
