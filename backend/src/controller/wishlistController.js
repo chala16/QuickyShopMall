@@ -52,7 +52,10 @@ const getItemsFromWishlist = async (req, res) => {
         .json({ message: "There are no items in your wishlist." });
     }
 
-    const items = wishlist.items
+    // Filter out items that were deleted or don't exist in the inventory
+    const validItems = wishlist.items.filter((item) => item.itemId !== null);
+
+    const items = validItems
       .map((item) => ({
         itemId: item.itemId._id,
         name: item.itemId.name,

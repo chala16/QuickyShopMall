@@ -3,7 +3,7 @@ import Modal from "react-modal";
 
 const floorImages = {
   1: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor1-min.png?alt=media&token=e56c6a1e-e1df-4572-b45f-7b9aebe62641",
-  2: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor2-min.png?alt=media&token=dbedf1cd-f996-4971-9814-9a102757bb1d",
+  2: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor2-min.png?alt=media&token=71f2b30a-0823-48fc-9255-1238f43aa5df",
   3: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor3-min.png?alt=media&token=4625b40a-9eca-499e-aa39-eb7b7075c945",
   4: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor4-min.png?alt=media&token=1ca05a6f-031f-4fb0-b9db-9e4b25d5b7c8",
   5: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor5-min.png?alt=media&token=e3281487-ec30-424c-b7eb-2900138aafa0"
@@ -23,10 +23,15 @@ const ItemBox = ({ item, handleDelete }) => {
     setModalIsOpen(false);
   };
 
+  const handleImageClick = (itemId) => {
+    const itemUrl = `/client/dashboard/view-item/${itemId}`;
+    window.open(itemUrl, "_blank");
+  };
+
   return (
     <div className="bg-100 p-6 mb-3 w-full max-w-xl flex items-start space-x-4">
-      <div className="flex-shrink-0">
-        <img src={item.image} alt="item-image" className="w-36 h-28 object-contain rounded" />
+      <div className="flex-shrink-0 cursor-pointer">
+        <img src={item.image} alt="item-image" onClick={() => handleImageClick(item.itemId)} className="w-36 h-28 object-contain rounded" />
       </div>
       <div className="flex-1">
         <h2 className="text-xl font-semibold">{item.name}</h2>
