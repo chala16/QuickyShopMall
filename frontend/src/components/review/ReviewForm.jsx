@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { toast } from "react-toastify";
 
-const ReviewForm = ({ productId, onReviewSubmitted}) => {
+const ReviewForm = ({ shopId, productId, onReviewSubmitted}) => {
   const [rating, setRating] = useState(1);
   const [text, setText] = useState("");
   const {user} = useAuthContext();   // Retrieve user context
@@ -29,6 +29,7 @@ const ReviewForm = ({ productId, onReviewSubmitted}) => {
     console.log( "user email:",user.email , "Product ID:", productId, "rating:", rating, "text:", text); 
     try {
       await axios.post("http://localhost:3000/api/reviews/submit", {
+        shopId: shopId,  // Ensure shopId is passed
         productId,
         email:user.email,
         rating,

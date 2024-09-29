@@ -1,25 +1,22 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import RatingStars from 'react-rating-stars-component';
+import RatingStars from "react-rating-stars-component";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { toast } from "react-toastify";
 
-
-
-
-const ReviewList = ({ productId, reviewsUpdated }) => {
+const ReviewList = ({ productId, shopId, reviewsUpdated }) => {
   const [reviews, setReviews] = useState([]);
   const { user } = useAuthContext(); // Get user info from context
   const [editingReview, setEditingReview] = useState(null);
   const [updatedText, setUpdatedText] = useState("");
   const [updatedRating, setUpdatedRating] = useState(0); // Track updated rating
 
-  
-
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/reviews/product/${productId}`);
+        const response = await axios.get(
+          `http://localhost:3000/api/reviews/shop/${shopId}/product/${productId}`
+        );
         const data = response.data;
 
         // Ensure the response data is an array
@@ -36,11 +33,14 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
     };
 
     fetchReviews();
-  }, [productId, reviewsUpdated]); // Add reviewsUpdated to dependency array
+  }, [shopId,productId, reviewsUpdated]); // Add reviewsUpdated to dependency array
 
   const handleHelpful = async (reviewId, helpful) => {
     try {
-      await axios.post(`http://localhost:3000/api/reviews/helpful/${reviewId}`, { helpful });
+      await axios.post(
+        `http://localhost:3000/api/reviews/helpful/${reviewId}`,
+        { helpful }
+      );
       // Optional: re-fetch reviews or update state to reflect changes
     } catch (error) {
       console.error("Error marking review as helpful/not helpful:", error);
@@ -48,63 +48,73 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
   };
 
   const handleUpdate = async (reviewId) => {
-
     if (!updatedText || updatedText.trim() === "") {
       toast.error("Please provide review text.");
       return;
     }
 
     try {
-      const reviewToUpdate = reviews.find(review => review._id === reviewId);
+      const reviewToUpdate = reviews.find((review) => review._id === reviewId);
 
       if (reviewToUpdate) {
-      await axios.put(`http://localhost:3000/api/reviews/update/${reviewId}`, {
-        email: user?.email,
-        text: updatedText,
-        rating: updatedRating || reviewToUpdate.rating // Update rating if modified
-      });
+        await axios.put(
+          `http://localhost:3000/api/reviews/update/${reviewId}`,
+          {
+            email: user?.email,
+            text: updatedText,
+            rating: updatedRating || reviewToUpdate.rating, // Update rating if modified
+          }
+        );
 
-      setEditingReview(null);
-      setUpdatedText("");
-      setUpdatedRating(0);
+        setEditingReview(null);
+        setUpdatedText("");
+        setUpdatedRating(0);
 
-      // Re-fetch or update reviews to reflect the change
-      setReviews((prevReviews) =>
-        prevReviews.map((review) =>
-          review._id === reviewId ? { ...review, text: updatedText, rating: updatedRating || review.rating } : review
-        )
-      );
+        // Re-fetch or update reviews to reflect the change
+        setReviews((prevReviews) =>
+          prevReviews.map((review) =>
+            review._id === reviewId
+              ? {
+                  ...review,
+                  text: updatedText,
+                  rating: updatedRating || review.rating,
+                }
+              : review
+          )
+        );
 
-      toast.success("Review updated successfully!", {
-        position: "top-right",
-        autoClose: 5000, // Duration for the toast to be visible
-      });
-
-    } else {
-      console.error("Review not found for update");
-    } }catch (error) {
+        toast.success("Review updated successfully!", {
+          position: "top-right",
+          autoClose: 5000, // Duration for the toast to be visible
+        });
+      } else {
+        console.error("Review not found for update");
+      }
+    } catch (error) {
       console.error("Error updating review:", error);
-    };
+    }
   };
 
   const handleDelete = async (reviewId) => {
     if (window.confirm("Are you sure you want to delete this review?")) {
       try {
-        await axios.delete(`http://localhost:3000/api/reviews/delete/${reviewId}`, {
-          data: { email: user?.email },
-        });
-        setReviews(reviews.filter(review => review._id !== reviewId)); // Remove review from UI
+        await axios.delete(
+          `http://localhost:3000/api/reviews/delete/${reviewId}`,
+          {
+            data: { email: user?.email },
+          }
+        );
+        setReviews(reviews.filter((review) => review._id !== reviewId)); // Remove review from UI
 
         toast.success("Review deleted successfully!", {
           position: "top-right",
           autoClose: 5000, // Duration for the toast to be visible
         });
-
       } catch (error) {
         console.error("Error deleting review:", error);
       }
     }
-  };   
+  };
 
   return (
     <div className="space-y-4">
@@ -159,7 +169,6 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
                     />
                   </span>
                   <div>
-                    
                     {review.email === user?.email && (
                       <>
                         <button
@@ -190,6 +199,5 @@ const ReviewList = ({ productId, reviewsUpdated }) => {
     </div>
   );
 };
-
 
 export default ReviewList;

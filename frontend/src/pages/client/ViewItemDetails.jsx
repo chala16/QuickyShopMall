@@ -15,7 +15,9 @@ const ViewItemDetails = () => {
   const [reviewsUpdated, setReviewsUpdated] = useState(false);
   const location = useLocation();
 
+
   useEffect(() => {
+    
     if (id) {
       fetch(`http://localhost:3000/home/get-item/${id}`, {
         method: "GET",
@@ -35,11 +37,15 @@ const ViewItemDetails = () => {
     }
   }, [id]);
 
+
+  
   useEffect(() => {
     if (reviewsUpdated) {
       setReviewsUpdated(false);
     }
   }, [reviewsUpdated]);
+
+
 
   const handleReviewSubmitted = () => {
     setReviewsUpdated(true);
@@ -94,12 +100,13 @@ const ViewItemDetails = () => {
             </h1>
             <ReviewForm
               productId={id}
+              shopId={item.user_id}
               onReviewSubmitted={handleReviewSubmitted}
             />
           </div>
         </div>
         <h1 className="mt-10 mb-4 font-bold text-s">Voices of Our Shoppers</h1>
-        <ReviewList productId={id} reviewsUpdated={reviewsUpdated} />
+        <ReviewList productId={id} shopId={item.user_id}reviewsUpdated={reviewsUpdated} />
       </div>
     </div>
   );
