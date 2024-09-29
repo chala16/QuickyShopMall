@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "apexcharts": "^3.52.0",
     "axios": "^1.7.3",
+    "firebase": "^10.13.2",
     "flowbite": "^2.5.1",
     "flowbite-react": "^0.10.1",
     "jspdf": "^2.5.2",
