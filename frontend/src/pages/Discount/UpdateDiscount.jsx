@@ -135,6 +135,7 @@ const UpdateDiscount = () => {
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
+                  min={new Date().toISOString().split("T")[0]} // Prevent past dates
                   required
                 />
               </div>
@@ -151,6 +152,7 @@ const UpdateDiscount = () => {
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
+                  min={startDate || new Date().toISOString().split("T")[0]} // End date should not be before the start date
                   required
                 />
               </div>
@@ -167,6 +169,8 @@ const UpdateDiscount = () => {
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   value={discountPercentage}
                   onChange={(e) => setDiscountPercentage(e.target.value)}
+                  min="0" // Minimum 0%
+                  max="100" // Maximum 100%
                   required
                 />
               </div>

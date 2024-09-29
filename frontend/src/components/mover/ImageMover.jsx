@@ -12,7 +12,7 @@ const ImageMover = () => {
   useEffect(() => {
     const fetchPromotions = async () => {
       try {
-        // Replace with your actual API endpoint
+        
         const response = await axios.get('http://localhost:3000/api/promotion/promotion-list/all-promotions');
         console.log('API Response:', response);  // Log the whole response
 
