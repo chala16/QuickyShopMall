@@ -39,7 +39,7 @@ const inventorySchema = new Schema({
     type: String,
     required: [true, "User ID is required"],
   },
-});
+},{timestamps:true});
 
 const Inventory = mongoose.model("inventory", inventorySchema);
 

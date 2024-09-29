@@ -85,9 +85,9 @@ const Report = () => {
     img.onload = () => {
       doc.addImage(img, "PNG", 130, 4, 60, 40); // Logo on the right side
       doc.setFontSize(24); // Bigger font size for emphasis
-        doc.setFont("times", "bold"); // Use a specific font, bold style
-        doc.text(shopName, 10, 20); // Add the shop name
-        doc.setFont("times", "normal"); // Reset to normal for other text
+      doc.setFont("times", "bold"); // Use a specific font, bold style
+      doc.text(shopName, 10, 20); // Add the shop name
+      doc.setFont("times", "normal"); // Reset to normal for other text
 
       const startY = 50; // Adjust this value to push the table further down
 
@@ -119,7 +119,11 @@ const Report = () => {
           {
             content: "Category Type",
             styles: { halign: "center", fontStyle: "bold" },
-          }
+          },
+          {
+            content: "Date Added",
+            styles: { halign: "center", fontStyle: "bold" },
+          },
         ],
       ];
 
@@ -128,6 +132,7 @@ const Report = () => {
         item.quantity,
         item.price,
         item.category,
+        new Date(item.createdAt).toLocaleDateString('en-CA'),
       ]);
 
       // Add the table
@@ -157,14 +162,16 @@ const Report = () => {
     };
   };
 
-
   return (
     <div>
       <Navbar />
       <div
         style={{ margin: "20px", display: "flex", justifyContent: "flex-end" }}
       >
-        <button onClick={generatePDFReport} className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg">
+        <button
+          onClick={generatePDFReport}
+          className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg"
+        >
           Generate PDF Report
         </button>
       </div>
@@ -178,19 +185,22 @@ const Report = () => {
         <table className="w-full table-fixed">
           <thead>
             <tr className="bg-gray-100">
-              <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
+              <th className="w-3/12 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                 Item Name
               </th>
-              <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
+              <th className="w-1/12 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                 Item Quantity
               </th>
-              <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
+              <th className="w-1/12 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                 Item Price
               </th>
-              <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
+              <th className="w-2/12 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                 Category Type
               </th>
-              <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-center text-gray-600 uppercase">
+              <th className="w-2/12 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
+                Date Added
+              </th>
+              <th className="w-3/12 px-4 py-2 text-sm font-bold text-center text-gray-600 uppercase">
                 Action
               </th>
             </tr>
@@ -210,9 +220,12 @@ const Report = () => {
                 <td className="px-4 py-2 text-sm border-b border-gray-200">
                   {item.category}
                 </td>
-                
-                <td className="px-4 py-2 border-b border-gray-200">
-                <button
+                <td className="px-4 py-2 text-sm border-b border-gray-200">
+                  {new Date(item.createdAt).toLocaleDateString("en-CA")}
+                </td>
+
+                <td className="px-16 py-2 border-b border-gray-200 justify-items-center">
+                  <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleView(item._id);
