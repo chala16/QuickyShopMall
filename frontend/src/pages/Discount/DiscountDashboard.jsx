@@ -74,7 +74,7 @@ const DiscountDashboard = () => {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="object-cover w-full h-48"
+                  className="object-contain pt-8 m-4 h-52 w-80"
                 />
                 <div className="p-4">
                   <h3 className="mb-2 text-lg font-semibold">{item.name}</h3>
@@ -86,7 +86,7 @@ const DiscountDashboard = () => {
                 </div>
                 <div className="absolute flex space-x-2 top-4 right-4">
                   <button
-                    className="px-2 py-1 text-sm text-white bg-yellow-500 rounded"
+                    className="px-2 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-700"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleAddDiscount(item._id);

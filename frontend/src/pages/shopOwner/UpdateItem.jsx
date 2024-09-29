@@ -3,21 +3,21 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
-import upload from "../../images/upload.jpg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IconContext } from "react-icons";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { FaBoxArchive } from "react-icons/fa6";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import { Spinner } from "flowbite-react";
 
 const UpdateItem = () => {
   const { user } = useAuthContext();
-  const [itemNameError, setItemNameError] = useState();
-  const [itemQtyError, setItemQtyError] = useState();
-  const [itemPriceError, setItemPriceError] = useState();
-  const [descriptionError, setDescriptionError] = useState();
+  const [errors, setErrors] = useState({});
   const [postImage, setPostImage] = useState(null);
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [itemDetails, setItemDetails] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -69,11 +69,25 @@ const UpdateItem = () => {
   }, [id, user.token]);
 
   const handleFileUpload = async (e) => {
-    setFileUploaded(true);
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setLoading(true); // Start loading
+      const storageRef = firebase.storage().ref();
+      const fileRef = storageRef.child(selectedFile.name);
 
-    const file = e.target.files[0];
-    const base64 = await convertToBase64(file);
-    setPostImage(base64);
+      try {
+        const snapshot = await fileRef.put(selectedFile);
+        const downloadURL = await snapshot.ref.getDownloadURL();
+        setPostImage(downloadURL);
+        setFileUploaded(true);
+        setLoading(false); // Stop loading when done
+      } catch (error) {
+        console.error("Error uploading file: ", error);
+        setLoading(false); // Stop loading in case of error
+      }
+    } else {
+      setErrors((prev) => ({ ...prev, file: "No file selected" }));
+    }
   };
 
   const handleUpdateItem = (event) => {
@@ -84,11 +98,11 @@ const UpdateItem = () => {
     }
     const form = event.target;
 
-    const name = form.name.value;
+    const name = form.name.value.trim();
     const category = form.category.value;
-    const description = form.description.value;
-    const price = form.price.value;
-    const quantity = form.qty.value;
+    const description = form.description.value.trim();
+    const price = parseFloat(form.price.value);
+    const quantity = parseInt(form.qty.value, 10);
     const image = postImage;
 
     const itemObj = {
@@ -124,49 +138,34 @@ const UpdateItem = () => {
   }
 
   //Validations
-  const handleItemName = (event) => {
-    const inputValue = event.target.value.trim();
-    if (!inputValue) {
-      setDescriptionError("Cannot be empty");
-    } else {
-      setDescriptionError("");
+  const validateInput = (name, value) => {
+    let error = "";
+    switch (name) {
+      case "name":
+        if (!value) error = "Name cannot be empty";
+        break;
+      case "qty":
+        if (value < 0 || value > 99999)
+          error = "Enter a valid quantity (1-99999)";
+        break;
+      case "price":
+        if (value <= 0 || value > 999999999999)
+          error = "Enter a valid price (1-999999999999)";
+        break;
+      case "description":
+        if (!value) error = "Description cannot be empty";
+        break;
+      default:
+        break;
     }
-  };
-
-  const handleQty = (event) => {
-    const inputValue = event.target.value.trim();
-    if (inputValue < 0 || inputValue > 99999 || inputValue == 0) {
-      setItemQtyError("Cannot be minus value or enter below 100000 quantity");
-    } else {
-      setItemQtyError("");
-    }
-  };
-
-  const handlePrice = (event) => {
-    const inputValue = event.target.value.trim();
-    if (inputValue < 0 || inputValue > 999999999999 || inputValue == 0) {
-      setItemPriceError(
-        "Cannot be minus value or enter below Rs.1000000000000 price"
-      );
-    } else {
-      setItemPriceError("");
-    }
-  };
-
-  const handleDescription = (event) => {
-    const inputValue = event.target.value.trim();
-    if (!inputValue) {
-      setDescriptionError("Cannot be empty");
-    } else {
-      setDescriptionError("");
-    }
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   return (
     <div className="min-h-screen pb-16 bg-gray-100">
       <Navbar />
       <div className="px-20 pb-12 mt-16 bg-white shadow-xl rounded-3xl mx-44">
-        <div className="pt-8 mt-8">
+        <div className="w-8 pt-8 mt-8">
           <Link to={`/shopOwner/dashboard/view-items`}>
             <IconContext.Provider value={{ color: "green", size: "40px" }}>
               <IoArrowBackCircleSharp />
@@ -200,14 +199,12 @@ const UpdateItem = () => {
                 type="text"
                 defaultValue={itemDetails.name}
                 required
-                onChange={handleItemName}
+                onChange={(e) => validateInput("name", e.target.value)}
                 minLength={3}
                 maxLength={30}
               />
-              {itemNameError && (
-                <div className="font-semibold text-red-600 ">
-                  {itemNameError}
-                </div>
+             {errors.name && (
+                <div className="font-semibold text-red-600">{errors.name}</div>
               )}
             </div>
 
@@ -223,14 +220,12 @@ const UpdateItem = () => {
                 id="qty"
                 name="qty"
                 type="number"
-                onChange={handleQty}
+                onChange={(e) => validateInput("qty", e.target.value)}
                 defaultValue={itemDetails.quantity}
                 required
               />
-              {itemQtyError && (
-                <div className="font-semibold text-red-600 ">
-                  {itemQtyError}
-                </div>
+               {errors.qty && (
+                <div className="font-semibold text-red-600">{errors.qty}</div>
               )}
             </div>
           </div>
@@ -252,14 +247,12 @@ const UpdateItem = () => {
                 placeholder="Item price"
                 defaultValue={itemDetails.price}
                 required
-                onChange={handlePrice}
+                onChange={(e) => validateInput("price", e.target.value)}
                 minLength={1}
                 maxLength={10}
               />
-              {itemPriceError && (
-                <div className="font-semibold text-red-600 ">
-                  {itemPriceError}
-                </div>
+              {errors.price && (
+                <div className="font-semibold text-red-600">{errors.price}</div>
               )}
             </div>
 
@@ -306,12 +299,12 @@ const UpdateItem = () => {
                 className="w-40%"
                 rows={5}
                 maxLength={1000}
-                onChange={handleDescription}
+                onChange={(e) => validateInput("description", e.target.value)}
                 defaultValue={itemDetails.description}
               />
-              {descriptionError && (
-                <div className="font-semibold text-red-600 ">
-                  {descriptionError}
+              {errors.description && (
+                <div className="font-semibold text-red-600">
+                  {errors.description}
                 </div>
               )}
             </div>
@@ -342,6 +335,12 @@ const UpdateItem = () => {
                     accept=".jpeg,.png,.jpg"
                     onChange={(e) => handleFileUpload(e)}
                   />
+                  {loading && (
+                    <div className="flex items-center mt-2">
+                      <Spinner size="md" color="blue" />
+                      <span className="ml-2">Uploading...</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -350,13 +349,11 @@ const UpdateItem = () => {
           <Button
             type="submit"
             disabled={
-              !fileUploaded ||
-              itemNameError ||
-              itemQtyError ||
-              itemPriceError ||
-              descriptionError
+              !postImage ||
+              loading ||
+              Object.keys(errors).some((key) => errors[key])
             }
-            className="w-40 bg-red-500 shadow-lg "
+            className="w-40 bg-red-500 shadow-lg"
           >
             <p className="text-lg font-bold">Update Item</p>
           </Button>
@@ -368,15 +365,3 @@ const UpdateItem = () => {
 
 export default UpdateItem;
 
-function convertToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
