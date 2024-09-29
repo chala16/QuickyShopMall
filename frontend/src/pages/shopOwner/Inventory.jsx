@@ -82,9 +82,9 @@ const DeleteItem = () => {
                 onClick={() => handleCardClick(item._id)}
               >
                 <img
-                  src={item.image}
+                  src={encodeURIComponent(item.image) ? item.image : "https://via.placeholder.com/150"}
                   alt={item.name}
-                  className="object-cover m-4 w-36 "
+                  className="object-fill pt-8 m-4 h-52 w-80"
                 />
                 <div className="p-4">
                   <h3 className="mb-2 text-lg font-semibold">{item.name}</h3>
