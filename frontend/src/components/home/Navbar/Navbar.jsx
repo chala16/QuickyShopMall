@@ -93,7 +93,7 @@ const Navbar = () => {
                   Feedbacks
                 </a>
                 <a
-                  href="/client/report"
+                  href="/shopOwner/dashboard/report"
                   className="text-sm font-bold text-client-brown nav-link"
                 >
                   Report
