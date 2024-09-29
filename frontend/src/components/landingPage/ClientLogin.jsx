@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
+import LoginImg from "../../images/login.jpg";
+import '../../index.css';
 
 const ClientLogin = () => {
   const [email, setEmail] = useState("");
@@ -16,13 +18,18 @@ const ClientLogin = () => {
   return (
     <div>
       <section className="flex flex-col items-center h-screen md:flex-row">
-        <div className="hidden w-full h-screen bg-indigo-600 lg:block md:w-1/2 xl:w-2/3"></div>
-        <div className="flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12">
+        <img src={LoginImg} className="object-cover w-2/3 h-full" />
+        <div className="flex items-center justify-center w-1/3 px-6 bg-white">
           <div className="w-full h-100">
-            <Link to={`/`} className="font-medium hover:underline ">
-              <Button className="bg-client-brown">Home</Button>
+            <Link to={`/`} className="font-medium ">
+              <Button className="bg-green-500 rounded-full hover:bg-green-700">
+                Home
+              </Button>
+              <h1 className="mt-8 text-3xl font-[poppins] font-bold leading-tight text-yellow-900 md:text-2xl">
+                Welcome to QuickyShop!
+              </h1>
             </Link>
-            <h1 className="mt-4 text-xl font-bold leading-tight md:text-2xl">
+            <h1 className="mt-4 text-xl font-bold leading-tight text-blue-600 md:text-2xl">
               Log in to your account
             </h1>
             <form className="mt-6 login" action="#" onSubmit={handleSubmit}>

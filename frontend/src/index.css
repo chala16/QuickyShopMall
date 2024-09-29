@@ -1,6 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+  }
+  
+  h1, h2, h3 {
+    font-weight: 400; 
+  }
+  
 
 @layer components{
     .card{

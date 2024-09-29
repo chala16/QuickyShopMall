@@ -57,7 +57,7 @@ const ImageMover = () => {
         className="h-[700px] w-[400px] bg-primary/40 absolute -top-1/2 right-0 rounded-3xl rotate-45 z-[-9]"
       ></div>
       {/* Slider section */}
-      <div className="container pb-8 sm:pb-0 relative z-10">
+      <div className="container relative z-10 pb-8 sm:pb-0">
         <Slider {...settings}>
           {promotions.map((promotion) => (
             <div key={promotion._id}>
@@ -72,9 +72,7 @@ const ImageMover = () => {
                   </p>
                   <div>
                     <button
-                      className="bg-gradient-to-r
-                              from-image-slider to-image-slider-secondary hover:scale-105
-                              duration-200 text-white py-2 px-4 rounded-full"
+                      className="px-4 py-2 text-white duration-200 rounded-full bg-gradient-to-r from-image-slider to-image-slider-secondary hover:scale-105"
                     >
                       Order Now
                     </button>

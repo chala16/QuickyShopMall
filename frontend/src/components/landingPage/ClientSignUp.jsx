@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSignUp } from "../../hooks/useSignUp";
+import SignupImg from "../../images/signup.jpg"
 
 const ClientSignUp = () => {
   const [email, setEmail] = useState("");
@@ -14,14 +15,17 @@ const ClientSignUp = () => {
 
   return (
     <div
-      style={{
-        height: "100vh",
-        backgroundSize: "cover",
-      }}
-    >
-      <div className="max-w-screen-xl px-4 pt-16 mx-auto sm:px-6 lg:px-8">
+    style={{
+      height: "100vh",
+      backgroundSize: "cover",
+      backgroundImage: `url(${SignupImg})`,
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }}
+  >
+      <div className="max-w-screen-xl px-4 ml-[800px] sm:px-6 lg:px-8 pt-48">
         <div className="max-w-lg mx-auto">
-          <h1 className="text-2xl font-bold text-center text-indigo-600 sm:text-3xl">
+          <h1 className="text-3xl font-bold font-[poppins] text-center text-yellow-200 sm:text-3xl">
             Get started today
           </h1>
 
@@ -30,7 +34,7 @@ const ClientSignUp = () => {
             action="#"
             className="p-4 mb-0 space-y-4 rounded-lg shadow-lg signUp sm:p-6 lg:p-8"
           >
-            <p className="text-2xl font-bold text-center">Sign up</p>
+            <p className="text-2xl font-bold text-center font-[poppins]">Sign up</p>
 
             <div>
               <label htmlFor="email" className="sr-only">
@@ -111,7 +115,7 @@ const ClientSignUp = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="block w-full px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg"
+              className="block w-full px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-purple-800"
             >
               Sign Up
             </button>

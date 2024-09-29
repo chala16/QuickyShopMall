@@ -97,7 +97,7 @@ const ShopItems = () => {
             [...discountItems, ...items].map((item) => (
               <div key={item._id} className="card min-w-[300px] flex flex-col">
                 <img
-                  className="object-contain w-full h-40"
+                  className="object-contain pt-8 m-4 h-52 w-80"
                   src={item.image}
                   alt={item.name}
                 />
