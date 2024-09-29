@@ -17,7 +17,7 @@ const ClientLogin = () => {
     <div>
       <section className="flex flex-col items-center h-screen md:flex-row">
         <div className="hidden w-full h-screen bg-indigo-600 lg:block md:w-1/2 xl:w-2/3"></div>
-        <div className="flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-fullmd:w-1/2 xl:w-1/3 lg:px-16 xl:px-12">
+        <div className="flex items-center justify-center w-full h-screen px-6 bg-white md:max-w-md lg:max-w-full md:w-1/2 xl:w-1/3 lg:px-16 xl:px-12">
           <div className="w-full h-100">
             <Link to={`/`} className="font-medium hover:underline ">
               <Button className="bg-client-brown">Home</Button>
