@@ -23,10 +23,15 @@ const ItemBox = ({ item, handleDelete }) => {
     setModalIsOpen(false);
   };
 
+  const handleImageClick = (itemId) => {
+    const itemUrl = `/client/dashboard/view-item/${itemId}`;
+    window.open(itemUrl, "_blank");
+  };
+
   return (
     <div className="bg-100 p-6 mb-3 w-full max-w-xl flex items-start space-x-4">
-      <div className="flex-shrink-0">
-        <img src={item.image} alt="item-image" className="w-36 h-28 object-contain rounded" />
+      <div className="flex-shrink-0 cursor-pointer">
+        <img src={item.image} alt="item-image" onClick={() => handleImageClick(item.itemId)} className="w-36 h-28 object-contain rounded" />
       </div>
       <div className="flex-1">
         <h2 className="text-xl font-semibold">{item.name}</h2>
