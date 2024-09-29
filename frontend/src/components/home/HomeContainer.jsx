@@ -94,6 +94,11 @@ const HomeContainer = () => {
     navigate(`/client/dashboard/shops`);
   };
 
+  const handleHomeCardClick = (itemId, item) => {
+    navigate(`/client/dashboard/view-item/${itemId}`,{state:item});
+    
+  };
+
   return (
     <div className="mb-12">
       {loading ? (
