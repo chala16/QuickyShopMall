@@ -3,7 +3,6 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
-import upload from "../../images/upload.jpg";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { FaBoxArchive } from "react-icons/fa6";
