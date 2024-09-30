@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let Inventory = require("../models/inventory");
 const requireAuth = require("../middleware/requireAuth")
+const Review = require("./../models/Review");
 
 router.route("/add-item").post(requireAuth,async (req, res) => {
     try {
@@ -59,6 +60,42 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
       res.status(500).send({ message: err.message });
     }
   });
+
+//get reviews by shopOwner
+  router.route("/shop-reviews").get(async (req, res) => {
+    try {
+      const shopId = req.user._id; 
+      const items = await Inventory.find({ shopId: shopId });
+      const reviews = await Review.find({ shopId: shopId }).populate("productId");
+  
+
+      
+    const itemReviews = items.map(item => {
+      // Filter reviews for the current item
+      const itemSpecificReviews = reviews.filter(review => review.productId._id.equals(item._id));
+      
+      // Format the reviews for the current item
+      return {
+        item: {
+          id: item._id,
+          name: item.name,
+          price: item.price 
+        },
+        reviews: itemSpecificReviews.map(review => ({
+          email: review.email,
+          date: review.date,
+          rating: review.rating,
+          text: review.text
+        }))
+      };
+    });
+    res.send(itemReviews);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send({ message: err.message });
+  }
+});
+  
 
   router.route("/items/:id").get(async (req, res) => {
     try {
