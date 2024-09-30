@@ -3,21 +3,21 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Label, Select, Textarea, TextInput } from "flowbite-react";
-import upload from "../../images/upload.jpg";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { FaBoxArchive } from "react-icons/fa6";
 import { IconContext } from "react-icons";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import { Spinner } from "flowbite-react"; // Import Spinner
 
 const AddItem = () => {
   const { user } = useAuthContext();
-  const [itemNameError,setItemNameError]=useState();
-  const [itemQtyError,setItemQtyError]=useState();
-  const [itemPriceError,setItemPriceError]=useState();
-  const [descriptionError,setDescriptionError]=useState();
-  const [postImage, setPostImage] = useState();
+  const [errors, setErrors] = useState({});
+  const [postImage, setPostImage] = useState(null);
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [loading, setLoading] = useState(false); // New loading state
   const navigate = useNavigate();
 
   const showSuccess = () => {
@@ -27,7 +27,7 @@ const AddItem = () => {
     });
   };
 
-  const category = [
+  const categoryOptions = [
     "Cloths",
     "Electronics",
     "Foods & Beverages",
@@ -44,95 +44,90 @@ const AddItem = () => {
     "Other items",
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState(category[0]);
+  const [selectedCategory, setSelectedCategory] = useState(categoryOptions[0]);
 
   const handleFileUpload = async (e) => {
-    setFileUploaded(true);
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setLoading(true); // Start loading
+      const storageRef = firebase.storage().ref();
+      const fileRef = storageRef.child(selectedFile.name);
 
-    const file = e.target.files[0];
-    const base64 = await convertToBase64(file);
-    setPostImage(base64);
+      try {
+        const snapshot = await fileRef.put(selectedFile);
+        const downloadURL = await snapshot.ref.getDownloadURL();
+        setPostImage(downloadURL);
+        setFileUploaded(true);
+        setLoading(false); // Stop loading when done
+      } catch (error) {
+        console.error("Error uploading file: ", error);
+        setLoading(false); // Stop loading in case of error
+      }
+    } else {
+      setErrors((prev) => ({ ...prev, file: "No file selected" }));
+    }
   };
 
-  const handleAddItem = (event) => {
+  const handleAddItem = async (event) => {
     event.preventDefault();
     if (!user) {
-      setError("You must be logged in");
+      setErrors((prev) => ({ ...prev, auth: "You must be logged in" }));
+      return;
     }
+
     const form = event.target;
-
-    const name = form.name.value.trim();
-    const category = form.category.value;
-    const description = form.description.value.trim();
-    const price = form.price.value;
-    const quantity = form.qty.value;
-    const image = postImage;
-
     const itemObj = {
-      name,
-      category,
-      description,
-      price,
-      quantity,
-      image,
+      name: form.name.value.trim(),
+      category: selectedCategory,
+      description: form.description.value.trim(),
+      price: parseFloat(form.price.value),
+      quantity: parseInt(form.qty.value, 10),
+      image: postImage,
     };
 
-    fetch("http://localhost:3000/inventory/add-item", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify(itemObj),
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    try {
+      const response = await fetch("http://localhost:3000/inventory/add-item", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(itemObj),
+      });
+
+      if (response.ok) {
         showSuccess();
         navigate("/shopOwner/dashboard/view-items");
-      });
-  };
-
-  //Validations
-  const handleItemName = (event) => {
-    const inputValue = event.target.value.trim();
-    if (!inputValue) {
-      setDescriptionError("Cannot be empty");
-    } else {
-      setDescriptionError("");
+      } else {
+        setErrors((prev) => ({ ...prev, server: "Failed to add item" }));
+      }
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, server: "Server error occurred" }));
     }
   };
 
-  const handleQty = (event) => {
-    const inputValue = event.target.value.trim();
-    if (inputValue<0 || inputValue>99999 ||inputValue==0) {
-      setItemQtyError(
-        "Cannot be minus value or enter below 100000 quantity"
-      );
-    } else {
-      setItemQtyError("");
+  // Consolidated Validation Handler
+  const validateInput = (name, value) => {
+    let error = "";
+    switch (name) {
+      case "name":
+        if (!value) error = "Name cannot be empty";
+        break;
+      case "qty":
+        if (value <= 0 || value > 99999)
+          error = "Enter a valid quantity (1-99999)";
+        break;
+      case "price":
+        if (value <= 0 || value > 999999999999)
+          error = "Enter a valid price (1-999999999999)";
+        break;
+      case "description":
+        if (!value) error = "Description cannot be empty";
+        break;
+      default:
+        break;
     }
-  };
-
-  const handlePrice = (event) => {
-    const inputValue = event.target.value.trim();
-    if (inputValue<0 || inputValue>999999999999 ||inputValue==0) {
-      setItemPriceError(
-        "Cannot be minus value or enter below Rs.1000000000000 price"
-      );
-    } else {
-      setItemPriceError("");
-    }
-  };
-
-  const handleDescription = (event) => {
-    const inputValue = event.target.value.trim();
-    if (!inputValue) {
-      setDescriptionError(
-        "Cannot be empty"
-      );
-    } else {
-      setDescriptionError("");
-    }
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   return (
@@ -160,39 +155,33 @@ const AddItem = () => {
           {/* first row */}
           <div className="flex gap-8">
             <div className="lg:w-1/2">
-              <div className="block mb-2">
-                <Label
-                  htmlFor="itemName"
-                  value="Item name"
-                  className="text-lg"
-                />
-              </div>
+              <Label htmlFor="name" value="Item Name" className="text-lg" />
               <TextInput
                 id="name"
                 name="name"
                 type="text"
                 placeholder="Item name"
                 required
-                onChange={handleItemName}
+                onChange={(e) => validateInput("name", e.target.value)}
                 minLength={3}
                 maxLength={30}
               />
-               {itemNameError && (
-                <div className="font-semibold text-red-600 ">{itemNameError}</div>
+              {errors.name && (
+                <div className="font-semibold text-red-600">{errors.name}</div>
               )}
             </div>
 
             <div className="lg:w-1/2">
-              <div className="block mb-2">
-                <Label
-                  htmlFor="qty"
-                  value="Item Quantity"
-                  className="text-lg "
-                />
-              </div>
-              <TextInput onChange={handleQty} id="qty" name="qty" type="number" required />
-              {itemQtyError && (
-                <div className="font-semibold text-red-600 ">{itemQtyError}</div>
+              <Label htmlFor="qty" value="Item Quantity" className="text-lg" />
+              <TextInput
+                id="qty"
+                name="qty"
+                type="number"
+                required
+                onChange={(e) => validateInput("qty", e.target.value)}
+              />
+              {errors.qty && (
+                <div className="font-semibold text-red-600">{errors.qty}</div>
               )}
             </div>
           </div>
@@ -200,45 +189,36 @@ const AddItem = () => {
           {/* second row */}
           <div className="flex gap-8">
             <div className="lg:w-1/2">
-              <div className="block mb-2">
-                <Label
-                  htmlFor="price"
-                  value="Item Price"
-                  className="text-lg "
-                />
-              </div>
+              <Label htmlFor="price" value="Item Price" className="text-lg" />
               <TextInput
                 id="price"
                 name="price"
                 type="number"
-                onChange={handlePrice}
                 placeholder="Item price"
                 required
+                onChange={(e) => validateInput("price", e.target.value)}
                 minLength={1}
                 maxLength={10}
               />
-              {itemPriceError && (
-                <div className="font-semibold text-red-600 ">{itemPriceError}</div>
+              {errors.price && (
+                <div className="font-semibold text-red-600">{errors.price}</div>
               )}
             </div>
 
             <div className="lg:w-1/2">
-              <div className="block mb-2">
-                <Label
-                  htmlFor="category"
-                  value="Category type"
-                  className="text-lg "
-                />
-              </div>
-
+              <Label
+                htmlFor="category"
+                value="Category Type"
+                className="text-lg"
+              />
               <Select
                 id="category"
                 name="category"
                 className="w-full rounded"
                 value={selectedCategory}
-                onChange={(event) => setSelectedCategory(event.target.value)}
+                onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                {category.map((option) => (
+                {categoryOptions.map((option) => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -250,34 +230,30 @@ const AddItem = () => {
           {/* last row */}
           <div className="flex gap-8">
             <div className="lg:w-1/2">
-              <div className="block mb-2">
-                <Label
-                  htmlFor="itemDescription"
-                  value="Item Description"
-                  className="text-lg "
-                />
-              </div>
+              <Label
+                htmlFor="description"
+                value="Item Description"
+                className="text-lg"
+              />
               <Textarea
                 id="description"
                 name="description"
                 placeholder="Write your item description..."
                 required
-                className="w-40%"
-                onChange={handleDescription}
+                onChange={(e) => validateInput("description", e.target.value)}
                 rows={5}
                 maxLength={1000}
               />
-              {descriptionError && (
-                <div className="font-semibold text-red-600 ">{descriptionError}</div>
+              {errors.description && (
+                <div className="font-semibold text-red-600">
+                  {errors.description}
+                </div>
               )}
             </div>
+
             <div className="lg:w-1/2">
               <div className="block mb-2">
-                <Label
-                  htmlFor="image"
-                  value="Item Image"
-                  className="text-lg "
-                />
+                <Label htmlFor="image" value="Item Image" className="text-lg" />
                 <div>
                   <input
                     className="mt-4 bg-black"
@@ -286,14 +262,28 @@ const AddItem = () => {
                     name="image"
                     id="file-upload"
                     accept=".jpeg,.png,.jpg"
-                    onChange={(e) => handleFileUpload(e)}
+                    onChange={handleFileUpload}
                   />
+                  {loading && (
+                    <div className="flex items-center mt-2">
+                      <Spinner size="md" color="blue" />
+                      <span className="ml-2">Uploading...</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
-          <Button type="submit" disabled={!fileUploaded || itemNameError || itemQtyError || itemPriceError || descriptionError} className="w-40 bg-red-500 shadow-lg ">
+          <Button
+            type="submit"
+            disabled={
+              !fileUploaded ||
+              loading ||
+              Object.keys(errors).some((key) => errors[key])
+            }
+            className="w-40 bg-red-500 shadow-lg"
+          >
             <p className="text-lg font-bold">Add Product</p>
           </Button>
         </form>
@@ -303,16 +293,3 @@ const AddItem = () => {
 };
 
 export default AddItem;
-
-function convertToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}

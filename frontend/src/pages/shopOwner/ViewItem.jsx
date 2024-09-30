@@ -42,12 +42,12 @@ const ViewItem = () => {
           <img
             src={item.image}
             alt={item.name}
-            className="object-cover mb-4 w-full max-w-[200px] md:max-w-[35%]"
+            className="object-contain pt-8 m-4 h-80 w-96"
           />
           <div className="flex-1 md:ml-8">
-            <p className="mb-2 font-bold text-red-500">Price: Rs. {item.price}</p>
-            <p className="mb-2 text-sm text-gray-600">Category: {item.category}</p>
-            <p className="text-sm text-gray-500">Description: {item.description}</p>
+            <p className="mb-2 text-2xl font-bold text-red-500">Price: Rs. {item.price}</p>
+            <p className="mb-2 text-xl font-bold text-gray-600">Category: {item.category}</p>
+            <p className="text-gray-500 text-md">Description: {item.description}</p>
           </div>
         </div>
       </div>
