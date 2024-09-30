@@ -65,7 +65,7 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
   router.route("/shop-reviews").get(async (req, res) => {
     try {
       const shopId = req.user._id; 
-      const items = await Inventory.find({ shopId: shopId });
+      const items = await Inventory.find({ user_id: shopId });
       const reviews = await Review.find({ shopId: shopId }).populate("productId");
   
 
@@ -79,7 +79,7 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
         item: {
           id: item._id,
           name: item.name,
-          price: item.price 
+          category:item.category
         },
         reviews: itemSpecificReviews.map(review => ({
           email: review.email,
