@@ -2,29 +2,48 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Label, TextInput, Button } from 'flowbite-react';
 import Navbar from "../../components/home/Navbar/Navbar";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom'; // Import useParams to get URL parameters
 import { IconContext } from 'react-icons';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
-
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const AddFAQ = () => {
+  const { user } = useAuthContext();
+  const { shopId } = useParams(); // Use useParams to get shopId from URL
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:3000/api/faq/faqs', {
-        shopId,
-        question,
-        answer
-      });
-      console.log('FAQ added successfully:', response.data);
-      setQuestion('');
-      setAnswer('');
-    } catch (error) {
-      setError('Error adding FAQ');
+
+    if (user) {
+      if (!shopId) {
+        setError('Shop ID is missing.'); // Handle case where shopId is not defined
+        return;
+      }
+
+      try {
+        const response = await axios.post('http://localhost:3000/inventory/create-faq', {
+          shopId, // Use the shopId obtained from useParams
+          question,
+          answer
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          }
+        });
+
+        console.log('FAQ added successfully:', response.data);
+        setQuestion('');
+        setAnswer('');
+      } catch (error) {
+        console.error("Error adding FAQ", error);
+        setError('Error adding FAQ');
+      }
+    } else {
+      setError('User not authenticated'); // Handle case where user is not authenticated
     }
   };
 
@@ -92,10 +111,6 @@ const AddFAQ = () => {
       </div>
     </div>
   );
-  
-  
-  
-  
 }
 
 export default AddFAQ;

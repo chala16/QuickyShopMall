@@ -2,6 +2,8 @@ const router = require("express").Router();
 let Inventory = require("../models/inventory");
 const requireAuth = require("../middleware/requireAuth")
 const Review = require("./../models/Review");
+const FAQ = require("../models/FAQ");
+
 
 router.route("/add-item").post(requireAuth,async (req, res) => {
     try {
@@ -96,6 +98,40 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
   }
 });
   
+
+  // Create a new FAQ
+router.route("/create-faq").post(requireAuth, async (req, res) => {
+  try {
+    // Get the shopId from the logged-in user (shop owner)
+    const shopId = req.user._id;
+    const { question, answer } = req.body;
+
+    // Check for required fields
+    if (!question || !answer) {
+      return res.status(400).json({
+        message: "Please provide all required fields: question and answer.",
+      });
+    }
+
+    // Create a new FAQ entry
+    const faq = new FAQ({ shopId, question, answer });
+
+    // Save the FAQ entry to the database
+    await faq.save();
+
+    // Return a success response
+    return res.status(201).json(faq);
+  } catch (error) {
+    console.error("Error creating FAQ:", error.message);
+
+    // Return a failure response
+    return res.status(500).json({
+      message: "Error creating FAQ",
+      error: error.message,
+    });
+  }
+});
+
 
   router.route("/items/:id").get(async (req, res) => {
     try {
