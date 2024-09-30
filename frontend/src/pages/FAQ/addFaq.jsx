@@ -2,31 +2,52 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Label, TextInput, Button } from 'flowbite-react';
 import Navbar from "../../components/home/Navbar/Navbar";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom'; // Import useParams to get URL parameters
 import { IconContext } from 'react-icons';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
-
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const AddFAQ = () => {
+  const { user } = useAuthContext();
+  const { shopId } = useParams(); // Use useParams to get shopId from URL
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Check if the user is authenticated before proceeding
+    if (!user) {
+      setError('User not authenticated');
+      return; // Return early to prevent submitting the form
+    }
+  
     try {
-      const response = await axios.post('http://localhost:3000/api/faq/faqs', {
-        shopId,
-        question,
-        answer
-      });
+      const response = await axios.post(
+        'http://localhost:3000/inventory/create-faq',
+        {
+          question,
+          answer
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`, // Ensure user.token is passed here
+          }
+        }
+      );
+  
       console.log('FAQ added successfully:', response.data);
       setQuestion('');
       setAnswer('');
+      setError(null); // Clear any previous errors
     } catch (error) {
+      console.error('Error adding FAQ', error);
       setError('Error adding FAQ');
     }
   };
+  
 
   return (
     <div className="min-h-screen pb-16 bg-gray-100">
@@ -92,10 +113,6 @@ const AddFAQ = () => {
       </div>
     </div>
   );
-  
-  
-  
-  
 }
 
 export default AddFAQ;
