@@ -16,36 +16,38 @@ const AddFAQ = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (user) {
-      if (!shopId) {
-        setError('Shop ID is missing.'); // Handle case where shopId is not defined
-        return;
-      }
-
-      try {
-        const response = await axios.post('http://localhost:3000/inventory/create-faq', {
-          shopId, // Use the shopId obtained from useParams
+  
+    // Check if the user is authenticated before proceeding
+    if (!user) {
+      setError('User not authenticated');
+      return; // Return early to prevent submitting the form
+    }
+  
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/inventory/create-faq',
+        {
           question,
           answer
-        }, {
+        },
+        {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user.token}`, // Ensure user.token is passed here
           }
-        });
-
-        console.log('FAQ added successfully:', response.data);
-        setQuestion('');
-        setAnswer('');
-      } catch (error) {
-        console.error("Error adding FAQ", error);
-        setError('Error adding FAQ');
-      }
-    } else {
-      setError('User not authenticated'); // Handle case where user is not authenticated
+        }
+      );
+  
+      console.log('FAQ added successfully:', response.data);
+      setQuestion('');
+      setAnswer('');
+      setError(null); // Clear any previous errors
+    } catch (error) {
+      console.error('Error adding FAQ', error);
+      setError('Error adding FAQ');
     }
   };
+  
 
   return (
     <div className="min-h-screen pb-16 bg-gray-100">
