@@ -49,6 +49,19 @@ const UpdateDiscount = () => {
     }
   }, [id, user]);
 
+  useEffect(() => {
+    if (data && data.discountedPrice && discountPercentage >= 0) {
+      // Step 1: Calculate the original price using the old discount percentage and old discounted price
+      const originalPrice = (data.discountedPrice / (data.discountPercentage / 100)).toFixed(2);
+  
+      // Step 2: Calculate the new discounted price using the new discount percentage
+      const calculatedDiscountedPrice = (originalPrice * (discountPercentage / 100)).toFixed(2);
+  
+      setDiscountedPrice(calculatedDiscountedPrice);
+    }
+  }, [discountPercentage, data]);
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -134,8 +147,9 @@ const UpdateDiscount = () => {
                   id="start-date"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  min={new Date().toISOString().split("T")[0]} // Prevent past dates
+                  // onChange={(e) => setStartDate(e.target.value)}
+                  // min={new Date().toISOString().split("T")[0]} // Prevent past dates
+                  readOnly
                   required
                 />
               </div>
@@ -186,7 +200,7 @@ const UpdateDiscount = () => {
                   id="discounted-price"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   value={discountedPrice}
-                  onChange={(e) => setDiscountedPrice(e.target.value)}
+                  // onChange={(e) => setDiscountedPrice(e.target.value)}
                   required
                 />
               </div>
