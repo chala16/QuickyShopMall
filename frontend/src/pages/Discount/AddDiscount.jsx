@@ -50,6 +50,21 @@ const AddDiscount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!endDate || new Date(endDate) <= new Date(startDate)) {
+      toast.error("End date must be after the start date");
+      return;
+    }
+  
+    if (discountPercentage <= 0 || discountPercentage > 100) {
+      toast.error("Discount percentage must be between 1 and 100");
+      return;
+    }
+  
+    if (!discountedPrice || discountedPrice <= 0) {
+      toast.error("Discounted price must be greater than 0");
+      return;
+    }
+    
     const discountDetails = {
       email: user.email,
       itemId: id,
