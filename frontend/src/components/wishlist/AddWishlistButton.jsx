@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const AddWishlistButton = ({ itemId }) => {
-  const [isInWishlist, setIsInWishlist] = useState(false)
+  const [isInWishlist, setIsInWishlist] = useState(false) // State to track if item is in the wishlist
   
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token') // Get token from local storage
 
   useEffect(() => {
     const checkItemInWishlist = async () => {
@@ -12,25 +12,25 @@ const AddWishlistButton = ({ itemId }) => {
         const response = await fetch(`http://localhost:3000/api/wishlist/read`, {
           method: 'GET',
           headers: {
-            authorization: `Bearer ${token}`,
+            authorization: `Bearer ${token}`, // Attach token for authentication
             'Content-Type': 'application/json'
           },
         })
         const data = await response.json()
 
         if (response.ok && data.items) {
-          const itemExists = data.items.some((item) => item.itemId === itemId)
-          setIsInWishlist(itemExists)
+          const itemExists = data.items.some((item) => item.itemId === itemId) // Check if item exists in the wishlist
+          setIsInWishlist(itemExists) // Update state based on existence
         }
       } catch (error) {
         console.error("Error checking if item is in wishlist", error);
       }
     }
     checkItemInWishlist()
-  }, [itemId, token])
+  }, [itemId, token]) // Dependency array to re-run effect when itemId or token changes
 
   const handleToggleWishlist = async () => {
-    const user = localStorage.getItem('user')
+    const user = localStorage.getItem('user') // Get user from local storage
 
     if (!user) {
       toast.error("Please log in to add items to your wishlist");
@@ -47,7 +47,7 @@ const AddWishlistButton = ({ itemId }) => {
        const response = await fetch(url, {
          method,
          headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`, // Attach token for authentication
            "Content-Type": "application/json",
          },
          body: isInWishlist ? null : JSON.stringify({ itemId })

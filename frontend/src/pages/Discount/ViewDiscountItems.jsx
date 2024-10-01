@@ -195,7 +195,7 @@ const ViewDiscountItems = () => {
 
         <button
           onClick={generatePDFReport}
-          className="py-2 px-4 rounded-lg text-sm font-medium bg-green-500 text-white"
+          className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg"
         >
           Generate PDF Report
         </button>
@@ -207,35 +207,35 @@ const ViewDiscountItems = () => {
       >
         Discounted Items
       </h1>
-      <div className="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
+      <div className="mx-4 overflow-hidden rounded-lg shadow-lg md:mx-10">
         {filteredItems.length === 0 ? (
           <p className="py-4 text-center">No items available.</p>
         ) : (
           <table className="w-full table-fixed">
             <thead>
-              <tr className="bg-gray-100">
-                {/* <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+              <tr className="bg-gray-200">
+                {/* <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Email
                 </th> */}
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Item Name
                 </th>
-                <th className="w-1/4 py-2 px-16 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-16 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Start Date
                 </th>
-                <th className="w-1/4 py-2 px-14 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 py-2 text-sm font-bold text-left text-gray-600 uppercase px-14">
                   End Date
                 </th>
-                <th className="w-1/4 py-2 px-1 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-1 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Discount Percentage
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Discount Price
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Availability
                 </th>
-                <th className="w-1/4 py-2 px-8 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-8 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Action
                 </th>
               </tr>
@@ -243,25 +243,25 @@ const ViewDiscountItems = () => {
             <tbody className="bg-white">
               {filteredItems.map((discount) => (
                 <tr key={discount._id}>
-                  {/* <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                  {/* <td className="px-4 py-2 text-sm border-b border-gray-200">
                     {discount.email}
                   </td> */}
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                  <td className="px-4 py-2 text-sm border-b border-gray-200">
                     {discount.itemName}
                   </td>
-                  <td className="py-2 px-16 border-b border-gray-200 text-sm">
+                  <td className="px-16 py-2 text-sm border-b border-gray-200">
                     {new Date(discount.startDate).toLocaleDateString()}
                   </td>
-                  <td className="py-2 px-14 border-b border-gray-200 text-sm">
+                  <td className="py-2 text-sm border-b border-gray-200 px-14">
                     {new Date(discount.endDate).toLocaleDateString()}
                   </td>
-                  <td className="py-2 px-16 border-b border-gray-200 text-sm">
+                  <td className="px-16 py-2 text-sm border-b border-gray-200">
                     {discount.discountPercentage}%
                   </td>
-                  <td className="py-2 px-14 border-b border-gray-200 text-sm">
+                  <td className="py-2 text-sm border-b border-gray-200 px-14">
                     {discount.discountedPrice}
                   </td>
-                  <td className="py-2 px-8 border-b border-gray-200 text-sm">
+                  <td className="px-8 py-2 text-sm border-b border-gray-200">
                     <span
                       className={`py-1 px-2 rounded-full text-xs ${
                         discount.discountAvailable
@@ -272,13 +272,13 @@ const ViewDiscountItems = () => {
                       {discount.discountAvailable ? "Active" : "Inactive"}
                     </span>
                   </td>
-                  <td className="py-2 px-1 border-b border-gray-200">
+                  <td className="px-1 py-2 border-b border-gray-200">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleUpdate(discount._id, discount.itemId);
                       }}
-                      className="py-1 px-4 rounded-lg text-sm font-medium bg-blue-500 mx-2 text-white"
+                      className="px-4 py-1 mx-2 text-sm font-medium text-white bg-blue-500 rounded-lg"
                     >
                       Edit
                     </button>
@@ -287,7 +287,7 @@ const ViewDiscountItems = () => {
                         e.stopPropagation();
                         handleDelete(discount._id);
                       }}
-                      className="py-1 px-4 rounded-lg text-sm font-medium bg-red-500 text-white"
+                      className="px-4 py-1 text-sm font-medium text-white bg-red-500 rounded-lg"
                     >
                       Delete
                     </button>
