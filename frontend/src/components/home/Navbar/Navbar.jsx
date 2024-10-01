@@ -144,7 +144,7 @@ const Navbar = () => {
                 >
                   Wishlist
                 </a>
-                <p className="absolute font-semibold ml-[650px]">{user.email}</p>
+                <p className="absolute font-semibold ml-[400px]">{user.email}</p>
               </>
             )}
 
