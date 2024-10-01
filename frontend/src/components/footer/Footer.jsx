@@ -25,12 +25,12 @@ const Footer = () => {
               </h2>
               <ul class="text-white dark:text-white font-medium">
                 <li class="mb-4">
-                  <a href="https://flowbite.com/" class="hover:underline">
+                  <a href="/client/dashboard/shops" class="hover:underline">
                     Shops
                   </a>
                 </li>
                 <li>
-                  <a href="https://tailwindcss.com/" class="hover:underline">
+                  <a href="#" class="hover:underline">
                     Items
                   </a>
                 </li>
@@ -43,18 +43,18 @@ const Footer = () => {
               <ul class="text-white dark:text-white font-medium">
                 <li class="mb-4">
                   <a
-                    href="https://github.com/themesberg/flowbite"
+                    href="#"
                     class="hover:underline "
                   >
-                    Github
+                    Instagram
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://discord.gg/4eeurUVvTy"
+                    href="#"
                     class="hover:underline"
                   >
-                    Discord
+                    Facebook
                   </a>
                 </li>
               </ul>
