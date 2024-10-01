@@ -15,6 +15,15 @@ const PromotionAdd = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!title) {
+      toast.error("Title is required");
+      return;
+    }
+    if (!description) {
+      toast.error("Description is required");
+      return;
+    }
+
     if (!image) {
       toast.error("Image is required");
       return;
@@ -76,7 +85,7 @@ const PromotionAdd = () => {
               marginTop: "-30px",
             }}
           >
-            <form className="max-w-md mx-auto" style={{ width: "100%" }} onSubmit={handleSubmit}>
+            <form className="max-w-md mx-auto" style={{ width: "100%" }} onSubmit={handleSubmit} noValidate>
               <h1
                 className="max-w-1xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
                 style={{ fontSize: "2rem" }}
