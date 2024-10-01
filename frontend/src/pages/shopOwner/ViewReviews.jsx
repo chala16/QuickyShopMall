@@ -9,6 +9,8 @@ const Reviews = () => {
   const { user } = useAuthContext();
   const [itemReviews, setItemReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [filteredReviews, setFilteredReviews] = useState([]); // State for filtered reviews
 
   // Function to fetch reviews
   const fetchReviews = () => {
@@ -21,13 +23,12 @@ const Reviews = () => {
         },
       })
         .then((res) => {
-          console.log("Response status:", res.status); // Log response status
           if (!res.ok) throw new Error("Network response was not ok");
           return res.json();
         })
         .then((data) => {
-          console.log("Fetched data:", data); // Log the fetched data
           setItemReviews(data);
+          setFilteredReviews(data); // Initially set filtered reviews to all reviews
           setLoading(false);
         })
         .catch((error) => {
@@ -40,29 +41,39 @@ const Reviews = () => {
     }
   };
 
+  // Function to handle search
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    const filtered = itemReviews.filter(
+      (itemReview) =>
+        itemReview.item.name
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase()) ||
+        itemReview.item.category
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
+    );
+    setFilteredReviews(filtered);
+  };
+
   const generatePDFReport = () => {
     const doc = new jsPDF();
     const shopName = "QuickyShop";
-  
-    // Add header with shop name
+
     doc.setFontSize(24);
     doc.setFont("times", "bold");
-    doc.text(shopName, 10, 20); // Add the shop name
+    doc.text(shopName, 10, 20);
     doc.setFont("times", "normal");
-  
+
     const startY = 50;
-  
-    // Add a line separator
     doc.setLineWidth(0.5);
     doc.line(10, startY - 5, 200, startY - 5);
-  
-    // Add a section title for the report
+
     doc.setFontSize(18);
     doc.setFont(undefined, "bold");
     doc.text("Reviews Report", 10, 55);
     doc.setFont(undefined, "normal");
-  
-    // Prepare table headers and data
+
     const headers = [
       [
         {
@@ -85,14 +96,13 @@ const Reviews = () => {
         { content: "Date", styles: { halign: "center", fontStyle: "bold" } },
       ],
     ];
-  
+
     const data = [];
-  
-    itemReviews.forEach((itemReview) => {
+    filteredReviews.forEach((itemReview) => {
       itemReview.reviews.forEach((review, index) => {
         data.push([
-          index === 0 ? itemReview.item.name : "", // Show item name only once
-          index === 0 ? itemReview.item.category : "", // Show category only once
+          index === 0 ? itemReview.item.name : "",
+          index === 0 ? itemReview.item.category : "",
           review.email,
           review.rating,
           review.text,
@@ -100,16 +110,12 @@ const Reviews = () => {
         ]);
       });
     });
-  
-    // Add the table
+
     doc.autoTable({
       head: headers,
       body: data,
       startY: startY + 10,
-      styles: {
-        cellPadding: 4,
-        fontSize: 10,
-      },
+      styles: { cellPadding: 4, fontSize: 10 },
       headStyles: {
         fillColor: [22, 160, 133],
         textColor: [255, 255, 255],
@@ -117,11 +123,10 @@ const Reviews = () => {
       },
       theme: "grid",
     });
-  
-    // Save the PDF
+
     doc.save("Reviews_Report.pdf");
   };
-  
+
   useEffect(() => {
     fetchReviews();
   }, [user]);
@@ -138,8 +143,21 @@ const Reviews = () => {
     <div>
       <Navbar />
       <div
-        style={{ margin: "20px", display: "flex", justifyContent: "flex-end" }}
+        style={{
+          margin: "20px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
+        <input
+  type="text"
+  placeholder="Search by item name or category"
+  value={searchTerm}
+  onChange={handleSearch}
+  className="w-[400px] px-4 py-2 border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300 ease-in-out hover:shadow-lg"
+/>
+
+
         <button
           onClick={generatePDFReport}
           className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg"
@@ -178,8 +196,8 @@ const Reviews = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {itemReviews.length > 0 ? (
-              itemReviews.map((itemReview) => {
+            {filteredReviews.length > 0 ? (
+              filteredReviews.map((itemReview) => {
                 const hasReviews = itemReview.reviews.length > 0;
 
                 return (
