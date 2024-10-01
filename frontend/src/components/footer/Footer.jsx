@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "../../images/logo.png";
+import QuckyShop from "../../images/WhiteLogo.png";
 
 const Footer = () => {
   return (
@@ -9,13 +10,10 @@ const Footer = () => {
           <div class="mb-6 md:mb-0">
             <a href="/" class="flex items-center">
               <img
-                src={Logo}
+                src={QuckyShop}
                 class="h-8 me-3"
                 alt="FlowBite Logo"
               />
-              <span class="self-center text-4xl font-semibold whitespace-nowrap text-white">
-                QuickShop
-              </span>
             </a>
           </div>
           <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
@@ -25,12 +23,12 @@ const Footer = () => {
               </h2>
               <ul class="text-white dark:text-white font-medium">
                 <li class="mb-4">
-                  <a href="https://flowbite.com/" class="hover:underline">
+                  <a href="/client/dashboard/shops" class="hover:underline">
                     Shops
                   </a>
                 </li>
                 <li>
-                  <a href="https://tailwindcss.com/" class="hover:underline">
+                  <a href="#" class="hover:underline">
                     Items
                   </a>
                 </li>
@@ -43,18 +41,18 @@ const Footer = () => {
               <ul class="text-white dark:text-white font-medium">
                 <li class="mb-4">
                   <a
-                    href="https://github.com/themesberg/flowbite"
+                    href="#"
                     class="hover:underline "
                   >
-                    Github
+                    Instagram
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://discord.gg/4eeurUVvTy"
+                    href="#"
                     class="hover:underline"
                   >
-                    Discord
+                    Facebook
                   </a>
                 </li>
               </ul>
