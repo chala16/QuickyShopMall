@@ -144,6 +144,7 @@ const Navbar = () => {
                 >
                   Wishlist
                 </a>
+                <p className="absolute font-semibold ml-[650px]">{user.email}</p>
               </>
             )}
 
@@ -172,9 +173,8 @@ const Navbar = () => {
           </div>
 
           {/* search bar and oder button */}
-          <div className="flex items-center justify-between gap-4">
-            <div className="relative hidden w-48 group sm:block"></div>
-
+          <div className="flex items-center gap-4">
+            <div className="w-36"></div>
             <div className="mr-4">
               {/* sign button */}
               <Dropdown
