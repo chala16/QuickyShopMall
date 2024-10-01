@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../../images/logo.png";
 import QuckyShop from "../../images/WhiteLogo.png";
+import QuickyShopLogo from "../../images/logoquickyshop.png";
 
 const Footer = () => {
   return (
@@ -14,6 +15,7 @@ const Footer = () => {
                 class="h-8 me-3"
                 alt="FlowBite Logo"
               />
+              <img src={QuickyShopLogo} alt="Logo" className="ml-4 w-10 h-10" />
             </a>
           </div>
           <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
