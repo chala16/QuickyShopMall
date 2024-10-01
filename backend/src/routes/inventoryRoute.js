@@ -99,6 +99,34 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
 });
   
 
+
+// Get all FAQs for the logged-in shop owner
+router.route("/get-faqs").get(requireAuth, async (req, res) => {
+  try {
+    // Get the shopId from the logged-in user (shop owner)
+    const shopId = req.user._id;
+
+    // Find FAQs by the shopId
+    const faqs = await FAQ.find({ shopId });
+
+    // If no FAQs are found, return a 404 status
+    if (!faqs || faqs.length === 0) {
+      return res.status(404).json({
+        message: "No FAQs found for this shop.",
+      });
+    }
+
+    // Send the FAQs if found
+    res.status(200).json(faqs);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching FAQs",
+      error: error.message,
+    });
+  }
+});
+
+
   // Create a new FAQ
 router.route("/create-faq").post(requireAuth, async (req, res) => {
   try {
@@ -112,6 +140,7 @@ router.route("/create-faq").post(requireAuth, async (req, res) => {
         message: "Please provide all required fields: question and answer.",
       });
     }
+
 
     // Create a new FAQ entry
     const faq = new FAQ({ shopId, question, answer });
