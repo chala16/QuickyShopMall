@@ -6,7 +6,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import Navbar from "../../components/home/Navbar/Navbar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import logo from "../../assets/sale.png";
+import logo from "../../images/logoquickyshop.png";
 
 const ViewDiscountItems = () => {
   const [discountedItems, setDiscountedItems] = useState([]);
@@ -104,7 +104,7 @@ const ViewDiscountItems = () => {
     img.src = logoPath;
 
     img.onload = () => {
-      doc.addImage(img, "PNG", 130, 4, 60, 40);
+      doc.addImage(img, "PNG", 160, 4, 40, 30);
       doc.setFontSize(24);
       doc.setFont("times", "bold");
       doc.text(shopName, 10, 20);

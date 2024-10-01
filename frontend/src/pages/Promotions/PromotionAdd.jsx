@@ -19,6 +19,15 @@ const PromotionAdd = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!title) {
+      toast.error("Title is required");
+      return;
+    }
+    if (!description) {
+      toast.error("Description is required");
+      return;
+    }
+
     if (!image) {
       toast.error("Image is required");
       return;
