@@ -10,6 +10,7 @@ import logo from "../../assets/sale.png";
 
 const ViewDiscountItems = () => {
   const [discountedItems, setDiscountedItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search input
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -55,13 +56,22 @@ const ViewDiscountItems = () => {
     }
   }, [user]);
 
+  // Filter the discounted items based on the search query (by item name or date)
+  const filteredItems = discountedItems.filter((item) => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    return (
+      item.itemName.toLowerCase().includes(lowerCaseQuery) ||
+      new Date(item.startDate).toLocaleDateString().includes(lowerCaseQuery) ||
+      new Date(item.endDate).toLocaleDateString().includes(lowerCaseQuery)
+    );
+  });
+
   // If loading is true, show a loading state
   if (loading) {
     return <p>Loading...</p>;
   }
 
   const handleUpdate = (id, itemId) => {
-    console.log("Update discount item with id:", id);
     navigate(`/shopOwner/discounts/update-discount-item/${id}/${itemId}`);
   };
 
@@ -87,34 +97,28 @@ const ViewDiscountItems = () => {
   // Function to generate the report
   const generatePDFReport = () => {
     const doc = new jsPDF();
-
-    // Add header with logo and shop name
-    const logoPath = logo; // Adjust based on where your logo is stored
+    const logoPath = logo;
     const shopName = "QuickyShop";
 
     const img = new Image();
     img.src = logoPath;
 
     img.onload = () => {
-      doc.addImage(img, "PNG", 130, 4, 60, 40); // Logo on the right side
-      doc.setFontSize(24); // Bigger font size for emphasis
-      doc.setFont("times", "bold"); // Use a specific font, bold style
-      doc.text(shopName, 10, 20); // Add the shop name
-      doc.setFont("times", "normal"); // Reset to normal for other text
+      doc.addImage(img, "PNG", 130, 4, 60, 40);
+      doc.setFontSize(24);
+      doc.setFont("times", "bold");
+      doc.text(shopName, 10, 20);
+      doc.setFont("times", "normal");
 
-      const startY = 50; // Adjust this value to push the table further down
-
-      // Add a line separator
+      const startY = 50;
       doc.setLineWidth(0.5);
-      doc.line(10, startY - 5, 200, startY - 5); // Draws a line above the header
+      doc.line(10, startY - 5, 200, startY - 5);
 
-      // Add a section title for the report
       doc.setFontSize(18);
-      doc.setFont(undefined, "bold"); // Set font to bold
-      doc.text("Discount Report", 10, 55); // Title for the report
-      doc.setFont(undefined, "normal"); // Reset font to normal
+      doc.setFont(undefined, "bold");
+      doc.text("Discount Report", 10, 55);
+      doc.setFont(undefined, "normal");
 
-      // Prepare table headers and data
       const headers = [
         [
           {
@@ -153,29 +157,23 @@ const ViewDiscountItems = () => {
         discount.discountAvailable ? "Active" : "Inactive",
       ]);
 
-      // Add the table
       doc.autoTable({
         head: headers,
         body: data,
-        startY: startY + 10, // Starts the table further down after the title
-        styles: {
-          cellPadding: 4,
-          fontSize: 10,
-        },
+        startY: startY + 10,
+        styles: { cellPadding: 4, fontSize: 10 },
         headStyles: {
           fillColor: [22, 160, 133],
           textColor: [255, 255, 255],
           fontStyle: "bold",
         },
-        theme: "grid", // Optional: you can choose the table theme
+        theme: "grid",
       });
 
-      // Save the PDF
       doc.save("Discounted_Items_Report.pdf");
     };
 
     img.onerror = () => {
-      console.error("Logo image not found or failed to load.");
       toast.error("Failed to load logo for report.");
     };
   };
@@ -186,104 +184,114 @@ const ViewDiscountItems = () => {
       <div
         style={{ margin: "20px", display: "flex", justifyContent: "flex-end" }}
       >
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by item name or date"
+          className="px-4 py-2 border rounded-md"
+          style={{ width: "20%", marginRight: "20px" }}
+        />
+
         <button
           onClick={generatePDFReport}
-          className="py-2 px-4 rounded-lg text-sm font-medium bg-green-500 text-white"
+          className="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg"
         >
           Generate PDF Report
         </button>
       </div>
+
       <h1
         className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
         style={{ fontSize: "2rem", marginTop: "30px", marginLeft: "20px" }}
       >
-        Discounted Items <br />
+        Discounted Items
       </h1>
-      <div className="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
-        {discountedItems.length === 0 ? (
-          <p className="py-4 text-center">No items available.</p> // Message when no items are available
+      <div className="mx-4 overflow-hidden rounded-lg shadow-lg md:mx-10">
+        {filteredItems.length === 0 ? (
+          <p className="py-4 text-center">No items available.</p>
         ) : (
           <table className="w-full table-fixed">
             <thead>
-              <tr className="bg-gray-100">
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+              <tr className="bg-gray-200">
+                {/* <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Email
-                </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                </th> */}
+                <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Item Name
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-16 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Start Date
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 py-2 text-sm font-bold text-left text-gray-600 uppercase px-14">
                   End Date
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-1 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Discount Percentage
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Discount Price
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-4 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Availability
                 </th>
-                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                <th className="w-1/4 px-8 py-2 text-sm font-bold text-left text-gray-600 uppercase">
                   Action
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white">
-              {discountedItems.map((discount) => (
+              {filteredItems.map((discount) => (
                 <tr key={discount._id}>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                  {/* <td className="px-4 py-2 text-sm border-b border-gray-200">
                     {discount.email}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                  </td> */}
+                  <td className="px-4 py-2 text-sm border-b border-gray-200">
                     {discount.itemName}
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                  <td className="px-16 py-2 text-sm border-b border-gray-200">
                     {new Date(discount.startDate).toLocaleDateString()}
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                  <td className="py-2 text-sm border-b border-gray-200 px-14">
                     {new Date(discount.endDate).toLocaleDateString()}
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                    {discount.discountPercentage}
+                  <td className="px-16 py-2 text-sm border-b border-gray-200">
+                    {discount.discountPercentage}%
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                  <td className="py-2 text-sm border-b border-gray-200 px-14">
                     {discount.discountedPrice}
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  <span
-                    className={`py-1 px-2 rounded-full text-xs ${
-                      discount.discountAvailable
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
-                    }`}
-                  >
-                    {discount.discountAvailable ? "Active" : "Inactive"}
-                  </span>
-                </td>
-                <td className="py-2 px-4 border-b border-gray-200">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleUpdate(discount._id, discount.itemId);
-                    }}
-                    className="py-1 px-4 rounded-lg text-sm font-medium bg-blue-500 mx-2 text-white"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(discount._id);
-                    }}
-                    className="py-1 px-4 rounded-lg text-sm font-medium bg-red-500 text-white"
-                  >
-                    Delete
-                  </button>
-                </td>
+                  <td className="px-8 py-2 text-sm border-b border-gray-200">
+                    <span
+                      className={`py-1 px-2 rounded-full text-xs ${
+                        discount.discountAvailable
+                          ? "bg-green-500 text-white"
+                          : "bg-red-500 text-white"
+                      }`}
+                    >
+                      {discount.discountAvailable ? "Active" : "Inactive"}
+                    </span>
+                  </td>
+                  <td className="px-1 py-2 border-b border-gray-200">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdate(discount._id, discount.itemId);
+                      }}
+                      className="px-4 py-1 mx-2 text-sm font-medium text-white bg-blue-500 rounded-lg"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(discount._id);
+                      }}
+                      className="px-4 py-1 text-sm font-medium text-white bg-red-500 rounded-lg"
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

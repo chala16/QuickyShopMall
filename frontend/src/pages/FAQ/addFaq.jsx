@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Label, TextInput, Button } from 'flowbite-react';
 import Navbar from "../../components/home/Navbar/Navbar";
@@ -6,6 +6,8 @@ import { Link, useParams } from 'react-router-dom'; // Import useParams to get U
 import { IconContext } from 'react-icons';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { toast } from 'react-toastify'; 
+
 
 const AddFAQ = () => {
   const { user } = useAuthContext();
@@ -13,6 +15,72 @@ const AddFAQ = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [error, setError] = useState(null);
+  const [faqs, setFaqs] = useState([]);
+
+// Function to fetch FAQs from the backend
+const fetchFAQs = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/inventory/get-faqs', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`, // Include token if using authentication
+      },
+    });
+    setFaqs(response.data);
+  } catch (err) {
+    setError(err.response ? err.response.data.message : 'Error fetching FAQs');
+  }
+};
+
+// Use useEffect to fetch FAQs when the component mounts
+useEffect(() => {
+  fetchFAQs();
+}, []);
+
+const handleDelete = async (id) => {
+  // Show confirmation dialog before proceeding with the deletion
+  const confirmed = window.confirm("Are you sure you want to delete this FAQ?");
+
+  if (confirmed) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/faq/faqs/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        // Check for a 204 status code (No Content)
+        if (response.status === 204) {
+          console.log('FAQ deleted successfully'); // Log success message
+          toast.success('FAQ deleted successfully!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          // Update the state to remove the deleted FAQ
+          setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq._id !== id));
+        } else {
+          const data = await response.json();
+          console.log(data.message); // Log success message for other responses
+          // Update the state to remove the deleted FAQ
+          setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq._id !== id));
+        }
+      } else {
+        const errorData = await response.json();
+        console.error('Error deleting FAQ:', errorData.message);
+      }
+    } catch (error) {
+      console.error('Error deleting FAQ:', error.message);
+    }
+  } else {
+    console.log('Deletion canceled');
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +110,18 @@ const AddFAQ = () => {
       setQuestion('');
       setAnswer('');
       setError(null); // Clear any previous errors
+
+      toast.success('FAQ added successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      fetchFAQs();
     } catch (error) {
       console.error('Error adding FAQ', error);
       setError('Error adding FAQ');
@@ -98,7 +178,7 @@ const AddFAQ = () => {
               {error && <div className="font-semibold text-red-600">{error}</div>}
             </div>
   
-            <Button type="submit" className="w-40 bg-indigo-500 text-white shadow-lg mt-4">
+            <Button type="submit" className="px-2 py-1 w-40 text-sm font-medium text-white bg-indigo-500 rounded-lg shadow-lg mt-4">
               <p className="text-lg font-bold">Add FAQ</p>
             </Button>
           </form>
@@ -110,7 +190,45 @@ const AddFAQ = () => {
             className="w-96 h-30" // Tailwind class for controlling width
           />
         </div>
+
+        
       </div>
+      <div className="container mx-auto mt-5 p-4">
+  <h1 className="text-2xl font-bold flex-col items-center justify-center text-center mb-10 text-amber-900">Frequently Asked Questions</h1>
+  {error && <p className="text-red-500 text-center">{error}</p>}
+  {faqs && faqs.length > 0 ? (
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+        <thead className="bg-green-400 text-white">
+          <tr>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Question</th>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Answer</th>
+            <th className="py-3 px-4 text-left text-sm font-semibold">Action</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {faqs.map((faq) => (
+            <tr key={faq._id} className="hover:bg-gray-100 transition-colors duration-200">
+              <td className="py-3 px-4">{faq.question}</td>
+              <td className="py-3 px-4">{faq.answer}</td>
+              <td className="py-3 px-4">
+                <button
+                  onClick={() => handleDelete(faq._id)}
+                  className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600 transition duration-200"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ) : (
+    <p className="text-center">No FAQs found for this shop.</p>
+  )}
+</div>
+
     </div>
   );
 }

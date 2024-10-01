@@ -82,7 +82,16 @@ const DiscountDashboard = () => {
                     Rs. {item.price}
                   </p>
                   <p className="mb-2 text-sm text-gray-600">{item.category}</p>
-                  <p className="text-sm text-gray-500">{item.description}</p>
+                  <p
+                    className="overflow-hidden text-sm text-gray-500"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 4,
+                      WebkitBoxOrient: "vertical",
+                    }}
+                  >
+                    {item.description}
+                  </p>
                 </div>
                 <div className="absolute flex space-x-2 top-4 right-4">
                   <button

@@ -43,7 +43,7 @@ const Navbar = () => {
         <div className="container flex items-center justify-between ">
           <div>
             <a href="/" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
-              <img src={QuickyShop} alt="Logo" className="w-36 ml-20" />
+              <img src={QuickyShop} alt="Logo" className="ml-20 w-36" />
             </a>
           </div>
 
@@ -133,12 +133,6 @@ const Navbar = () => {
                   Home
                 </a>
                 <a
-                  href="/client/dashboard/manage"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  Discounts
-                </a>
-                <a
                   href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
@@ -150,6 +144,7 @@ const Navbar = () => {
                 >
                   Wishlist
                 </a>
+                <p className="absolute ml-[560px] font-semibold">{user.email}</p>
               </>
             )}
 
@@ -162,12 +157,6 @@ const Navbar = () => {
                   Home
                 </a>
                 <a
-                  href="/login"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  Discounts
-                </a>
-                <a
                   href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
@@ -179,26 +168,13 @@ const Navbar = () => {
                 >
                   Wishlist
                 </a>
-                <a
-                  href="/client/dashboard/aboutus"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  About Us
-                </a>
-                <a
-                  href="/client/dashboard/faq"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  FAQ
-                </a>
               </>
             )}
           </div>
 
           {/* search bar and oder button */}
-          <div className="flex items-center justify-between gap-4">
-            <div className="relative hidden w-48 group sm:block"></div>
-
+          <div className="flex items-center gap-4">
+            <div className="w-36"></div>
             <div className="mr-4">
               {/* sign button */}
               <Dropdown

@@ -190,7 +190,7 @@ const AddDiscount = () => {
         </div>
 
         {/* Image Card Container */}
-        <div className="w-full max-w-md mt-16 mr-20 shadow-xl">
+        <div className="w-full max-w-xs mt-16 mr-20 shadow-xl">
           <DiscountImageCard data={data} />
         </div>
       </div>
