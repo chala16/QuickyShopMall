@@ -1,4 +1,5 @@
 import React from "react";
+import QuickyShop from "../../../images/QuickyShop.png";
 import Logo from "../../../images/logo.png";
 import { IoMdSearch } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
@@ -42,8 +43,7 @@ const Navbar = () => {
         <div className="container flex items-center justify-between ">
           <div>
             <a href="/" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
-              <img src={Logo} alt="Logo" className="w-10 ml-20" />
-              QuickShop
+              <img src={QuickyShop} alt="Logo" className="w-36 ml-20" />
             </a>
           </div>
 
