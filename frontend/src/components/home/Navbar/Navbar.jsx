@@ -1,4 +1,5 @@
 import React from "react";
+import QuickyShop from "../../../images/QuickyShop.png";
 import Logo from "../../../images/logo.png";
 import { IoMdSearch } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
@@ -42,8 +43,7 @@ const Navbar = () => {
         <div className="container flex items-center justify-between ">
           <div>
             <a href="/" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
-              <img src={Logo} alt="Logo" className="w-10 ml-20" />
-              QuickShop
+              <img src={QuickyShop} alt="Logo" className="ml-20 w-36" />
             </a>
           </div>
 
@@ -133,12 +133,6 @@ const Navbar = () => {
                   Home
                 </a>
                 <a
-                  href="/client/dashboard/manage"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  Discounts
-                </a>
-                <a
                   href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
@@ -162,12 +156,6 @@ const Navbar = () => {
                   Home
                 </a>
                 <a
-                  href="/login"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  Discounts
-                </a>
-                <a
                   href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
@@ -179,42 +167,13 @@ const Navbar = () => {
                 >
                   Wishlist
                 </a>
-                <a
-                  href="/client/dashboard/aboutus"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  About Us
-                </a>
-                <a
-                  href="/client/dashboard/faq"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  FAQ
-                </a>
               </>
             )}
           </div>
 
           {/* search bar and oder button */}
           <div className="flex items-center justify-between gap-4">
-            <div className="relative hidden group sm:block">
-              <input
-                type="text"
-                placeholder="search"
-                className="w-[200px] sm:w-[200px]
-                group-hover:w-[300px] transitions-all
-                duration-300 rounded-full border
-                border-gray-300 px-2 py-1
-                focus: outline-none focus:border-1
-                focus:border-primary"
-              />
-              <IoMdSearch className="absolute text-gray-500 -translate-y-1/2 group-hover:text-primary top-1/2 right-3" />
-            </div>
-
-            {/* Darkmode */}
-            <div>
-              <DarkMode />
-            </div>
+            <div className="relative hidden w-48 group sm:block"></div>
 
             <div className="mr-4">
               {/* sign button */}

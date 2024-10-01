@@ -52,6 +52,31 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
     
   });
 
+
+  router.route("/search-items").get(async (req, res) => {
+    const { query } = req.query; 
+  
+    try {
+      const user_id = req.user._id; 
+      
+      const items = await Inventory.find({
+        $and: [
+          { user_id: user_id },
+          {
+            $or: [
+              { name: { $regex: query, $options: "i" } }
+            ]
+          }
+        ]
+      });
+  
+      res.status(200).json(items);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send({ message: err.message });
+    }
+  });
+
   router.route("/owner-items").get(async (req, res) => {
     try {
       const user_id = req.user._id;
