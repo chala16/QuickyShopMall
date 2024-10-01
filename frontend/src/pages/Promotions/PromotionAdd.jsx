@@ -106,7 +106,7 @@ const PromotionAdd = () => {
               className="max-w-md mx-auto"
               style={{ width: "100%" }}
               onSubmit={handleSubmit}
-            >
+              noValidate >
               <h1
                 className="mb-4 text-4xl font-extrabold leading-none tracking-tight max-w-1xl md:text-5xl xl:text-6xl dark:text-white"
                 style={{ fontSize: "2rem" }}
