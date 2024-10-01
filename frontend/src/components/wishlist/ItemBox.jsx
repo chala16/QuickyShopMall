@@ -46,13 +46,13 @@ const ItemBox = ({ item, handleDelete }) => {
         <p className="text-gray-600"><b>Floor:</b> {item.shopFloorNo}</p>
         <button
           onClick={() => handleDelete(item.itemId)}
-          className="py-1 px-2 bg-red-500 text-white hover:bg-red-700 rounded-md"
+          className="my-1.5 py-1 px-2 bg-red-500 text-white hover:bg-red-700 rounded-md"
         >
           Remove
         </button>
         <button
           onClick={() => openModal(item.shopFloorNo)}
-          className="ml-2 py-1 px-2 bg-blue-500 text-white hover:bg-blue-700 rounded-md"
+          className="my-1.5 ml-2 py-1 px-2 bg-blue-500 text-white hover:bg-blue-700 rounded-md"
         >
           Show Floor ➡️
         </button>
