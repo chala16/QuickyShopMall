@@ -45,7 +45,14 @@ const ImageMover = () => {
     pauseOnFocus: true,
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return (
+    <div className="flex flex-col justify-center items-center h-[550px] bg-gray-100">
+      {/* White spinner */}
+      <div className="w-12 h-12 border-4 border-black border-dashed rounded-full animate-spin"></div>
+      {/* Loading text */}
+      <p className="mt-4 text-black">Loading Promotions...</p>
+    </div>
+  );
   if (error) return <div>Error: {error}</div>;
 
   return (
