@@ -65,6 +65,16 @@ const UpdateDiscount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (discountPercentage <= 0 || discountPercentage > 100) {
+      toast.error("Discount percentage must be between 1 and 100");
+      return;
+    }
+  
+    if (!discountedPrice || discountedPrice <= 0) {
+      toast.error("Discounted price must be greater than 0");
+      return;
+    }
+
     const discountDetails = {
       email: user.email,
       itemId: itemId,
@@ -128,6 +138,7 @@ const UpdateDiscount = () => {
               className="max-w-md mx-auto"
               style={{ width: "100%" }}
               onSubmit={handleSubmit}
+              noValidate
             >
               <h1
                 className="max-w-1xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
