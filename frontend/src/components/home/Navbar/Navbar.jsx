@@ -43,7 +43,7 @@ const Navbar = () => {
           <div>
             <a href="/" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
               <img src={Logo} alt="Logo" className="w-10 ml-20" />
-              QuickShop
+              QuickyShop
             </a>
           </div>
 

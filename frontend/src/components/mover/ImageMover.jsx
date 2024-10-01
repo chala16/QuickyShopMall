@@ -50,7 +50,7 @@ const ImageMover = () => {
 
   return (
     <div
-      className="relative overflow-hidden min-h-[550px] sm:min-h-[550px] bg-gray-100 flex justify-center items-center dark:bg-gray-950 dark:text-white duration-200"
+      className="relative overflow-hidden min-h-[550px] sm:min-h-[450px] bg-gray-100 flex justify-center items-center dark:bg-gray-950 dark:text-white duration-200"
     >
       {/* Slider background pattern */}
       <div
@@ -70,13 +70,13 @@ const ImageMover = () => {
                   <p className="text-sm">
                     {promotion.description}
                   </p>
-                  <div>
+                  {/* <div>
                     <button
                       className="px-4 py-2 text-white duration-200 rounded-full bg-gradient-to-r from-image-slider to-image-slider-secondary hover:scale-105"
                     >
                       Order Now
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 {/* Image section */}
                 <div className="order-1 sm:order-2">
