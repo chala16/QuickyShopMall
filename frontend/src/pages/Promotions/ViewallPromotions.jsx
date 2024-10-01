@@ -21,13 +21,26 @@ const ViewallPromotions = () => {
           },
         })
         .then((res) => {
-          setpromotionItems(res.data);
+          if (res.data.length === 0) {
+            setpromotionItems([]); // Set items to empty if no discounts are found
+          } else {
+            setpromotionItems(res.data);
+          }
           setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching items", error);
-          toast.error("Failed to fetch items");
+          if (error.response && error.response.status === 404) {
+            // Handle 404 error
+            setLoading(false);
+          } else {
+            // Handle other errors
+            toast.error("Failed to fetch items");
+            setLoading(false);
+          }
         });
+    } else {
+      setLoading(false);
     }
   };
 
@@ -75,6 +88,9 @@ const ViewallPromotions = () => {
         Manage &amp; Promotions.
       </h1>
       <div className="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
+      {promotionItems.length === 0 ? (
+          <p className="py-4 text-center">No items available.</p> // Message when no items are available
+        ) : (
         <table className="w-full table-fixed">
           <thead>
             <tr className="bg-gray-100">
@@ -132,6 +148,7 @@ const ViewallPromotions = () => {
             ))}
           </tbody>
         </table>
+        )}
       </div>
     </div>
   );

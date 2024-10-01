@@ -24,7 +24,12 @@ import PromotionDashBoard from "../pages/Promotions/PromotionDashBoard";
 import PromotionAdd from "../pages/Promotions/PromotionAdd";
 import ViewallPromotions from "../pages/Promotions/ViewallPromotions";
 import UpdatePromotion from "../pages/Promotions/UpdatePromotion";
+
+import AddFAQ from "../pages/FAQ/addFaq"
+import Reviews from "../pages/shopOwner/ViewReviews";
+
 import Report from "../pages/shopOwner/Report";
+
 
 function CreateRouter(){
   return createBrowserRouter([
@@ -72,6 +77,11 @@ function CreateRouter(){
           path: '/shopOwner/dashboard/report',
           element:<Report/>
         },
+        {path:"/shopOwner/dashboard/reviews" ,
+          element:<Reviews />
+          },
+        
+
 
 
       ]
@@ -100,7 +110,8 @@ function CreateRouter(){
         {
           path: '/client/dashboard/faqs/:shopId/:shopName',
           element: <FAQsPage/>,
-        }
+        },
+        
 
       ]
 
@@ -132,6 +143,10 @@ function CreateRouter(){
     },
     
 
+    {
+      path: '/shopOwner/faqs',  element: <AddFAQ/>
+
+    },
   ]);
 }
 export default CreateRouter;

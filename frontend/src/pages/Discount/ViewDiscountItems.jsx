@@ -7,6 +7,7 @@ import Navbar from "../../components/home/Navbar/Navbar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import logo from "../../assets/sale.png";
+
 const ViewDiscountItems = () => {
   const [discountedItems, setDiscountedItems] = useState([]);
   const { user } = useAuthContext();
@@ -23,19 +24,34 @@ const ViewDiscountItems = () => {
           },
         })
         .then((res) => {
-          setDiscountedItems(res.data);
+          if (res.data.length === 0) {
+            setDiscountedItems([]); // Set items to empty if no discounts are found
+          } else {
+            setDiscountedItems(res.data);
+          }
           setLoading(false);
         })
         .catch((error) => {
           console.error("Error fetching items", error);
-          toast.error("Failed to fetch items");
+          if (error.response && error.response.status === 404) {
+            // Handle 404 error
+            setLoading(false);
+          } else {
+            // Handle other errors
+            toast.error("Failed to fetch items");
+            setLoading(false);
+          }
         });
+    } else {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (user) {
       fetchItems();
+    } else {
+      setLoading(false); // If no user is found, stop loading
     }
   }, [user]);
 
@@ -69,7 +85,6 @@ const ViewDiscountItems = () => {
   };
 
   // Function to generate the report
-  // Function to generate the report
   const generatePDFReport = () => {
     const doc = new jsPDF();
 
@@ -83,9 +98,9 @@ const ViewDiscountItems = () => {
     img.onload = () => {
       doc.addImage(img, "PNG", 130, 4, 60, 40); // Logo on the right side
       doc.setFontSize(24); // Bigger font size for emphasis
-        doc.setFont("times", "bold"); // Use a specific font, bold style
-        doc.text(shopName, 10, 20); // Add the shop name
-        doc.setFont("times", "normal"); // Reset to normal for other text
+      doc.setFont("times", "bold"); // Use a specific font, bold style
+      doc.text(shopName, 10, 20); // Add the shop name
+      doc.setFont("times", "normal"); // Reset to normal for other text
 
       const startY = 50; // Adjust this value to push the table further down
 
@@ -185,57 +200,60 @@ const ViewDiscountItems = () => {
         Discounted Items <br />
       </h1>
       <div className="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
-        <table className="w-full table-fixed">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                Email
-              </th>
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                Item Name
-              </th>
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                Start Date
-              </th>
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                End Date
-              </th>
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                Discount Percentage
-              </th>
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                Discount Price
-              </th>
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                Availability
-              </th>
-              <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white">
-            {discountedItems.map((discount) => (
-              <tr key={discount._id}>
-                <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {discount.email}
-                </td>
-                <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {discount.itemName}
-                </td>
-                <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {new Date(discount.startDate).toLocaleDateString()}
-                </td>
-                <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {new Date(discount.endDate).toLocaleDateString()}
-                </td>
-                <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {discount.discountPercentage}
-                </td>
-                <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                  {discount.discountedPrice}
-                </td>
-                <td className="py-2 px-4 border-b border-gray-200 text-sm">
+        {discountedItems.length === 0 ? (
+          <p className="py-4 text-center">No items available.</p> // Message when no items are available
+        ) : (
+          <table className="w-full table-fixed">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  Email
+                </th>
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  Item Name
+                </th>
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  Start Date
+                </th>
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  End Date
+                </th>
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  Discount Percentage
+                </th>
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  Discount Price
+                </th>
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  Availability
+                </th>
+                <th className="w-1/4 py-2 px-4 text-left text-gray-600 font-bold uppercase text-sm">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              {discountedItems.map((discount) => (
+                <tr key={discount._id}>
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                    {discount.email}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                    {discount.itemName}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                    {new Date(discount.startDate).toLocaleDateString()}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                    {new Date(discount.endDate).toLocaleDateString()}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                    {discount.discountPercentage}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
+                    {discount.discountedPrice}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
                   <span
                     className={`py-1 px-2 rounded-full text-xs ${
                       discount.discountAvailable
@@ -266,10 +284,11 @@ const ViewDiscountItems = () => {
                     Delete
                   </button>
                 </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

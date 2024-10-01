@@ -87,10 +87,16 @@ const Navbar = () => {
                   Promotion
                 </a>
                 <a
-                  href="/client/feedbacks"
+                  href="/shopOwner/faqs"
                   className="text-sm font-bold text-client-brown nav-link"
                 >
-                  Feedbacks
+                  FAQs
+                </a>
+                <a
+                  href="/shopOwner/dashboard/reviews"
+                  className="text-sm font-bold text-client-brown nav-link"
+                >
+                  Reviews
                 </a>
                 <a
                   href="/shopOwner/dashboard/report"
