@@ -87,10 +87,16 @@ const Navbar = () => {
                   Promotion
                 </a>
                 <a
-                  href="/client/feedbacks"
+                  href="/shopOwner/faqs"
                   className="text-sm font-bold text-client-brown nav-link"
                 >
-                  Feedbacks
+                  FAQs
+                </a>
+                <a
+                  href="/shopOwner/dashboard/reviews"
+                  className="text-sm font-bold text-client-brown nav-link"
+                >
+                  Reviews
                 </a>
                 <a
                   href="/shopOwner/dashboard/report"
@@ -191,24 +197,7 @@ const Navbar = () => {
 
           {/* search bar and oder button */}
           <div className="flex items-center justify-between gap-4">
-            <div className="relative hidden group sm:block">
-              <input
-                type="text"
-                placeholder="search"
-                className="w-[200px] sm:w-[200px]
-                group-hover:w-[300px] transitions-all
-                duration-300 rounded-full border
-                border-gray-300 px-2 py-1
-                focus: outline-none focus:border-1
-                focus:border-primary"
-              />
-              <IoMdSearch className="absolute text-gray-500 -translate-y-1/2 group-hover:text-primary top-1/2 right-3" />
-            </div>
-
-            {/* Darkmode */}
-            <div>
-              <DarkMode />
-            </div>
+            <div className="relative hidden w-48 group sm:block"></div>
 
             <div className="mr-4">
               {/* sign button */}

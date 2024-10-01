@@ -1,6 +1,9 @@
 const router = require("express").Router();
 let Inventory = require("../models/inventory");
 const requireAuth = require("../middleware/requireAuth")
+const Review = require("./../models/Review");
+const FAQ = require("../models/FAQ");
+
 
 router.route("/add-item").post(requireAuth,async (req, res) => {
     try {
@@ -49,6 +52,31 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
     
   });
 
+
+  router.route("/search-items").get(async (req, res) => {
+    const { query } = req.query; 
+  
+    try {
+      const user_id = req.user._id; 
+      
+      const items = await Inventory.find({
+        $and: [
+          { user_id: user_id },
+          {
+            $or: [
+              { name: { $regex: query, $options: "i" } }
+            ]
+          }
+        ]
+      });
+  
+      res.status(200).json(items);
+    } catch (err) {
+      console.log(err.message);
+      res.status(500).send({ message: err.message });
+    }
+  });
+
   router.route("/owner-items").get(async (req, res) => {
     try {
       const user_id = req.user._id;
@@ -59,6 +87,76 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
       res.status(500).send({ message: err.message });
     }
   });
+
+//get reviews by shopOwner
+  router.route("/shop-reviews").get(async (req, res) => {
+    try {
+      const shopId = req.user._id; 
+      const items = await Inventory.find({ user_id: shopId });
+      const reviews = await Review.find({ shopId: shopId }).populate("productId");
+  
+
+      
+    const itemReviews = items.map(item => {
+      // Filter reviews for the current item
+      const itemSpecificReviews = reviews.filter(review => review.productId._id.equals(item._id));
+      
+      // Format the reviews for the current item
+      return {
+        item: {
+          id: item._id,
+          name: item.name,
+          category:item.category
+        },
+        reviews: itemSpecificReviews.map(review => ({
+          email: review.email,
+          date: review.date,
+          rating: review.rating,
+          text: review.text
+        }))
+      };
+    });
+    res.send(itemReviews);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send({ message: err.message });
+  }
+});
+  
+
+  // Create a new FAQ
+router.route("/create-faq").post(requireAuth, async (req, res) => {
+  try {
+    // Get the shopId from the logged-in user (shop owner)
+    const shopId = req.user._id;
+    const { question, answer } = req.body;
+
+    // Check for required fields
+    if (!question || !answer) {
+      return res.status(400).json({
+        message: "Please provide all required fields: question and answer.",
+      });
+    }
+
+    // Create a new FAQ entry
+    const faq = new FAQ({ shopId, question, answer });
+
+    // Save the FAQ entry to the database
+    await faq.save();
+
+    // Return a success response
+    return res.status(201).json(faq);
+  } catch (error) {
+    console.error("Error creating FAQ:", error.message);
+
+    // Return a failure response
+    return res.status(500).json({
+      message: "Error creating FAQ",
+      error: error.message,
+    });
+  }
+});
+
 
   router.route("/items/:id").get(async (req, res) => {
     try {
