@@ -65,6 +65,20 @@ const UpdatePromotion = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!title) {
+      toast.error("Title is required");
+      return;
+    }
+    if (!description) {
+      toast.error("Description is required");
+      return;
+    }
+
+    if (!image) {
+      toast.error("Image is required");
+      return;
+    }
+    
     const promotionDetails = {
       email: user.email,
       title,
@@ -130,6 +144,7 @@ const UpdatePromotion = () => {
               className="max-w-md mx-auto"
               style={{ width: "100%" }}
               onSubmit={handleSubmit}
+              noValidate
             >
               <h1
                 className="mb-4 text-4xl font-extrabold leading-none tracking-tight max-w-1xl md:text-5xl xl:text-6xl dark:text-white"
@@ -181,6 +196,7 @@ const UpdatePromotion = () => {
                   accept="image/*"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer mt-6"
                   onChange={handleImageChange}
+                  required
                 />
                 {loading && (
                   <div className="flex items-center mt-2">
