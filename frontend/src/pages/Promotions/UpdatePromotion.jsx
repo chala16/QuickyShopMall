@@ -74,10 +74,10 @@ const UpdatePromotion = () => {
       return;
     }
 
-    if (!image) {
-      toast.error("Image is required");
-      return;
-    }
+    // if (!image) {
+    //   toast.error("Image is required");
+    //   return;
+    // }
     
     const promotionDetails = {
       email: user.email,
