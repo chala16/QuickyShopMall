@@ -107,7 +107,7 @@ const AddDiscount = () => {
         <h1 className="text-3xl font-bold font-[poppins] text-center text-black sm:text-3xl">
             Add Discount
           </h1>
-          <form className="p-4 mb-0 space-y-4 rounded-lg shadow-lg signUp sm:p-6 lg:p-8" onSubmit={handleSubmit}>
+          <form className="p-4 mb-0 space-y-4 rounded-lg shadow-lg signUp sm:p-6 lg:p-8" onSubmit={handleSubmit} noValidate>
 
             {/* Form fields */}
             <div className="mb-5">
