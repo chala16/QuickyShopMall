@@ -203,7 +203,7 @@ const UpdateItem = () => {
                 minLength={3}
                 maxLength={30}
               />
-             {errors.name && (
+              {errors.name && (
                 <div className="font-semibold text-red-600">{errors.name}</div>
               )}
             </div>
@@ -224,7 +224,7 @@ const UpdateItem = () => {
                 defaultValue={itemDetails.quantity}
                 required
               />
-               {errors.qty && (
+              {errors.qty && (
                 <div className="font-semibold text-red-600">{errors.qty}</div>
               )}
             </div>
@@ -364,4 +364,3 @@ const UpdateItem = () => {
 };
 
 export default UpdateItem;
-
