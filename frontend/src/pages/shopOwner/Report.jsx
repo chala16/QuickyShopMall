@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import logo from "../../assets/sale.png";
+import logo from "../../images/logoquickyshop.png";
 import { IoMdSearch } from "react-icons/io";
 
 const Report = () => {
@@ -85,7 +85,7 @@ const Report = () => {
     img.src = logoPath;
 
     img.onload = () => {
-      doc.addImage(img, "PNG", 130, 4, 60, 40); // Logo on the right side
+      doc.addImage(img, "PNG", 160, 4, 40, 30); // Logo on the right side
       doc.setFontSize(24); // Bigger font size for emphasis
       doc.setFont("times", "bold"); // Use a specific font, bold style
       doc.text(shopName, 10, 20); // Add the shop name
