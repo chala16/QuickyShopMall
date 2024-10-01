@@ -178,7 +178,7 @@ const handleDelete = async (id) => {
               {error && <div className="font-semibold text-red-600">{error}</div>}
             </div>
   
-            <Button type="submit" className="w-40 bg-indigo-500 text-white shadow-lg mt-4">
+            <Button type="submit" className="px-2 py-1 w-40 text-sm font-medium text-white bg-indigo-500 rounded-lg shadow-lg mt-4">
               <p className="text-lg font-bold">Add FAQ</p>
             </Button>
           </form>
