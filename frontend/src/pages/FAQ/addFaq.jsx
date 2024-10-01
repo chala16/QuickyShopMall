@@ -199,7 +199,7 @@ const handleDelete = async (id) => {
   {faqs && faqs.length > 0 ? (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
-        <thead className="bg-gray-400 text-white">
+        <thead className="bg-green-400 text-white">
           <tr>
             <th className="py-3 px-4 text-left text-sm font-semibold">Question</th>
             <th className="py-3 px-4 text-left text-sm font-semibold">Answer</th>
