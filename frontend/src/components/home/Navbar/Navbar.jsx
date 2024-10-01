@@ -43,7 +43,7 @@ const Navbar = () => {
         <div className="container flex items-center justify-between ">
           <div>
             <a href="/" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
-              <img src={QuickyShop} alt="Logo" className="w-36 ml-20" />
+              <img src={QuickyShop} alt="Logo" className="ml-20 w-36" />
             </a>
           </div>
 
@@ -133,12 +133,6 @@ const Navbar = () => {
                   Home
                 </a>
                 <a
-                  href="/client/dashboard/manage"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  Discounts
-                </a>
-                <a
                   href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
@@ -162,12 +156,6 @@ const Navbar = () => {
                   Home
                 </a>
                 <a
-                  href="/login"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  Discounts
-                </a>
-                <a
                   href="/client/dashboard/shops"
                   className="text-lg font-bold text-client-brown nav-link"
                 >
@@ -178,18 +166,6 @@ const Navbar = () => {
                   className="text-lg font-bold text-client-brown nav-link"
                 >
                   Wishlist
-                </a>
-                <a
-                  href="/client/dashboard/aboutus"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  About Us
-                </a>
-                <a
-                  href="/client/dashboard/faq"
-                  className="text-lg font-bold text-client-brown nav-link"
-                >
-                  FAQ
                 </a>
               </>
             )}
