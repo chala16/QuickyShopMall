@@ -187,8 +187,9 @@ const HomeContainer = () => {
 
             <div className="ml-8 mr-8 ">
               <Swiper
-                slidesPerView={6}
+                slidesPerView={5}
                 spaceBetween={10}
+                loop={true}
                 breakpoints={{
                   640: {
                     slidesPerView: 2,
