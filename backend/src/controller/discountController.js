@@ -34,19 +34,19 @@ const getDiscountsByEmail = async (req, res) => {
 // Get a single discount
 const getDiscount = async (req, res) => {
   
-  const { id } = req.params;  // Corrected to use req.params
+  const { id } = req.params;  // use req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).send("No discount with that id");
   }
 
   try {
-    const discount = await Discount.findById(id);  // Corrected to use Discount model
+    const discount = await Discount.findById(id);  // use Discount model
 
     if (!discount) {
       return res.status(404).send("No discount with that id");
     }
-    res.status(200).json(discount);  // Corrected to use discount
+    res.status(200).json(discount);  
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -74,7 +74,7 @@ const createDiscount = async (req, res) => {
       discountedPrice,
       discountAvailable
     });
-    res.status(200).json(discount);  // Corrected to use discount
+    res.status(200).json(discount);  
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -89,7 +89,7 @@ const deleteDiscount = async (req, res) => {
   }
 
   try {
-    const discount = await Discount.findByIdAndDelete(id);  // Corrected to use Discount model
+    const discount = await Discount.findByIdAndDelete(id);  
 
     if (!discount) {
       return res.status(404).send("No discount with that id");
@@ -111,7 +111,7 @@ const updateDiscount = async (req, res) => {
 
   try {
     const discount = await Discount.findByIdAndUpdate(
-      id,  // Corrected to use id directly
+      id,  // use id directly
       {
         ...req.body,
       },
@@ -122,13 +122,13 @@ const updateDiscount = async (req, res) => {
       return res.status(404).send("No discount with that id");
     }
 
-    res.status(200).json(discount);  // Corrected to use discount
+    res.status(200).json(discount);  
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// Correct the export statement
+
 module.exports = {
   getDiscounts,
   getDiscount,
