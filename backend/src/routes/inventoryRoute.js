@@ -64,7 +64,8 @@ router.route("/add-item").post(requireAuth,async (req, res) => {
           { user_id: user_id },
           {
             $or: [
-              { name: { $regex: query, $options: "i" } }
+              { name: { $regex: query, $options: "i" } },
+              { category: { $regex: query, $options: "i" } }
             ]
           }
         ]
