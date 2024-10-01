@@ -81,7 +81,7 @@ const Footer = () => {
           <span class="text-sm text-white sm:text-center dark:text-white">
             © 2024{" "}
             <a href="https://flowbite.com/" class="hover:underline">
-              QuickShop™
+              QuickyShop™
             </a>
             . All Rights Reserved.
           </span>
