@@ -37,32 +37,48 @@ useEffect(() => {
 }, []);
 
 const handleDelete = async (id) => {
-  try {
-    const response = await fetch(`http://localhost:3000/api/faq/faqs/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+  // Show confirmation dialog before proceeding with the deletion
+  const confirmed = window.confirm("Are you sure you want to delete this FAQ?");
 
-    if (response.ok) {
-      // Check for a 204 status code
-      if (response.status === 204) {
-        console.log('FAQ deleted successfully'); // Log success message for 204
-        // Update the state to remove the deleted FAQ
-        setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq._id !== id));
+  if (confirmed) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/faq/faqs/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        // Check for a 204 status code (No Content)
+        if (response.status === 204) {
+          console.log('FAQ deleted successfully'); // Log success message
+          toast.success('FAQ deleted successfully!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          // Update the state to remove the deleted FAQ
+          setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq._id !== id));
+        } else {
+          const data = await response.json();
+          console.log(data.message); // Log success message for other responses
+          // Update the state to remove the deleted FAQ
+          setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq._id !== id));
+        }
       } else {
-        const data = await response.json();
-        console.log(data.message); // Log success message for other success responses
-        // Update the state to remove the deleted FAQ
-        setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq._id !== id));
+        const errorData = await response.json();
+        console.error('Error deleting FAQ:', errorData.message);
       }
-    } else {
-      const errorData = await response.json();
-      console.error('Error deleting FAQ:', errorData.message);
+    } catch (error) {
+      console.error('Error deleting FAQ:', error.message);
     }
-  } catch (error) {
-    console.error('Error deleting FAQ:', error.message);
+  } else {
+    console.log('Deletion canceled');
   }
 };
 
@@ -105,7 +121,7 @@ const handleDelete = async (id) => {
         progress: undefined,
       });
 
-      
+      fetchFAQs();
     } catch (error) {
       console.error('Error adding FAQ', error);
       setError('Error adding FAQ');
@@ -162,7 +178,7 @@ const handleDelete = async (id) => {
               {error && <div className="font-semibold text-red-600">{error}</div>}
             </div>
   
-            <Button type="submit" className="w-40 bg-indigo-500 text-white shadow-lg mt-4">
+            <Button type="submit" className="px-2 py-1 w-40 text-sm font-medium text-white bg-indigo-500 rounded-lg shadow-lg mt-4">
               <p className="text-lg font-bold">Add FAQ</p>
             </Button>
           </form>
@@ -183,7 +199,7 @@ const handleDelete = async (id) => {
   {faqs && faqs.length > 0 ? (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
-        <thead className="bg-gray-400 text-white">
+        <thead className="bg-green-400 text-white">
           <tr>
             <th className="py-3 px-4 text-left text-sm font-semibold">Question</th>
             <th className="py-3 px-4 text-left text-sm font-semibold">Answer</th>
