@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Promotion = require("../models/promotionModel.js");
 
-// Get all discounts
+// Get all promotions
 const getPromotions = async (req, res) => {
     try {
       const promotions = await Promotion.find({}).sort({ createdAt: -1 });
@@ -21,12 +21,12 @@ const getPromotion = async (req, res) => {
     }
   
     try {
-      const promotions = await Promotion.findById(id);  // Corrected to use Discount model
+      const promotions = await Promotion.findById(id);  
   
       if (!promotions) {
         return res.status(404).send("No promotion with that id");
       }
-      res.status(200).json(promotions);  // Corrected to use discount
+      res.status(200).json(promotions);  
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -38,7 +38,7 @@ const getPromotion = async (req, res) => {
     }
   
     try {
-      // Find discounts by email
+      // Find promotion by email
       const promotions = await Promotion.find({ email: email });
   
       if (!promotions || promotions.length === 0) {
@@ -82,7 +82,7 @@ const createPromotion = async (req, res) => {
     }
   
     try {
-      const promotion = await Promotion.findByIdAndDelete(id);  // Corrected to use Discount model
+      const promotion = await Promotion.findByIdAndDelete(id);  
   
       if (!promotion) {
         return res.status(404).send("No promotion with that id");
@@ -115,7 +115,7 @@ const createPromotion = async (req, res) => {
         return res.status(404).send("No promotion with that id");
       }
   
-      res.status(200).json(promotion);  // Corrected to use discount
+      res.status(200).json(promotion);  
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

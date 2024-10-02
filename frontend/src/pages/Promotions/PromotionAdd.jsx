@@ -4,6 +4,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import { Spinner } from "flowbite-react";
 
 const PromotionAdd = () => {
   const { id } = useParams();
@@ -11,9 +14,19 @@ const PromotionAdd = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!title) {
+      toast.error("Title is required");
+      return;
+    }
+    if (!description) {
+      toast.error("Description is required");
+      return;
+    }
 
     if (!image) {
       toast.error("Image is required");
@@ -21,13 +34,11 @@ const PromotionAdd = () => {
     }
 
     try {
-      const imageBase64 = await convertToBase64(image);
-      
       const formData = {
         email: user.email,
         title,
         description,
-        image: imageBase64, // Use the Base64-encoded image
+        image: image,
       };
 
       await axios.post("http://localhost:3000/api/promotions", formData, {
@@ -43,8 +54,23 @@ const PromotionAdd = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleImageChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setLoading(true);
+      const storageRef = firebase.storage().ref();
+      const fileRef = storageRef.child(selectedFile.name);
+
+      try {
+        const snapshot = await fileRef.put(selectedFile);
+        const downloadURL = await snapshot.ref.getDownloadURL();
+        setImage(downloadURL);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error uploading file: ", error);
+        setLoading(false);
+      }
+    }
   };
 
   return (
@@ -76,9 +102,13 @@ const PromotionAdd = () => {
               marginTop: "-30px",
             }}
           >
-            <form className="max-w-md mx-auto" style={{ width: "100%" }} onSubmit={handleSubmit}>
+            <form
+              className="max-w-md mx-auto"
+              style={{ width: "100%" }}
+              onSubmit={handleSubmit}
+              noValidate >
               <h1
-                className="max-w-1xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white"
+                className="mb-4 text-4xl font-extrabold leading-none tracking-tight max-w-1xl md:text-5xl xl:text-6xl dark:text-white"
                 style={{ fontSize: "2rem" }}
               >
                 Add Promotion
@@ -101,7 +131,7 @@ const PromotionAdd = () => {
                 </label>
               </div>
 
-              <div className="relative z-0 w-full mb-5 group pb-4">
+              <div className="relative z-0 w-full pb-4 mb-5 group">
                 <textarea
                   id="description"
                   rows="4"
@@ -128,6 +158,12 @@ const PromotionAdd = () => {
                   onChange={handleImageChange}
                   required
                 />
+                {loading && (
+                  <div className="flex items-center mt-2">
+                    <Spinner size="md" color="blue" />
+                    <span className="ml-2">Uploading...</span>
+                  </div>
+                )}
                 <label
                   htmlFor="image"
                   className="absolute text-1xl text-gray-500 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -142,6 +178,7 @@ const PromotionAdd = () => {
 
               <button
                 type="submit"
+                disabled={loading}
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
               >
                 Submit
@@ -155,16 +192,3 @@ const PromotionAdd = () => {
 };
 
 export default PromotionAdd;
-
-function convertToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
