@@ -4,6 +4,8 @@ import "jspdf-autotable";
 import Navbar from "../../components/home/Navbar/Navbar";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { toast } from "react-toastify";
+import logo from "../../images/logoquickyshop.png"; // Import the logo
+
 
 const Reviews = () => {
   const { user } = useAuthContext();
@@ -58,8 +60,14 @@ const Reviews = () => {
 
   const generatePDFReport = () => {
     const doc = new jsPDF();
+    const logoPath = logo;
     const shopName = "QuickyShop";
 
+    const img = new Image();
+    img.src = logoPath;
+
+    img.onload = () => {
+      doc.addImage(img, "PNG", 160, 4, 40, 30); // Add the logo to the PDF
     doc.setFontSize(24);
     doc.setFont("times", "bold");
     doc.text(shopName, 10, 20);
@@ -127,6 +135,10 @@ const Reviews = () => {
     doc.save("Reviews_Report.pdf");
   };
 
+  img.onerror = () => {
+    toast.error("Failed to load logo for report.");
+  };
+};
   useEffect(() => {
     fetchReviews();
   }, [user]);
