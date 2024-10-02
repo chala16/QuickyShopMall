@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 
 const floorImages = {
+  // Mapping of floor numbers to their corresponding image URLs
   1: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor1-min.png?alt=media&token=e56c6a1e-e1df-4572-b45f-7b9aebe62641",
   2: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor2-min.png?alt=media&token=71f2b30a-0823-48fc-9255-1238f43aa5df",
   3: "https://firebasestorage.googleapis.com/v0/b/doc-app-c9683.appspot.com/o/QuickyShop%2FFloors%2Ffloor3-min.png?alt=media&token=4625b40a-9eca-499e-aa39-eb7b7075c945",
@@ -11,8 +12,8 @@ const floorImages = {
 
 const ItemBox = ({ item, handleDelete }) => {
   const isInStock = item.inStock > 0;
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false); // State to control modal visibility
+  const [currentImage, setCurrentImage] = useState(""); // State to store the current floor image
 
   const openModal = (floor) => {
     setCurrentImage(floorImages[floor]); // Set the image based on the floor number
@@ -46,13 +47,13 @@ const ItemBox = ({ item, handleDelete }) => {
         <p className="text-gray-600"><b>Floor:</b> {item.shopFloorNo}</p>
         <button
           onClick={() => handleDelete(item.itemId)}
-          className="py-1 px-2 bg-red-500 text-white hover:bg-red-700 rounded-md"
+          className="my-1.5 py-1 px-2 bg-red-500 text-white hover:bg-red-700 rounded-md"
         >
           Remove
         </button>
         <button
           onClick={() => openModal(item.shopFloorNo)}
-          className="ml-2 py-1 px-2 bg-blue-500 text-white hover:bg-blue-700 rounded-md"
+          className="my-1.5 ml-2 py-1 px-2 bg-blue-500 text-white hover:bg-blue-700 rounded-md"
         >
           Show Floor ➡️
         </button>

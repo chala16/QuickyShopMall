@@ -111,7 +111,8 @@ const AddItem = () => {
     let error = "";
     switch (name) {
       case "name":
-        if (!value) error = "Name cannot be empty";
+        if (!value.trim()) // This checks for empty or only space
+          error = "Name cannot be empty";
         break;
       case "qty":
         if (value <= 0 || value > 99999)
@@ -122,13 +123,15 @@ const AddItem = () => {
           error = "Enter a valid price (1-999999999999)";
         break;
       case "description":
-        if (!value) error = "Description cannot be empty";
+        if (!value.trim()) // This checks for empty or only space in description
+          error = "Description cannot be empty";
         break;
       default:
         break;
     }
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
+
 
   return (
     <div className="min-h-screen pb-16 bg-gray-100">

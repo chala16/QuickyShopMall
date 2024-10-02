@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useLogout } from "../../../hooks/useLogout";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-
+import QuickyShopLogo from "../../../images/logoquickyshop.png";
 const Navbar = () => {
   const navigate = useNavigate();
   const { logout } = useLogout();
@@ -43,7 +43,8 @@ const Navbar = () => {
         <div className="container flex items-center justify-between ">
           <div>
             <a href="/" className="flex gap-2 font-bold text - 2xl sm:text-3xl">
-              <img src={QuickyShop} alt="Logo" className="ml-20 w-36" />
+              <img src={QuickyShopLogo} alt="Logo" className="ml-20 w-10 h-10" />
+              <img src={QuickyShop} alt="Logo" className="ml-2 w-36 h-6 mt-3" />
             </a>
           </div>
 
@@ -144,6 +145,7 @@ const Navbar = () => {
                 >
                   Wishlist
                 </a>
+                <p className="absolute ml-[560px] font-semibold">{user.email}</p>
               </>
             )}
 
@@ -172,9 +174,8 @@ const Navbar = () => {
           </div>
 
           {/* search bar and oder button */}
-          <div className="flex items-center justify-between gap-4">
-            <div className="relative hidden w-48 group sm:block"></div>
-
+          <div className="flex items-center gap-4">
+            <div className="w-36"></div>
             <div className="mr-4">
               {/* sign button */}
               <Dropdown
